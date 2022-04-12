@@ -6,16 +6,18 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 09:18:31 by aweaver           #+#    #+#             */
-/*   Updated: 2022/04/12 14:53:53 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/04/12 17:57:59 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHLL_H
+#ifndef MINISHELL_H
 # define MINISHELL_H
 
 # include <unistd.h>
 # include <stdlib.h>
 # include <sys/types.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 # include <stdio.h>
 # include "minishell_struct.h"
 
