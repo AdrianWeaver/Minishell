@@ -6,13 +6,17 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 14:13:30 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/04/12 14:28:48 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/04/13 13:54:55 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* creation et manipulation de la liste des arguments */
+/* ************************************************************************** */
+/*	ACT : create a new element t_arg with content of argv                     */
+/*	ARG : char *argv from terminal input                                      */
+/*	RET : a pointer to the created element                                    */
+/* ************************************************************************** */
 
 t_arg	*ft_newarg(char *argv)
 {
@@ -27,6 +31,12 @@ t_arg	*ft_newarg(char *argv)
 	return (new);
 }
 
+/* ************************************************************************** */
+/*	ACT : find the last element of a t_arg list                               */
+/*	ARG : a pointer to a t_arg element                                        */
+/*	RET : a pointer to the last element                                       */
+/* ************************************************************************** */
+
 t_arg	*ft_lastarg(t_arg *arg)
 {
 	t_arg	*temp;
@@ -38,6 +48,12 @@ t_arg	*ft_lastarg(t_arg *arg)
 		temp = temp->next;
 	return (temp);
 }
+
+/* ************************************************************************** */
+/*	ACT : add a new element t_arg at the queue of a t_arg list                */
+/*	ARG : a pointer to a t_arg list, a pointer to a t_arg element             */
+/*	RET : none                                                                */
+/* ************************************************************************** */
 
 void	ft_addarg_back(t_arg **argl, t_arg *new)
 {
@@ -55,6 +71,12 @@ void	ft_addarg_back(t_arg **argl, t_arg *new)
 	}
 }
 
+/* ************************************************************************** */
+/*	ACT : calculate the size of a t_arg list                                  */
+/*	ARG : a pointer to a t_arg element                                        */
+/*	RET : an int (size)                                                       */
+/* ************************************************************************** */
+
 int	ft_argsize(t_arg *arg)
 {
 	int		i;
@@ -69,6 +91,12 @@ int	ft_argsize(t_arg *arg)
 	}
 	return (i);
 }
+
+/* ************************************************************************** */
+/*	ACT : free all elements of a t_arg list                                   */
+/*	ARG : a pointer to a t_arg element                                        */
+/*	RET : none                                                                */
+/* ************************************************************************** */
 
 void	ft_cleararg(t_arg *arg)
 {
