@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 09:18:31 by aweaver           #+#    #+#             */
-/*   Updated: 2022/04/12 17:57:59 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/04/13 15:36:05 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <readline/history.h>
 # include <stdio.h>
 # include "minishell_struct.h"
+# include "libft.h"
 
 /* ************************************************************************** */
 /*                                  PARSING                                   */
@@ -44,5 +45,9 @@ t_mlc	*ft_lastmlc(t_mlc *mlc);
 void	ft_addmlc_back(t_mlc **mlcl, t_mlc *new);
 void	ft_clearmlc(t_mlc *mlc);
 int		ft_mlcsize(t_mlc *mlc);
+
+t_arg	*ft_get_args(char *input);
+int	ft_get_quote_arg(char *input);
+int	ft_set_token(t_arg *args);
 
 #endif
