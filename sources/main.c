@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 09:18:40 by aweaver           #+#    #+#             */
-/*   Updated: 2022/04/13 15:45:36 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/04/14 10:05:34 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,12 @@ int	main(int ac, char *av[], char *envp[])
 	test = readline("Test readline :");
 	verif = ft_get_args(test);
 	ft_set_token(verif);
-	printf("%s\n", verif->token);
-	free(test);
-	ft_cleararg(verif);
+	while (verif != NULL)
+	{
+		printf("content = %s,  token = %s\n", verif->content, verif->token);
+		verif = verif->next;
+	}
+//	free(test);
+	//ft_cleararg(verif);
 	return (0);
 }
