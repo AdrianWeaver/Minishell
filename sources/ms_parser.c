@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 18:10:13 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/04/13 16:03:35 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/04/14 11:33:20 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,17 @@ int	ft_set_token(t_arg *args)
 	while (temp != NULL)
 	{
 		if (ft_isalpha(temp->content[0]) == 1)
-			temp->token = "word";
+			temp->token = ft_strdup("word");
 		else if (temp->content[0] == '|')
-			temp->token = "pipe";
+			temp->token = ft_strdup("pipe");
 		else if (temp->content[0] == '<')
-			temp->token = "input";
+			temp->token = ft_strdup("input");
 		else if (temp->content[0] == '>')
-			temp->token = "output";
+			temp->token = ft_strdup("output");
 		else if (temp->content[0] == '\'')
-			temp->token = "quote";
+			temp->token = ft_strdup("quote");
 		else if (temp->content[0] == '"')
-			temp->token = "dquote";
+			temp->token = ft_strdup("dquote");
 		else
 			return (1);
 		temp = temp->next;
@@ -58,21 +58,28 @@ t_arg	*ft_get_args(char *input)
 	int		i;
 	int		j;
 
-	i = 0;
+	i = -1;
 	arg = NULL;
-	while (input[i] != '\0')
+	while (input[++i] != '\0')
 	{
-		j = i;
-		if (ft_get_quote_arg(&input[i]) != -1)
-			i += ft_get_quote_arg(&input[i]);
 		while (input[i] != ' ' && input[i] != '\0')
-			i++;
-		sub = ft_substr(&input[j], 0, i - j);
-		temp = ft_newarg(sub);
-		free(sub);
-		ft_addarg_back(&arg, temp);
-		while(input[i] == ' ' && input[i] != '\0')
-			i++;
+		{
+			j = i;
+			if (ft_check_quotes(input[i]) == 1)
+			{
+				temp = ft_get_quote_arg(&input[i]);
+				ft_addarg_back(&arg, temp);
+				i += ft_strlen(temp->content);
+			}
+			else
+			{
+				while (ft_check_quotes(input[i]) != 1 && input[i] != '\0' && input[i] != ' ')
+					i++;
+				sub = ft_substr(&input[j], 0, i - j);
+				temp = ft_newarg(sub);
+				ft_addarg_back(&arg, temp);
+			}
+		}
 	}
 	return (arg);
 }
@@ -85,10 +92,12 @@ t_arg	*ft_get_args(char *input)
 /*		quote; -1 if quote opened but not closed                              */
 /* ************************************************************************** */
 
-int	ft_get_quote_arg(char *input)
+t_arg	*ft_get_quote_arg(char *input)
 {
-	int	i;
-	
+	t_arg	*arg;
+	char	*sub;
+	int		i;
+
 	i = 0;
 	if (input[i] != '\0')
 	{
@@ -98,8 +107,8 @@ int	ft_get_quote_arg(char *input)
 			while (input[i] != '"' && input[i] != '\0')
 				i++;
 			if (input[i] == '\0')
-				return (-1);
-			return (i);
+				return (NULL);
+			sub = ft_substr(input, 0, i + 1);
 		}
 		else if (input[i] == '\'')
 		{
@@ -107,9 +116,17 @@ int	ft_get_quote_arg(char *input)
 			while (input[i] != '\'' && input[i] != '\0')
 				i++;
 			if (input[i] == '\0')
-				return (-1);
-			return (i);
+				return (NULL);
+			sub = ft_substr(input, 0, i + 1);
 		}
 	}
+	arg = ft_newarg(sub);
+	return (arg);
+}
+
+int	ft_check_quotes(char input)
+{
+	if (input == '\'' || input == '"')
+		return (1);
 	return (0);
 }
