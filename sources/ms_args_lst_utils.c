@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 14:13:30 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/04/13 13:54:55 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/04/14 10:44:04 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_arg	*ft_newarg(char *argv)
 t_arg	*ft_lastarg(t_arg *arg)
 {
 	t_arg	*temp;
-	
+
 	temp = arg;
 	if (!arg)
 		return (NULL);
@@ -59,7 +59,7 @@ void	ft_addarg_back(t_arg **argl, t_arg *new)
 {
 	t_arg	*temp;
 
-	if(argl)
+	if (argl)
 	{
 		if (*argl == NULL)
 			*argl = new;
@@ -81,7 +81,7 @@ int	ft_argsize(t_arg *arg)
 {
 	int		i;
 	t_arg	*temp;
-	
+
 	i = 0;
 	temp = arg;
 	while (temp != NULL)
@@ -102,7 +102,7 @@ void	ft_cleararg(t_arg *arg)
 {
 	t_arg	*temp;
 	t_arg	*clear;
-	
+
 	temp = arg;
 	while (temp->next != NULL)
 	{

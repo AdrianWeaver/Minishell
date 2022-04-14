@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 14:34:33 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/04/13 11:29:42 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/04/14 10:45:37 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_mlc	*ft_newmlc(void *adr)
 t_mlc	*ft_lastmlc(t_mlc *mlc)
 {
 	t_mlc	*temp;
-	
+
 	temp = mlc;
 	if (!mlc)
 		return (NULL);
@@ -58,7 +58,7 @@ void	ft_addmlc_back(t_mlc **mlcl, t_mlc *new)
 {
 	t_mlc	*temp;
 
-	if(mlcl)
+	if (mlcl)
 	{
 		if (*mlcl == NULL)
 			*mlcl = new;
@@ -83,9 +83,9 @@ int	ft_mlcsize(t_mlc *mlc)
 
 	i = 0;
 	temp = mlc;
-	while (temp !=NULL)
+	while (temp != NULL)
 	{
-		temp=temp->next;
+		temp = temp->next;
 		i++;
 	}
 	return (i);
@@ -101,7 +101,7 @@ void	ft_clearmlc(t_mlc *mlc)
 {
 	t_mlc	*temp;
 	t_mlc	*clear;
-	
+
 	temp = mlc;
 	if (mlc)
 	{	
@@ -110,7 +110,7 @@ void	ft_clearmlc(t_mlc *mlc)
 			clear = temp;
 			free(clear->ptr);
 			free(clear);
-			temp = temp->next;		
+			temp = temp->next;
 		}
 		free(temp->ptr);
 		free(temp);
