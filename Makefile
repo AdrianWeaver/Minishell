@@ -46,8 +46,7 @@ SRCS 			=	main.c	\
 					 )\
 					$(addprefix $(SRCS_UTILS),		\
 						ms_args_lst_utils.c	\
-						ms_mlc_lst_utils.c
-					 )
+						ms_mlc_lst_utils.c)
 
 OBJS			=	$(addprefix $(OBJS_PATH), $(SRCS:.c=.o))
 DEPS			=	$(OBJS:.o=.d)
