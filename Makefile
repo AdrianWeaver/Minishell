@@ -40,6 +40,7 @@ SRCS_UTILS		=	./utils/
 SRCS 			=	main.c	\
 					$(addprefix $(SRCS_PARSING),	\
 						ms_parser.c	\
+						ms_parse_type.c \
 					 )\
 					$(addprefix $(SRCS_ERRORS),		\
 						ms_errors.c	\
