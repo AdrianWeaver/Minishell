@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 18:10:13 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/04/15 10:42:53 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/04/15 17:23:15 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,24 +24,23 @@ int	ft_set_token(t_arg *args)
 
 	temp = args;
 	while (temp != NULL)
-	{
-		if (ft_isalnum(temp->content[0]) == 1)
-			temp->token = "word";
-		else if (temp->content[0] == '|')
-			temp->token = "pipe";
-		else if (temp->content[0] == '<')
-			temp->token = "input";
-		else if (temp->content[0] == '>')
-			temp->token = "output";
+	{	
+		if (temp->content[0] == '|')
+			temp->token = TOKEN_PIPE;
+		else if (temp->content[0] == '<' && temp->content[1] != '<')
+			temp->token = TOKEN_INFILE;
+		else if (temp->content[0] == '<' && temp->content[1] == '<')
+			temp->token = TOKEN_HEREDOC;
+		else if (temp->content[0] == '>' && temp->content[1] != '>')
+			temp->token = TOKEN_OUTFILE;
+		else if (temp->content[0] == '>' && temp->content[1] == '>')
+			temp->token = TOKEN_APPENDOUT;
 		else if (temp->content[0] == '\'')
-			temp->token = "quote";
+			temp->token = TOKEN_QUOTE;
 		else if (temp->content[0] == '"')
-			temp->token = "dquote";
+			temp->token = TOKEN_DQUOTE;
 		else
-		{
-			temp->token = NULL;
-			return (1);
-		}
+			temp->token = TOKEN_CMD;
 		temp = temp->next;
 	}
 	return (0);
@@ -59,19 +58,19 @@ t_arg	*ft_get_args(char *input)
 	int		i;
 	int		j;
 
-	i = -1;
+	i = 0;
 	arg = NULL;
-	while (input[++i] != '\0')
+	while (input[i] != '\0')
 	{
-		while (input[i] != ' ' && input[i] != '\0')
+		if (input[i] != ' ' && input[i] != '\0')
 		{
 			j = i;
 			if (ft_check_quotes(input[i]) == 1)
 				arg = ft_get_quote_arg(&input[i], &i, arg);
 			else
 				arg = ft_get_arg(&input[j], &i, arg);
-			i++;
 		}
+		i++;
 	}
 	return (arg);
 }
@@ -99,7 +98,7 @@ t_arg	*ft_get_arg(char *input, int *i, t_arg *arg)
 		return (NULL);
 	new = ft_newarg(sub);
 	ft_addarg_back(&arg, new);
-	*i += ft_strlen(new->content);
+	*i += ft_strlen(new->content) - 1;
 	return (arg);
 }
 
@@ -133,7 +132,7 @@ t_arg	*ft_get_quote_arg(char *input, int *i, t_arg *arg)
 		return (NULL);
 	new = ft_newarg(sub);
 	ft_addarg_back(&arg, new);
-	*i += ft_strlen(new->content);
+	*i += ft_strlen(new->content) - 1;
 	return (arg);
 }
 
