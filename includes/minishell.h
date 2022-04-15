@@ -13,6 +13,15 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# define TOKEN_INFILE 0
+# define TOKEN_HEREDOC 1
+# define TOKEN_CMD 2
+# define TOKEN_PIPE 3
+# define TOKEN_QUOTE 4
+# define TOKEN_DQUOTE 5
+# define TOKEN_OUTFILE 6
+# define TOKEN_APPENDOUT 7
+
 # include <unistd.h>
 # include <stdlib.h>
 # include <sys/types.h>
@@ -21,6 +30,7 @@
 # include <stdio.h>
 # include <stdarg.h>
 # include "minishell_struct.h"
+# include "minishell_parsing.h"
 # include "libft.h"
 # include "libftprintf.h"
 
