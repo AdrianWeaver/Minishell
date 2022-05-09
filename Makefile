@@ -90,6 +90,10 @@ re:					fclean
 test:				$(NAME)
 					./$(NAME)
 
+teststaf:			$(LIBFT)
+					@clear
+					$(CC) $(CFLAGS) ./sources/utils/ms_env_to_list.c ./sources/utils/main_test_staf.c ./sources/utils/ms_free_env.c -I ./includes -I ./libft/includes libft/libft.a
+					valgrind --leak-check=full ./a.out
 
 -include $(DEPS)
 .PHONY:				all clean fclean re test

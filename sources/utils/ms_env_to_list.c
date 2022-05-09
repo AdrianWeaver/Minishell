@@ -6,7 +6,7 @@
 /*   By: aweaver <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 14:31:25 by aweaver           #+#    #+#             */
-/*   Updated: 2022/05/09 17:14:49 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/05/09 18:44:56 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ t_env	*ft_get_env_element(char *env_line)
 		i++;
 		tmp_element->content = ft_split(&env_line[i], ':');
 	}
+	tmp_element->next = NULL;
 	return (tmp_element);
 }
 
