@@ -6,7 +6,7 @@
 /*   By: aweaver <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 14:31:25 by aweaver           #+#    #+#             */
-/*   Updated: 2022/05/09 18:44:56 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/05/10 17:15:25 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,8 @@ t_env	*ft_get_env_element(char *env_line)
 	tmp_element->name = tmp_str;
 	if (env_line[i] == '=')
 	{
-		i++;
 		tmp_element->content = ft_split(&env_line[i], ':');
+		i++;
 	}
 	tmp_element->next = NULL;
 	return (tmp_element);
@@ -92,17 +92,19 @@ t_env	*ft_get_env_element(char *env_line)
 /*	RET : a pointer on the first element of the created struct                */
 /* ************************************************************************** */
 
-t_env	**ft_env_to_list(char **env)
+t_env	*ft_env_to_list(char **env)
 {
-	t_env	**env_start;
+	t_env	*env_start;
 	t_env	*tmp_element;
 
-	env_start = malloc(sizeof(*env_start) * 1);
-	*env_start = NULL;
+	//env_start = malloc(sizeof(*env_start) * 1);
+	//if (env_start == NULL)
+		//return (NULL);
+	env_start = NULL;
 	while (*env)
 	{
 		tmp_element = ft_get_env_element(*env);
-		ft_env_add_back(env_start, tmp_element);
+		ft_env_add_back(&env_start, tmp_element);
 		env++;
 	}
 	return (env_start);
