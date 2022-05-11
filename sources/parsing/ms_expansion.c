@@ -6,36 +6,51 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:00:46 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/05/11 13:14:51 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/05/11 17:43:22 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// void	ft_to_expand(t_arg *arg, t_env *env)
+char	**ft_reasy_to_expand(t_arg *arg)
+{
+	char	**temp;
+	int		i;
+
+	i = 1;
+	while(arg->content[i] != '\0')
+	{
+		if (arg->content[i] == '$')
+			i++;
+	}
+	if (i > 1)
+	{
+		temp = malloc(sizeof(char *) * i + 2);
+		if (temp == NULL)
+			return (NULL);
+	}
+}
+
+// void ft_expand(t_arg *arg, t_env *env, char ** temp)
 // {
 // 	int	i;
-// 	int	len;
-	
+// 	int	j;
+// 	int	t;
+
 // 	i = 0;
-// 	len = ft_strlen(arg->content);
-// 	if (arg->token == TOKEN_DQUOTE)
+// 	j = 0;
+// 	t = 0;
+// 	while (arg->content[i] != '\0')
 // 	{
-// 		while (arg->content[i])
+// 		if (arg->content[i] == '$' && (ft_isalnum(arg->content[i + 1]) == 1
+// 			|| arg->content[i + 1] == '_'))
 // 		{
-// 			if (arg->content[i] == '"')
-				
+// 			temp[t] = ft_substr(arg->content, j, i - j);
+// 			t++;
+// 			j = i + 1;
+// 			while 
 // 		}
-// 	}
-// }
-
-// void	ft_dquote_expand(t_arg *arg, t_env *env, int end)
-// {
-// 	char	*temp;
-// 	char	*sub;
-// 	int		i;
-
-// 	i = 0;
-// 	if (end != 0)
+// 		i++;
 		
+// 	}
 // }

@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 18:09:57 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/05/10 18:10:07 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/05/11 17:12:37 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,51 @@ t_arg	*ft_get_dquote_arg(char *input, int *i, t_arg *arg)
 	ft_addarg_back(&arg, new);
 	*i += ft_strlen(new->content);
 	return (arg);
+}
+
+int	ft_remove_dquotes(t_arg *arg)
+{
+	char	*temp;
+	char	*to_copy;
+	int		i;
+	int		st;
+
+	i = -1;
+	st = 0;
+	to_copy = "";
+	while (arg->content[++i] != '\0')
+	{
+		if (arg->content[i] == '"')
+		{
+			if (i == 0)
+				st = 1;
+			if (i > st)
+			{
+				temp = ft_substr(arg->content, st, i - st);
+				to_copy = ft_strjoin(to_copy, temp);
+				free(temp);
+				st = i + 1;
+			}
+		}
+	}
+	arg->content = to_copy;
+	return (0);
+}
+
+int	ft_check_dquotes(t_arg *arg)
+{
+	int	i;
+	int	dq;
+
+	i = 0;
+	dq = 0;
+	while (arg->content[i] != '\0')
+	{
+		if (arg->content[i] == '"')
+			dq++;
+		i++;
+	}
+	if ((dq != 0 && dq % 2 != 0) || dq == 0)
+		return (-1);
+	return (0);
 }
