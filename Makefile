@@ -40,14 +40,20 @@ SRCS_UTILS		=	./utils/
 SRCS 			=	main.c	\
 					$(addprefix $(SRCS_PARSING),	\
 						ms_parser.c	\
+						ms_parse_redirections.c \
 						ms_parse_type.c \
+						ms_expansion.c \
 					 )\
 					$(addprefix $(SRCS_ERRORS),		\
 						ms_errors.c	\
 					 )\
 					$(addprefix $(SRCS_UTILS),		\
 						ms_args_lst_utils.c	\
-						ms_mlc_lst_utils.c)
+						ms_mlc_lst_utils.c \
+					)\
+					$(addprefix $(SRCS_BUILTINS),	\
+						ms_echo.c \
+					)
 
 OBJS			=	$(addprefix $(OBJS_PATH), $(SRCS:.c=.o))
 DEPS			=	$(OBJS:.o=.d)
