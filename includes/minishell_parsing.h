@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 13:24:57 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/05/10 15:50:31 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/05/11 15:44:45 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,7 @@ t_arg	*ft_get_heredoc(t_arg *arg);
 t_arg	*ft_get_outfile(t_arg *arg);
 t_arg	*ft_get_appendout(t_arg *arg);
 void	ft_join_cmd(t_arg *arg);
+int		ft_remove_dquotes(t_arg *arg);
+int		ft_check_dquotes(t_arg *arg);
 
 #endif
