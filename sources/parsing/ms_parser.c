@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 18:10:13 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/04/15 17:23:15 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/05/10 18:08:54 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,13 @@ t_arg	*ft_get_args(char *input)
 		if (input[i] != ' ' && input[i] != '\0')
 		{
 			j = i;
-			if (ft_check_quotes(input[i]) == 1)
-				arg = ft_get_quote_arg(&input[i], &i, arg);
+			if (input[i] == '"')
+				arg = ft_get_dquote_arg(&input[j], &i, arg);
 			else
 				arg = ft_get_arg(&input[j], &i, arg);
 		}
-		i++;
+		else if (input[i] == ' ')
+			i++;
 	}
 	return (arg);
 }
@@ -90,61 +91,50 @@ t_arg	*ft_get_arg(char *input, int *i, t_arg *arg)
 
 	j = 0;
 	new = NULL;
-	while (ft_check_quotes(input[j]) != 1
-		&& input[j] != '\0' && input[j] != ' ')
+	if (input[j] == '|')
+	{
+		sub = "|";
+		new = ft_newarg(sub);
+		ft_addarg_back(&arg, new);
+		*i += ft_strlen(new->content);
+		j++;
+		return (arg);
+	}
+	while (input[j] != '\0' && input[j] != ' ' && input[j] != '|')
 		j++;
 	sub = ft_substr(input, 0, j);
 	if (sub == NULL)
 		return (NULL);
 	new = ft_newarg(sub);
 	ft_addarg_back(&arg, new);
-	*i += ft_strlen(new->content) - 1;
+	*i += ft_strlen(new->content);
 	return (arg);
 }
 
-/* ************************************************************************** */
-/*	ACT : check if opened quote is closed, create a t_arg element, add it     */
-/*		in queue of the list and return a pointer to the list                 */
-/*	ARG : terminal input formated as char *, input index, t_arg list          */
-/*	RET : t_arg element, NULL in case of error                                */
-/* ************************************************************************** */
-
-t_arg	*ft_get_quote_arg(char *input, int *i, t_arg *arg)
+void	ft_join_cmd(t_arg *arg)
 {
-	t_arg	*new;
-	char	*sub;
-	int		j;
+	t_arg	*temp;
+	char	*space;
+	int		sec;
 
-	j = 0;
-	new = NULL;
-	if (input[j] != '\0')
+	space = " ";
+	sec = 0;
+	temp = arg->next;
+	while (temp != NULL && arg->token == TOKEN_CMD && temp->content[0] == '-')
 	{
-		if (input[j] == '"')
-			while (input[++j] != '"' && input[j] != '\0')
-				;
-		else if (input[j] == '\'')
-			while (input[++j] != '\'' && input[j] != '\0')
-				;
-		if (input[j] != '\0')
-			sub = ft_substr(input, 0, j + 1);
+		if (sec == 0)
+		{
+			arg->content = ft_strjoin(arg->content, space);
+			arg->content = ft_strjoin(arg->content, temp->content);
+			sec = 1;
+		}
+		else if (sec == 1)
+			arg->content = ft_strjoin(arg->content, &temp->content[1]);
+		if (temp->next != NULL)
+			arg->next = temp->next;
+		else
+			arg->next = NULL;
+		free(temp);
+		temp = arg->next;
 	}
-	if (sub == NULL)
-		return (NULL);
-	new = ft_newarg(sub);
-	ft_addarg_back(&arg, new);
-	*i += ft_strlen(new->content) - 1;
-	return (arg);
-}
-
-/* ************************************************************************** */
-/*	ACT : check if char is ' or "                                             */
-/*	ARG : a char                                                              */
-/*	RET : 1 if quote is found, 0 if not                                       */
-/* ************************************************************************** */
-
-int	ft_check_quotes(char input)
-{
-	if (input == '\'' || input == '"')
-		return (1);
-	return (0);
 }
