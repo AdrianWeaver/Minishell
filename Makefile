@@ -51,9 +51,6 @@ SRCS 			=	main.c	\
 						ms_args_lst_utils.c	\
 						ms_mlc_lst_utils.c \
 					)\
-					$(addprefix $(SRCS_BUILTINS),	\
-						ms_echo.c \
-					)
 
 OBJS			=	$(addprefix $(OBJS_PATH), $(SRCS:.c=.o))
 DEPS			=	$(OBJS:.o=.d)
