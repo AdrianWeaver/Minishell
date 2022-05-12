@@ -6,7 +6,7 @@
 /*   By: aweaver <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 17:27:33 by aweaver           #+#    #+#             */
-/*   Updated: 2022/05/10 17:37:40 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/05/12 14:38:48 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ void	ft_free_env(t_env *env_start)
 	{
 		tmp = env_start;
 		env_start = env_start->next;
-		printf("NAME=%s\n", tmp->name);
 		ft_env_delone(tmp, free);
 	}
 }
