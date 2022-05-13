@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:00:46 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/05/12 18:04:37 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/05/13 11:36:23 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,17 @@ char	**ft_count_expand(t_arg *arg)
 		while (arg->content[i] != '\0' &&ft_check_var(&arg->content[i]) < 1)
 			i++;
 		if (i > st)
+		{
 			exp++;
+			st = i;
+		}
 		if (arg->content[i] == '$' && (ft_isalnum(arg->content[i + 1]) == 1
 				|| arg->content[i + 1] == '_'))
+		{
 			exp++;
-		i += ft_check_var(&arg->content[i]) + 1;
+			i += ft_check_var(&arg->content[i]) + 1;
+		}
+		st = i;
 	}
 	if (exp > 0)
 	{
@@ -119,38 +125,43 @@ char	*ft_get_expanded(char *str, t_env *env)
 void	ft_get_final_string(t_arg *arg, char **pieces, t_env *env)
 {
 	char	*env_content;
+	char	*final;
 	int		i;
 	int		j;
 	int		st;
 
 	i = 0;
-	j = 0;
+	j = -1;
 	st = i;
+	env_content = NULL;
 	while (arg->content[i] != '\0')
 	{
-		while (arg->content[i + 1] != '\0' && ft_check_var(&arg->content[i]) < 1)
+		while (arg->content[i] != '\0' && ft_check_var(&arg->content[i]) < 1)
 			i++;
-		if (arg->content[i] != '\0')
+		if (arg->content[i] == '\0' && i > st)
+			pieces[++j] = ft_substr(arg->content, st, i - st);
+		else if (arg->content[i] != '\0')
 		{
 			if (ft_check_var(&arg->content[i]) > 0)
+			{
 				env_content = ft_get_expanded(&arg->content[i + 1], env);
+				i += ft_check_var(&arg->content[i]);
+			}
 			if (i > st)
-			{
-				pieces[j] = ft_substr(arg->content, st, i - st);
-				j++;
-			}
+				pieces[++j] = ft_substr(arg->content, st, (i - 1) - st);
 			if (env_content != NULL)
-			{
-				pieces[j] = ft_strdup(env_content);
-				free(env_content);
-				j++;
-			}
+				pieces[++j] = ft_strdup(env_content);
 			i+= ft_check_var(&arg->content[i]) + 1;
 			st = i;
 		}
 	}
-	for (int x = 0; pieces[x] != NULL;x++)
+	free(env_content);
+	int k = 0;
+	while (pieces[k] != NULL)
 	{
-		printf("pieces[%d] = %s\n", x, pieces[x]);
+		final = ft_strjoin(final, pieces[k]);
+		k++;
 	}
+	printf("arg == %s\n", final);
+	
 }
