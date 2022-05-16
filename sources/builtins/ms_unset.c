@@ -6,7 +6,7 @@
 /*   By: aweaver <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 17:58:52 by aweaver           #+#    #+#             */
-/*   Updated: 2022/05/13 16:09:10 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/05/16 18:00:02 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	ft_is_valid_env_variable(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (ft_is_alnum(str[i] == 1) && str[i] != '_')
+		if (ft_isalnum(str[i] == 1) && str[i] != '_')
 			return (0);
 		i++;
 	}
@@ -46,6 +46,7 @@ t_env	*ft_find_env_elem(t_env *env_list, char *name)
 			return (env_list);
 		env_list = env_list->next;
 	}
+	return (NULL);
 }
 
 /* ************************************************************************ */
@@ -54,25 +55,20 @@ t_env	*ft_find_env_elem(t_env *env_list, char *name)
 /*	RET: void but prints error if incorrect format for names given			*/
 /* ************************************************************************ */
 
-void	*ft_unset(t_env *env_list, char *name, ...)
+void	ft_unset(t_env *env_list, char **to_erase)
 {
 	t_env	*target;
-	char	*target_name;
-	va_list	to_erase;
 
-	va_start(to_erase, name);
-	while (to_erase)
+	while (*to_erase)
 	{
-		target_name = (char *) va_arg(to_erase);
-		if (ft_is_valid_env_variable(target_name) == 1)
+		if (ft_is_valid_env_variable(*to_erase) == 1)
 		{
-			target = ft_find_env_elem(env_list, target_name);
+			target = ft_find_env_elem(env_list, *to_erase);
 			if (target != 0)
 				ft_cleanly_delone_env(&env_list, target);
 		}
 		else
-			fprintf(stderr, "unset: %s: invalid parameter name", name);
+			fprintf(stderr, "unset: %s: invalid parameter name", *to_erase);
 		to_erase++;
 	}
-	va_end(to_erase);
 }

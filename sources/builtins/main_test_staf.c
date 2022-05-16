@@ -6,7 +6,7 @@
 /*   By: aweaver <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 09:50:56 by aweaver           #+#    #+#             */
-/*   Updated: 2022/05/10 17:41:07 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/05/16 18:24:55 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,11 @@ int	main(int argc, char **argv, char **env)
 	(void)argc;
 	(void)argv;
 
+	char **unset_tester;
+	unset_tester = ft_split("toto", ' ');
 	env_list = ft_env_to_list(env);
 	env_start = env_list;
+	ft_unset(env_list, unset_tester);
 	while (env_list)
 	{
 		i = 0;

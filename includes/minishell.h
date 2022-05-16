@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 09:18:31 by aweaver           #+#    #+#             */
-/*   Updated: 2022/05/12 14:47:03 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/05/16 18:04:41 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <stdio.h>
+# include <stdarg.h>
 # include "minishell_struct.h"
 # include "libft.h"
 # include "libftprintf.h"
@@ -62,7 +63,8 @@ t_env	*ft_env_last(t_env *env);
 void	ft_env_add_back(t_env **env_start, t_env *new);
 t_env	*ft_get_env_element(char *env_line);
 t_env	*ft_env_to_list(char **env);
-void	ft_env_delone(t_env *env, void (*del)(void *));
+void	ft_delone_env(t_env *env, void (*del)(void *));
+void	ft_cleanly_delone_env(t_env **env_start, t_env *target);
 
 /* ************************************************************************ */
 /*								FREE FUNCTIONS								*/
@@ -70,5 +72,16 @@ void	ft_env_delone(t_env *env, void (*del)(void *));
 
 void	ft_free_double_array(char **str);
 void	ft_free_env(t_env *env_start);
+
+/* ************************************************************************ */
+/*								BUILTIN FUNCTIONS							*/
+/* ************************************************************************ */
+
+/* unset */
+int		ft_is_valid_env_variable(char *str);
+t_env	*ft_find_env_elem(t_env *env_list, char *name);
+void	ft_unset(t_env *env_list, char **name);
+
+/* export */
 
 #endif

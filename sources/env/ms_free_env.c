@@ -6,7 +6,7 @@
 /*   By: aweaver <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 17:27:33 by aweaver           #+#    #+#             */
-/*   Updated: 2022/05/13 15:59:57 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/05/16 17:54:23 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	ft_free_double_array(char **str)
 void	ft_cleanly_delone_env(t_env **env_start, t_env *target)
 {
 	t_env	*env_list;
-	t_env	*prev;
+	t_env	*env_prev;
 
 	env_list = *env_start;
 	env_prev = *env_start;
@@ -55,11 +55,11 @@ void	ft_cleanly_delone_env(t_env **env_start, t_env *target)
 				env_prev->next = env_list->next;
 			else if (env_list->next == NULL)
 				env_prev->next = NULL;
-			ft_env_delone(env_list, free);
+			ft_delone_env(env_list, free);
 			return ;
 		}
 		env_prev = env_list;
-		env_list = next;
+		env_list = env_list->next;
 	}
 }
 
@@ -69,7 +69,7 @@ void	ft_cleanly_delone_env(t_env **env_start, t_env *target)
 /*	RET : void																*/
 /* ************************************************************************ */
 
-void	ft_env_delone(t_env *env, void (*del)(void *))
+void	ft_delone_env(t_env *env, void (*del)(void *))
 {
 	int	i;
 
@@ -100,6 +100,6 @@ void	ft_free_env(t_env *env_start)
 	{
 		tmp = env_start;
 		env_start = env_start->next;
-		ft_env_delone(tmp, free);
+		ft_delone_env(tmp, free);
 	}
 }
