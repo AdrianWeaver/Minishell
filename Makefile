@@ -43,6 +43,7 @@ SRCS 			=	main.c	\
 						ms_parse_redirections.c \
 						ms_parse_type.c \
 						ms_expansion.c \
+						ms_cat_expansion.c \
 					 )\
 					$(addprefix $(SRCS_ERRORS),		\
 						ms_errors.c	\
