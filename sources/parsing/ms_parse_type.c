@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 18:09:57 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/05/13 12:00:14 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/05/16 18:12:05 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,24 +53,35 @@ int	ft_remove_dquotes(t_arg *arg, int *dq_nbr)
 	char	*temp;
 	char	*to_copy;
 	int		i;
+	int		j;
 	int		st;
 
 	i = -1;
 	st = 0;
+	j = 1;
 	to_copy = "";
 	while (arg->content[++i] != '\0')
 	{
-		if (arg->content[i] == '"')
+		if (i == dq_nbr[j] && j <= dq_nbr[0])
 		{
 			if (i == 0)
 				st = 1;
-			else if (i > st)
+			if (i > st)
 			{
-				temp = ft_substr(arg->content, st, i - st);
+				temp = ft_substr(&arg->content[st], 0, i - st);
 				to_copy = ft_strjoin(to_copy, temp);
 				free(temp);
 				st = i + 1;
 			}
+			j++;
+		}
+		else if (j > dq_nbr[0])
+		{
+			while (arg->content[i])
+				i++;
+			temp = ft_substr(arg->content, st, i - (st));
+			to_copy = ft_strjoin(to_copy, temp);
+			free(temp);
 		}
 	}
 	arg->content = to_copy;
@@ -104,23 +115,26 @@ void	ft_set_final_dq_index(t_arg *arg, int *dq_nbr, t_env *env)
 {
 	int		i;
 	int		j;
-	
+	int		ret;
+
 	i = 0;
 	j = 1;
+	ret = 0;
 	while (arg->content[i] != '\0')
 	{
 		if (arg->content[i] == '"')
 		{
-			dq_nbr[j] += i;
-			printf("quote a l'index :%d\n", dq_nbr[j]);
+			dq_nbr[j] = dq_nbr[j] + i - ret;
 			j++;
 		}
-		else if (arg->content[i] == '$' && (ft_isalnum(arg->content[i + 1]) == 1
-			|| arg->content[i + 1] == '_'))
-			{
-				dq_nbr[j] += ft_expand_size(&arg->content[i + 1], env) - 1;
-			}
-		i++;	
+		if (arg->content[i] == '$')
+		{
+			if (ft_check_var(&arg->content[i], env) > 0)
+					dq_nbr[j] += ft_expand_size(&arg->content[i + 1], env) - 1;
+			else
+				ret ++;
+		}
+		i++;
 	}
 }
 
@@ -128,12 +142,13 @@ int	ft_test(t_arg *arg, t_env *env)
 {
 	int		*dq;
 	char	**pieces;
-	
-	pieces = ft_count_expand(arg);
+
+	pieces = ft_count_expand(arg, env);
 	dq = ft_count_dquotes(arg);
 	if (!dq || !pieces)
 		return (-1);
 	ft_set_final_dq_index(arg, dq, env);
-	ft_get_final_string(arg, pieces, env);
+	ft_final_string(arg, pieces, env);
+	ft_remove_dquotes(arg, dq);
 	return (0);
 }

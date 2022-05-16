@@ -6,33 +6,50 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:00:46 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/05/13 11:36:23 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/05/16 18:12:59 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_check_var(char *str)
+int	ft_check_env_var(char *str, t_env *env)
 {
-	int	i;
-	int	j;
-	
-	i = 0;
-	j = 0;
-	if (str[i] == '$' && (ft_isalnum(str[i + 1]) == 1 || str[i + 1] == '_'))
+	t_env	*temp;
+
+	temp = env;
+	while (temp != NULL)
 	{
-		i++;
-		while (str[i] && (ft_isalnum(str[i]) == 1 || str[i] == '_'))
-		{
-			i++;
-			j++;
-		}
-		return (j);
+		if (ft_strcmp(str, temp->name) == 0)
+			return (0);
+		temp = temp->next;
 	}
-	return (0);
+	return (-1);
 }
 
-char	**ft_count_expand(t_arg *arg)
+int	ft_check_var(char *str, t_env *env)
+{
+	char	*sub;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	if (str[i] == '$' && str[i + 1])
+	{
+		i++;
+		j = i;
+		while (str[i] && (ft_isalnum(str[i]) == 1 || str[i] == '_'))
+			i++;
+		sub = ft_substr(str, j, i - j);
+		if (!sub)
+			return (-1);
+		if (ft_check_env_var(sub, env) == 0)
+			return (i - j);
+	}
+	return (-1);
+}
+
+char	**ft_count_expand(t_arg *arg, t_env *env)
 {
 	char	**pieces;
 	int		exp;
@@ -41,31 +58,25 @@ char	**ft_count_expand(t_arg *arg)
 
 	exp = 0;
 	i = 0;
-	st = i;
 	while (arg->content[i] != '\0')
 	{
-		while (arg->content[i] != '\0' &&ft_check_var(&arg->content[i]) < 1)
+		st = i;
+		while (arg->content[i] && arg->content[i] != '$')
 			i++;
 		if (i > st)
+			exp++;
+		if (arg->content[i] && ft_check_var(&arg->content[i], env) > 0)
 		{
 			exp++;
-			st = i;
+			i += ft_check_var(&arg->content[i], env) + 1;
 		}
-		if (arg->content[i] == '$' && (ft_isalnum(arg->content[i + 1]) == 1
-				|| arg->content[i + 1] == '_'))
-		{
-			exp++;
-			i += ft_check_var(&arg->content[i]) + 1;
-		}
-		st = i;
+		else if (arg->content[i] != '\0')
+			i++;
 	}
 	if (exp > 0)
-	{
 		pieces = malloc(sizeof(char *) * exp + 1);
-		if (!pieces)
-			return (NULL);
+	if (pieces)
 		pieces[exp] = NULL;
-	}
 	return (pieces);
 }
 
@@ -120,48 +131,4 @@ char	*ft_get_expanded(char *str, t_env *env)
 		temp = temp->next;
 	}
 	return (var_ret);
-}
-
-void	ft_get_final_string(t_arg *arg, char **pieces, t_env *env)
-{
-	char	*env_content;
-	char	*final;
-	int		i;
-	int		j;
-	int		st;
-
-	i = 0;
-	j = -1;
-	st = i;
-	env_content = NULL;
-	while (arg->content[i] != '\0')
-	{
-		while (arg->content[i] != '\0' && ft_check_var(&arg->content[i]) < 1)
-			i++;
-		if (arg->content[i] == '\0' && i > st)
-			pieces[++j] = ft_substr(arg->content, st, i - st);
-		else if (arg->content[i] != '\0')
-		{
-			if (ft_check_var(&arg->content[i]) > 0)
-			{
-				env_content = ft_get_expanded(&arg->content[i + 1], env);
-				i += ft_check_var(&arg->content[i]);
-			}
-			if (i > st)
-				pieces[++j] = ft_substr(arg->content, st, (i - 1) - st);
-			if (env_content != NULL)
-				pieces[++j] = ft_strdup(env_content);
-			i+= ft_check_var(&arg->content[i]) + 1;
-			st = i;
-		}
-	}
-	free(env_content);
-	int k = 0;
-	while (pieces[k] != NULL)
-	{
-		final = ft_strjoin(final, pieces[k]);
-		k++;
-	}
-	printf("arg == %s\n", final);
-	
 }
