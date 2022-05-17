@@ -6,7 +6,7 @@
 /*   By: aweaver <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 17:27:33 by aweaver           #+#    #+#             */
-/*   Updated: 2022/05/17 10:14:30 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/05/17 13:55:58 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	ft_cleanly_delone_env(t_env **env_start, t_env *target)
 
 	env_list = *env_start;
 	env_prev = *env_start;
-	while (env_list)
+	while (env_list && target)
 	{
 		if (env_list == target)
 		{
@@ -58,7 +58,8 @@ void	ft_cleanly_delone_env(t_env **env_start, t_env *target)
 			ft_delone_env(env_list, free);
 			return ;
 		}
-		env_prev = env_list;
+		else
+			env_prev = env_list;
 		env_list = env_list->next;
 	}
 }
@@ -74,15 +75,20 @@ void	ft_delone_env(t_env *env, void (*del)(void *))
 	int	i;
 
 	i = 0;
+	if (!env)
+		return ;
 	del(env->name);
+	env->name = NULL;
 	if (env->content)
 	{
 		while ((env->content[i]))
 		{
 			del(env->content[i]);
+			env->content[i] = NULL;
 			i++;
 		}
 		del(env->content);
+		env->content = NULL;
 	}
 	del(env);
 }
