@@ -37,7 +37,7 @@ SRCS_UTILS		=	./utils/
 #																			#
 #############################################################################
 
-SRCS 			=	main.c	\
+SRCS 			=	mitch_main_test.c	\
 					$(addprefix $(SRCS_PARSING),	\
 						ms_parser.c	\
 						ms_parse_redirections.c \
