@@ -91,6 +91,7 @@ teststaf:			$(LIBFT)
 					./sources/env/ms_env_to_list.c  \
 					./sources/builtins/main_test_staf.c \
 					./sources/env/ms_free_env.c \
+					./sources/env/ms_print_env.c \
 					-I ./includes -I ./libft/includes libft/libft.a
 					valgrind --leak-check=full ./a.out
 
