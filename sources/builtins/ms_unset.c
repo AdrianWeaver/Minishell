@@ -6,7 +6,7 @@
 /*   By: aweaver <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 17:58:52 by aweaver           #+#    #+#             */
-/*   Updated: 2022/05/16 18:00:02 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/05/17 10:09:42 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,12 @@ t_env	*ft_find_env_elem(t_env *env_list, char *name)
 /*	RET: void but prints error if incorrect format for names given			*/
 /* ************************************************************************ */
 
-void	ft_unset(t_env *env_list, char **to_erase)
+int	ft_unset(t_env *env_list, char **to_erase)
 {
 	t_env	*target;
+	int		ret;
 
+	ret = 0;
 	while (*to_erase)
 	{
 		if (ft_is_valid_env_variable(*to_erase) == 1)
@@ -66,9 +68,12 @@ void	ft_unset(t_env *env_list, char **to_erase)
 			target = ft_find_env_elem(env_list, *to_erase);
 			if (target != 0)
 				ft_cleanly_delone_env(&env_list, target);
+			if (target == NULL)
+				ret++;
 		}
 		else
 			fprintf(stderr, "unset: %s: invalid parameter name", *to_erase);
 		to_erase++;
 	}
+	return (ret);
 }

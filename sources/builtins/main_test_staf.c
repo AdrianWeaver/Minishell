@@ -6,7 +6,7 @@
 /*   By: aweaver <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 09:50:56 by aweaver           #+#    #+#             */
-/*   Updated: 2022/05/16 18:24:55 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/05/17 10:13:07 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,6 @@ int	main(int argc, char **argv, char **env)
 		printf("\n");
 	}
 	ft_free_env(env_start);
+	ft_free_double_array(unset_tester);
 	return (0);
 }
