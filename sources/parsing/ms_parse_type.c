@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 18:09:57 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/05/16 18:12:05 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/05/17 17:51:18 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	ft_remove_dquotes(t_arg *arg, int *dq_nbr)
 	to_copy = "";
 	while (arg->content[++i] != '\0')
 	{
-		if (i == dq_nbr[j] && j <= dq_nbr[0])
+		if (j <= dq_nbr[0] && i == dq_nbr[j])
 		{
 			if (i == 0)
 				st = 1;
@@ -70,7 +70,7 @@ int	ft_remove_dquotes(t_arg *arg, int *dq_nbr)
 			{
 				temp = ft_substr(&arg->content[st], 0, i - st);
 				to_copy = ft_strjoin(to_copy, temp);
-				free(temp);
+				// free(temp);
 				st = i + 1;
 			}
 			j++;
@@ -81,10 +81,10 @@ int	ft_remove_dquotes(t_arg *arg, int *dq_nbr)
 				i++;
 			temp = ft_substr(arg->content, st, i - (st));
 			to_copy = ft_strjoin(to_copy, temp);
-			free(temp);
+			// free(temp);
 		}
 	}
-	arg->content = to_copy;
+	arg->content = ft_strdup(to_copy);
 	return (0);
 }
 
@@ -127,12 +127,12 @@ void	ft_set_final_dq_index(t_arg *arg, int *dq_nbr, t_env *env)
 			dq_nbr[j] = dq_nbr[j] + i - ret;
 			j++;
 		}
-		if (arg->content[i] == '$')
+		if (arg->content[i] == '$' && ft_set_dq_jump(&arg->content[i + 1]) > 0)
 		{
 			if (ft_check_var(&arg->content[i], env) > 0)
-					dq_nbr[j] += ft_expand_size(&arg->content[i + 1], env) - 1;
+				dq_nbr[j] += ft_expand_size(&arg->content[i + 1], env) - 1;
 			else
-				ret ++;
+				ret += ft_set_dq_jump(&arg->content[i + 1]) + 1;
 		}
 		i++;
 	}
@@ -141,6 +141,7 @@ void	ft_set_final_dq_index(t_arg *arg, int *dq_nbr, t_env *env)
 int	ft_test(t_arg *arg, t_env *env)
 {
 	int		*dq;
+	char	*flags;
 	char	**pieces;
 
 	pieces = ft_count_expand(arg, env);
@@ -148,7 +149,19 @@ int	ft_test(t_arg *arg, t_env *env)
 	if (!dq || !pieces)
 		return (-1);
 	ft_set_final_dq_index(arg, dq, env);
-	ft_final_string(arg, pieces, env);
+	flags = ft_get_var_pos(arg->content, env);
+	ft_final_string(arg, pieces, flags, env);
+	printf("flags = %s\n", flags);
 	ft_remove_dquotes(arg, dq);
 	return (0);
+}
+
+int	ft_set_dq_jump(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (ft_isalnum(str[i]) == 1 || str[i] == '_')
+		i++;
+	return (i);
 }

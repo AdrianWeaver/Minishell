@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:00:46 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/05/16 18:12:59 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/05/17 17:55:20 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,12 +98,12 @@ int	ft_expand_size(char *str, t_env *env)
 	while (temp != NULL)
 	{
 		if (ft_strcmp(str_name, temp->name) == 0)
-		{
-			len = ft_strlen(temp->content[0]) - ft_strlen(temp->name);
 			break ;
-		}
 		temp = temp->next;
 	}
+	len = ft_strlen(temp->content[0]) - ft_strlen(temp->name);
+	if (temp == NULL)
+		return (ft_strlen(str_name));
 	free(str_name);
 	return (len);
 }
