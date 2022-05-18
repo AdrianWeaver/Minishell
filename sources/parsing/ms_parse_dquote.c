@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_parse_type.c                                    :+:      :+:    :+:   */
+/*   ms_parse_dquote.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 18:09:57 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/05/18 12:10:45 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/05/18 14:28:45 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,29 @@ t_arg	*ft_get_dquote_arg(char *input, int *i, t_arg *arg)
 	sub = NULL;
 	if (input[j] != '\0')
 	{
-		while (input[j] && input[j] == '"')
+		j++;
+		while (input[j] && input[j] != '"')
 			j++;
 		while (input[j] && input[j] != ' ' && ft_check_operator(input[j]) == 0)
 			j++;
-		sub = ft_substr(input, 0, j);
-	}	
+	}
+	sub = ft_substr(input, 0, j);
 	if (!sub)
 		return (NULL);
 	new = ft_newarg(sub);
 	ft_addarg_back(&arg, new);
 	*i += ft_strlen(new->content);
-	// free(sub);
+	free(sub);
 	return (arg);
 }
+
+/* ************************************************************************** */
+/*	ACT : check string and copy each char except opening and                  */
+/*		closing double quotes                                                 */
+/*	ARG : t_arg pointer *arg, int *tab dq_nbr which contains quote's          */
+/*		indexes                                                               */
+/*	RET : 0 if OK, -1 in case of error                                        */
+/* ************************************************************************** */
 
 int	ft_remove_dquotes(t_arg *arg, int *dq_nbr)
 {
@@ -73,6 +82,13 @@ int	ft_remove_dquotes(t_arg *arg, int *dq_nbr)
 	return (0);
 }
 
+/* ************************************************************************** */
+/*	ACT : check string and fill a int *tab with number et indexes of closing  */
+/*		and opening double quotes                                             */
+/*	ARG : t_arg pointer *arg,                                                 */
+/*	RET : a pointer to malloc'd int *tab dq_nbr, NULL in case of error        */
+/* ************************************************************************** */
+
 int	*ft_count_dquotes(t_arg *arg)
 {
 	int	i;
@@ -95,6 +111,14 @@ int	*ft_count_dquotes(t_arg *arg)
 	dq_nbr[0] = dq;
 	return (dq_nbr);
 }
+
+/* ************************************************************************** */
+/*	ACT : check string for $VAR and calculate future position of dquote after */
+/*		expanding or removing wrong $VAR name in string                       */
+/*	ARG : t_arg pointer *arg, int *dq_nbr with initial position of dquotes,   */
+/*		t_env pointer *env for checking if $NAME exists                       */
+/*	RET : nothing                                                             */
+/* ************************************************************************** */
 
 void	ft_set_final_dq_index(t_arg *arg, int *dq_nbr, t_env *env)
 {
@@ -123,6 +147,12 @@ void	ft_set_final_dq_index(t_arg *arg, int *dq_nbr, t_env *env)
 		i++;
 	}
 }
+
+/* ************************************************************************** */
+/*	ACT : calculate length of char to jump ahaed in case of wrong $VAR name   */
+/*	ARG : pointer to an occurence of wrong $VAR name                          */
+/*	RET : length to add to dquote's position                                  */
+/* ************************************************************************** */
 
 int	ft_set_dq_jump(char *str)
 {

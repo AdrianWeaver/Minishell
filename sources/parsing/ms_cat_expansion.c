@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 18:13:22 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/05/18 10:48:07 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/05/18 16:16:20 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,23 +21,21 @@ void	ft_final_string(t_arg *arg, char **pieces, char *flags, t_env *env)
 	final = NULL;
 	ft_get_strings(arg, pieces, flags, env);
 	final = ft_strdup(pieces[0]);
+	free(pieces[0]);
 	while (pieces[++i])
 	{
 		final = ft_strjoin_free(final, pieces[i]);
 		free(pieces[i]);
 	}
 	if (pieces)
-	{
-		free(pieces[0]);
 		free(pieces);
-	}
-	arg->content = ft_strdup(final);
-	free(final);
+	free(arg->content);
+	arg->content = final;
 }
 
 char	*ft_get_var_pos(char *str, t_env *env)
 {
-	int	i;
+	int		i;
 	char	*flags;
 
 	i = 0;

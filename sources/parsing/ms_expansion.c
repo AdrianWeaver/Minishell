@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:00:46 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/05/18 10:37:44 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/05/18 16:16:56 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,17 +83,15 @@ int	ft_count_expand(t_arg *arg, t_env *env)
 char	**ft_lock_expand(int size)
 {
 	char	**pieces;
-	
-	// pieces = NULL;
-	pieces = malloc(sizeof(char *) * (size + 1));
+
+		pieces = malloc(sizeof(char *) * (size + 1));
 	if (!pieces)
-		return NULL;
+		return (NULL);
 	if (size == 0)
 		pieces[1] = NULL;
 	else
 		pieces[size] = NULL;
 	return (pieces);
-	
 }
 
 int	ft_expand_size(char *str, t_env *env)

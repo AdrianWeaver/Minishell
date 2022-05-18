@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 18:10:13 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/05/18 12:05:53 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/05/18 16:54:38 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	ft_check_operator(char c)
 		return (1);
 	return (0);
 }
+
 int	ft_set_token(t_arg *args)
 {
 	t_arg	*temp;
@@ -62,19 +63,17 @@ t_arg	*ft_get_args(char *input)
 {
 	t_arg	*arg;
 	int		i;
-	int		j;
 
 	i = 0;
 	arg = NULL;
 	while (input[i] != '\0')
 	{
 		if (input[i] != ' ' && input[i] != '\0')
-		{
-			j = i;
+		{	
 			if (input[i] == '"')
-				arg = ft_get_dquote_arg(&input[j], &i, arg);
+				arg = ft_get_dquote_arg(&input[i], &i, arg);
 			else
-				arg = ft_get_arg(&input[j], &i, arg);
+				arg = ft_get_arg(&input[i], &i, arg);
 		}
 		else if (input[i] == ' ')
 			i++;
@@ -99,11 +98,11 @@ t_arg	*ft_get_arg(char *input, int *i, t_arg *arg)
 	new = NULL;
 	if (input[j] == '|')
 	{
-		sub = "|";
+		sub = ft_strdup("|");
 		new = ft_newarg(sub);
 		ft_addarg_back(&arg, new);
 		*i += ft_strlen(new->content);
-		j++;
+		free(sub);
 		return (arg);
 	}
 	while (input[j] != '\0' && input[j] != ' ' && input[j] != '|')
@@ -114,33 +113,63 @@ t_arg	*ft_get_arg(char *input, int *i, t_arg *arg)
 	new = ft_newarg(sub);
 	ft_addarg_back(&arg, new);
 	*i += ft_strlen(new->content);
+	free(sub);
 	return (arg);
 }
 
-void	ft_join_cmd(t_arg *arg)
-{
-	t_arg	*temp;
-	char	*space;
-	int		sec;
 
-	space = " ";
-	sec = 0;
-	temp = arg->next;
-	while (temp != NULL && arg->token == TOKEN_CMD && temp->content[0] == '-')
-	{
-		if (sec == 0)
-		{
-			arg->content = ft_strjoin(arg->content, space);
-			arg->content = ft_strjoin(arg->content, temp->content);
-			sec = 1;
-		}
-		else if (sec == 1)
-			arg->content = ft_strjoin(arg->content, &temp->content[1]);
-		if (temp->next != NULL)
-			arg->next = temp->next;
-		else
-			arg->next = NULL;
-		free(temp);
-		temp = arg->next;
-	}
-}
+
+// fusionner fonctions de check
+
+// modifier le check en verifiant si la variable est dans une single ou juste en dehors
+
+
+// int	ft_check_quotes(t_arg *arg, t_env *env)
+// {}
+// 	int	i;
+// 	int	*quotes;
+
+// 	i = 0;
+// 	while (arg->content[i])
+// 	{
+// 		if (arg->content[i] == '\'')
+// 		{
+// 			quotes = ft_count_squote(arg);
+// 			if (!quotes)
+// 				return (-1);
+// 			if (quotes[0] != 0)
+// 				ft_set_final_sq_index(arg, quotes, env);
+// 			return (0);
+// 		}
+// 	}
+	
+// }
+
+// void	ft_join_cmd(t_arg *arg)
+// {
+// 	t_arg	*temp;
+// 	char	*space;
+// 	int		sec;
+
+// 	space = " ";
+// 	sec = 0;
+// 	temp = arg->next;
+// 	while (temp != NULL && arg->token == TOKEN_CMD && temp->content[0] == '-')
+// 	{
+// 		if (sec == 0)
+// 		{
+// 			arg->content = ft_strjoin_free(arg->content, space);
+// 			arg->content = ft_strjoin_free(arg->content, temp->content);
+// 			sec = 1;
+// 		}
+// 		else if (sec == 1)
+// 			arg->content = ft_strjoin_free(arg->content, &temp->content[1]);
+// 		if (temp->next != NULL)
+// 			arg->next = temp->next;
+// 		else
+// 			arg->next = NULL;
+// 		free(temp->content);
+// 		free(temp);
+// 		temp = arg->next;
+// 	}
+// }
