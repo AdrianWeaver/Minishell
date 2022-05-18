@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 14:13:30 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/04/15 10:41:24 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/05/18 10:53:23 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,8 @@ void	ft_cleararg(t_arg *arg)
 	{
 		clear = temp;
 		temp = temp->next;
+		free(clear->content);
+		clear->content = NULL;
 		free(clear);
 	}
 	free(temp);

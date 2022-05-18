@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:00:46 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/05/17 17:55:20 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/05/18 10:37:44 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,18 @@ int	ft_check_var(char *str, t_env *env)
 		if (!sub)
 			return (-1);
 		if (ft_check_env_var(sub, env) == 0)
+		{
+			free(sub);
 			return (i - j);
+		}
+		if (sub)
+			free(sub);
 	}
 	return (-1);
 }
 
-char	**ft_count_expand(t_arg *arg, t_env *env)
+int	ft_count_expand(t_arg *arg, t_env *env)
 {
-	char	**pieces;
 	int		exp;
 	int		i;
 	int		st;
@@ -73,11 +77,23 @@ char	**ft_count_expand(t_arg *arg, t_env *env)
 		else if (arg->content[i] != '\0')
 			i++;
 	}
-	if (exp > 0)
-		pieces = malloc(sizeof(char *) * exp + 1);
-	if (pieces)
-		pieces[exp] = NULL;
+	return (exp);
+}
+
+char	**ft_lock_expand(int size)
+{
+	char	**pieces;
+	
+	// pieces = NULL;
+	pieces = malloc(sizeof(char *) * (size + 1));
+	if (!pieces)
+		return NULL;
+	if (size == 0)
+		pieces[1] = NULL;
+	else
+		pieces[size] = NULL;
 	return (pieces);
+	
 }
 
 int	ft_expand_size(char *str, t_env *env)
@@ -121,6 +137,8 @@ char	*ft_get_expanded(char *str, t_env *env)
 	while (ft_isalnum(str[len]) == 1 || str[len] == '_')
 		len++;
 	name = ft_substr(str, 0, len);
+	if (!name)
+		return (NULL);
 	while (temp != NULL)
 	{
 		if (ft_strcmp(temp->name, name) == 0)
@@ -130,5 +148,6 @@ char	*ft_get_expanded(char *str, t_env *env)
 		}
 		temp = temp->next;
 	}
+	free(name);
 	return (var_ret);
 }
