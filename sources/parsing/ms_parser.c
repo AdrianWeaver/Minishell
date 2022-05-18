@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 18:10:13 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/05/12 14:31:44 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/05/18 12:05:53 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,12 @@
 /*	RET : 0 if all good; 1 in case of error                                   */
 /* ************************************************************************** */
 
+int	ft_check_operator(char c)
+{
+	if (c == '|' || c == '<' || c == '>')
+		return (1);
+	return (0);
+}
 int	ft_set_token(t_arg *args)
 {
 	t_arg	*temp;
