@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 14:10:20 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/04/15 15:04:49 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/05/19 11:28:33 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ typedef struct s_mlc
 typedef struct s_env
 {
 	char			*name;
-	char			**content;
+	char			*content;
 	struct s_env	*next;
 }	t_env;	
 

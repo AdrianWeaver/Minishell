@@ -6,7 +6,7 @@
 /*   By: aweaver <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 14:29:15 by aweaver           #+#    #+#             */
-/*   Updated: 2022/05/19 10:40:47 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/05/19 12:07:44 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 /*	RET: 1 if true 0 if false												*/
 /* ************************************************************************ */
 
-static int	ft_is_valid_env_variable(char *str)
+int	ft_is_valid_env_variable(char *str)
 {
 	int	i;
 
@@ -38,7 +38,7 @@ static int	ft_is_valid_env_variable(char *str)
 /*	RET: returns the address of the element seeked for						*/
 /* ************************************************************************ */
 
-static t_env	*ft_find_env_elem(t_env *env_list, char *name)
+t_env	*ft_find_env_elem(t_env *env_list, char *name)
 {
 	while (env_list)
 	{
@@ -61,10 +61,11 @@ void	ft_export_check_haters(t_env *env_list, t_env *to_add)
 	t_env	*old_env_var;
 
 	i = 0;
+	old_env_var = ft_find_env_elem(env_list, to_add->name);
 	while (to_add->name[i])
 	{
 		if (to_add->name[i] == '+' && to_add->name[i + 1] == '\0')
-			ft_str_array_join(old_env_var->content, to_add->content);
+			ft_strjoin(old_env_var->content, to_add->content);
 		i++;
 	}
 }
@@ -79,7 +80,7 @@ void	ft_deal_with_double_env_var(t_env *env_list, t_env *to_add)
 {
 	t_env	*old_env_var;
 
-	old_env_var = ft_find_env_elem(env_list, tmp_element->name);
+	old_env_var = ft_find_env_elem(env_list, to_add->name);
 	if (old_env_var != NULL)
 	{
 		ft_export_check_haters(env_list, to_add);
@@ -102,7 +103,7 @@ int	ft_export(t_env *env_list, char **to_add)
 	ret = 0;
 	while (*to_add)
 	{
-		tmp_element = ft_get_env_element(*to_add);
+		tmp_element = ft_get_env_element(env_list, *to_add);
 		if (ft_is_valid_env_variable(tmp_element->name) == 1)
 			ft_env_add_back(&env_list, tmp_element);
 		else
