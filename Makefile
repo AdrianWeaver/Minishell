@@ -40,9 +40,9 @@ SRCS_UTILS		=	./utils/
 SRCS 			=	mitch_main_test.c	\
 					$(addprefix $(SRCS_PARSING),	\
 						ms_parser.c	\
+						ms_parse_check.c \
 						ms_parse_redirections.c \
 						ms_parse_dquote.c \
-						ms_parse_squote.c \
 						ms_expansion.c \
 						ms_cat_expansion.c \
 					 )\
