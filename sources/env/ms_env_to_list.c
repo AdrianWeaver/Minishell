@@ -6,7 +6,7 @@
 /*   By: aweaver <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 14:31:25 by aweaver           #+#    #+#             */
-/*   Updated: 2022/05/19 12:09:26 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/05/19 13:22:14 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ char	*ft_env_get_content(t_env *env_list, char *name, char *env_line,
 	t_env	*old_env;
 	char	*joined;
 
+	if (!env_line)
+		return (ft_strdup(""));
 	if (flag_plus == 0)
 		return (ft_strdup(env_line));
 	else
@@ -83,7 +85,6 @@ t_env	*ft_get_env_element(t_env *env_list, char *env_line)
 {
 	int			i;
 	int			flag_plus;
-	char		*tmp_str;
 	t_env		*tmp_element;
 
 	i = 0;
@@ -95,8 +96,9 @@ t_env	*ft_get_env_element(t_env *env_list, char *env_line)
 			flag_plus = 1;
 		i++;
 	}
-	tmp_str = ft_strndup(env_line, i - flag_plus);
-	tmp_element->name = tmp_str;
+	tmp_element->name = ft_strndup(env_line, i - flag_plus);
+	if (env_line[i] == '=')
+		i++;
 	tmp_element->content = ft_env_get_content(env_list, tmp_element->name,
 			&env_line[i], flag_plus);
 	tmp_element->next = NULL;
