@@ -6,7 +6,7 @@
 /*   By: aweaver <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 09:50:56 by aweaver           #+#    #+#             */
-/*   Updated: 2022/05/19 11:44:40 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/05/19 12:58:47 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	main(int argc, char **argv, char **env)
 	(void)argc;
 	(void)argv;
 	unset_tester = ft_split("_toto", ' ');
-	export_tester = ft_split("wesh+=nan wesh=jesuis:un:path wesh2 wesh3=", ' ');
+	export_tester = ft_split("wesh=nedoitpasetrevisible wesh=jesuis:un:path wesh2 wesh3=debut_ wesh3_+=suite", ' ');
 	env_list = ft_env_to_list(env);
 	ret = ft_unset(&env_list, unset_tester);
 	export_ret = ft_export(env_list, export_tester);
