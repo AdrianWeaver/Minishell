@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 09:18:40 by aweaver           #+#    #+#             */
-/*   Updated: 2022/05/18 16:06:41 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/05/19 12:03:15 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,20 @@ int	ft_test(t_arg *arg, t_env *env)
 	char	*flags;
 	char	**pieces;
 
-	pieces = ft_lock_expand(ft_count_expand(arg, env));
-	if (!pieces)
-		return (-1);
-	dq = ft_count_dquotes(arg);
+	dq = ft_count_quotes(arg);
 	if (!dq)
 		return (-1);
-	if (dq[0] != 0)
-		ft_set_final_dq_index(arg, dq, env);
 	flags = ft_get_var_pos(arg->content, env);
+	ft_flag_char(arg->content, flags);
+	printf("flags = %s\n", flags);
+	if (dq[0] != 0)
+		ft_set_final_q_index(arg, flags, dq, env);
+	pieces = ft_lock_expand(ft_count_expand(arg, flags, env));
+	if (!pieces)
+		return (-1);
 	ft_final_string(arg, pieces, flags, env);
 	free(flags);
-	if (arg->token == TOKEN_DQUOTE)
-		ft_remove_dquotes(arg, dq);
+	ft_remove_quotes(arg, dq);
 	free(dq);
 	return (0);
 }
@@ -65,7 +66,6 @@ int	main(int ac, char *av[], char *env[])
 				verif = ft_get_heredoc(verif);
 				verif = ft_get_outfile(verif);
 				verif = ft_get_appendout(verif);
-				// ft_join_cmd(verif);
 				if (ft_test(verif, env_list) == -1)
 				{
 					printf("Missing or extra dquote\n");
