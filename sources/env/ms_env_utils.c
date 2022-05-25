@@ -6,7 +6,7 @@
 /*   By: aweaver <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 13:25:39 by aweaver           #+#    #+#             */
-/*   Updated: 2022/05/23 12:23:58 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/05/25 10:01:00 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 /*	ARG: an env as a list													*/
 /*	RET: the size of the env_ist as an int									*/
 /* ************************************************************************ */
+
 int	ft_env_size(t_env *env)
 {
 	int	i;
@@ -65,4 +66,33 @@ t_env	*ft_find_env_elem(t_env *env_list, char *name)
 		env_list = env_list->next;
 	}
 	return (NULL);
+}
+
+/* ************************************************************************ */
+/*	ACT: finds the element of the list with env->name == param				*/
+/*	ARG: the env as a list, a char *name									*/
+/*	RET: returns the address of the element seeked for						*/
+/* ************************************************************************ */
+
+void	ft_manually_add_one_env(t_env *env_list, char *name, char *content)
+{
+	t_env	*env_set;
+	t_env	*env_new;
+
+	if (ft_is_valid_env_variable(name) == 1)
+	{
+		env_set = ft_find_env_elem(env_list, name);
+		if (env_set)
+		{
+			free(env_set->content);
+			env_set->content = ft_strdup(content);
+		}
+		else
+		{
+			env_new = malloc(sizeof(*env_new) * 1);
+			env_new->name = ft_strdup(name);
+			env_new->content = ft_strdup(content);
+			ft_env_add_back(&env_list, env_new);
+		}
+	}
 }

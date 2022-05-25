@@ -6,7 +6,7 @@
 /*   By: aweaver <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 13:04:22 by aweaver           #+#    #+#             */
-/*   Updated: 2022/05/24 13:49:39 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/05/25 10:06:48 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,21 @@
 
 void	ft_cd(t_env *env, char *path)
 {
-	char	*cwd;		
-	char	*buff;
-	int		i;
+	char	*pwd;
+	t_env	env_pwd;
+	int		success;
 
-	i = 1;
-	while (cwd == NULL)
+	pwd = ft_get_pwd();
+	success = chdir(path);
+	if (success == 0)
 	{
-		buff = malloc(sizeof(*cwd) * i);
-		cwd = getcwd(buff, i);
-		if (cwd == NULL)
+		env_pwd = ft_find_env_elem(env, "PWD");
+		if (env_pwd == NULL)
+			ft_manually_add_one_env(env, "PWD", path);
+		else
 		{
-			i++;
-			free(buff);
+			free(old_pwd->content);
+			env_pwd->content = ft_get_pwd();
 		}
 	}
-	printf("%s\n", cwd);
-	printf("%s\n", buff);
-	free(cwd);
-}
-
-int main(void)
-{
-	ft_cd(NULL, NULL);
-	return (0);
 }
