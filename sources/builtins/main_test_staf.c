@@ -6,7 +6,7 @@
 /*   By: aweaver <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 09:50:56 by aweaver           #+#    #+#             */
-/*   Updated: 2022/05/19 12:58:47 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/05/25 11:34:03 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	main(int argc, char **argv, char **env)
 	ret = ft_unset(&env_list, unset_tester);
 	export_ret = ft_export(env_list, export_tester);
 	ft_print_env(env_list);
+	ft_print_pwd();
 	ft_free_env(env_list);
 	ft_free_double_array(unset_tester);
 	ft_free_double_array(export_tester);

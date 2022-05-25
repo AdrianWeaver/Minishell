@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 09:18:31 by aweaver           #+#    #+#             */
-/*   Updated: 2022/05/19 12:06:59 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/05/25 11:39:24 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void	ft_delone_env(t_env *env, void (*del)(void *));
 void	ft_cleanly_delone_env(t_env **env_start, t_env *target);
 void	ft_print_env(t_env *env_list);
 char	**ft_env_to_char(t_env *env);
+void	ft_manually_add_one_env(t_env *env_list, char *name, char *content);
 
 /* ************************************************************************ */
 /*								FREE FUNCTIONS								*/
@@ -94,6 +95,9 @@ int		ft_is_valid_env_variable(char *str);
 t_env	*ft_find_env_elem(t_env *env_list, char *name);
 int		ft_unset(t_env **env_list, char **name);
 int		ft_export(t_env *env_list, char **to_add);
+void	ft_print_pwd(void);
+char	*ft_get_pwd(void);
+int		ft_cd(t_env *env, char *path);
 
 /* export */
 

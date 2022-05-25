@@ -6,7 +6,7 @@
 /*   By: aweaver <aweaver@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 08:42:01 by aweaver           #+#    #+#             */
-/*   Updated: 2022/05/25 08:49:20 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/05/25 11:37:21 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ char	*ft_get_pwd(void)
 	int		i;
 
 	i = 1;
+	cwd = NULL;
 	while (cwd == NULL)
 	{
 		buff = malloc(sizeof(*cwd) * i);
@@ -39,10 +40,4 @@ void	ft_print_pwd(void)
 	pwd = ft_get_pwd();
 	printf("%s\n", pwd);
 	free (pwd);
-}
-
-int	main(void)
-{
-	ft_cd(NULL, NULL);
-	return (0);
 }
