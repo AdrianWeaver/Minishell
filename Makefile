@@ -64,7 +64,7 @@ SRCS 			=	mitch_main_test.c	\
 					$(addprefix $(SRCS_BUILTINS),		\
 						ms_export.c	\
 						ms_unset.c	\
-					)\
+					)
 
 OBJS			=	$(addprefix $(OBJS_PATH), $(SRCS:.c=.o))
 DEPS			=	$(OBJS:.o=.d)
