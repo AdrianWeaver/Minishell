@@ -6,7 +6,7 @@
 /*   By: aweaver <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 13:25:39 by aweaver           #+#    #+#             */
-/*   Updated: 2022/05/25 10:01:00 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/05/25 11:21:06 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	ft_env_size(t_env *env)
 	int	i;
 
 	i = 0;
-	while (*env)
+	while (env != NULL)
 	{
 		i++;
 		env = env->next;
