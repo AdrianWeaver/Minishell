@@ -1,25 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ms_builtin_parser.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/23 13:38:38 by aweaver           #+#    #+#             */
-/*   Updated: 2022/05/24 10:52:42 by jcervoni         ###   ########.fr       */
+/*   Created: 2022/05/24 08:27:19 by jcervoni          #+#    #+#             */
+/*   Updated: 2022/06/15 11:45:20 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
+#include <minishell.h>
 
-size_t	ft_strlen(const char *s)
+void	ft_builtin_parser(t_arg *arg)
 {
-	int	i;
-
-	i = 0;
-	if (!s)
-		return (0);
-	while (s[i])
-		i++;
-	return (i);
+	if (arg && ft_strcmp(arg->content, "echo") == 0)
+		ft_echo(arg->next);
 }

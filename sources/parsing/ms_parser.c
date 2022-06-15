@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 18:10:13 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/05/19 11:59:17 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/06/15 06:37:01 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,16 +57,14 @@ t_arg	*ft_get_args(char *input)
 	arg = NULL;
 	while (input[i] != '\0')
 	{
-		if (input[i] != ' ' && input[i] != '\0')
+		while (input[i] != ' ' && input[i] != '\0')
 		{	
-			if (input[i] == '"')
-				arg = ft_get_quote_arg(&input[i], &i, arg, '"');
-			else if (input[i] == '\'')
-				arg = ft_get_quote_arg(&input[i], &i, arg, '\'');
-			else
+			if (input[i] == '"' || input[i] == '\'')
+				arg = ft_get_quote_arg(&input[i], &i, arg, input[i]);
+			else if (input[i])
 				arg = ft_get_arg(&input[i], &i, arg);
 		}
-		else if (input[i] == ' ')
+		if (input[i] != '\0')
 			i++;
 	}
 	return (arg);
@@ -91,8 +89,8 @@ t_arg	*ft_get_quote_arg(char *input, int *i, t_arg *arg, char delim)
 	{
 		while (input[j] && input[j] != delim)
 			j++;
-		while (input[j] && input[j] != ' ' && ft_check_operator(input[j]) == 0)
-			j++;
+		while (input[++j] && input[j] != ' ' && ft_check_op(input[j]) == 0)
+			;
 	}
 	sub = ft_substr(input, 0, j);
 	if (!sub)
@@ -128,7 +126,7 @@ t_arg	*ft_get_arg(char *input, int *i, t_arg *arg)
 		free(sub);
 		return (arg);
 	}
-	while (input[j] != '\0' && input[j] != ' ' && input[j] != '|')
+	while (ft_check_arg(input[j]) == 0)
 		j++;
 	sub = ft_substr(input, 0, j);
 	if (sub == NULL)
