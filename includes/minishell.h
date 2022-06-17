@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 09:18:31 by aweaver           #+#    #+#             */
-/*   Updated: 2022/04/14 16:26:19 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/05/12 14:47:03 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,11 @@
 # include <stdio.h>
 # include "minishell_struct.h"
 # include "libft.h"
+# include "libftprintf.h"
 
-/* ************************************************************************** */
-/*                                  PARSING                                   */
-/* ************************************************************************** */
+/* ************************************************************************ */
+/*								PARSING										*/
+/* ************************************************************************ */
 
 /* ************************************ */
 /*              ARGS TOOLS              */
@@ -52,5 +53,22 @@ int		ft_set_token(t_arg *args);
 int		ft_check_quotes(char input);
 t_arg	*ft_get_arg(char *input, int *i, t_arg *arg);
 void	*ft_custom_calloc(int size);
+
+/* ************************************************************************ */
+/*								ENV FUNCTIONS								*/
+/* ************************************************************************ */
+
+t_env	*ft_env_last(t_env *env);
+void	ft_env_add_back(t_env **env_start, t_env *new);
+t_env	*ft_get_env_element(char *env_line);
+t_env	*ft_env_to_list(char **env);
+void	ft_env_delone(t_env *env, void (*del)(void *));
+
+/* ************************************************************************ */
+/*								FREE FUNCTIONS								*/
+/* ************************************************************************ */
+
+void	ft_free_double_array(char **str);
+void	ft_free_env(t_env *env_start);
 
 #endif
