@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 18:13:22 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/05/19 11:26:45 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/06/14 15:30:23 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,25 @@ void	ft_final_string(t_arg *arg, char **pieces, char *flags, t_env *env)
 	char	*final;
 	int		i;
 
-	i = 0;
+	i = 1;
 	final = NULL;
 	ft_get_strings(arg, pieces, flags, env);
 	final = ft_strdup(pieces[0]);
-	free(pieces[0]);
-	while (pieces[++i])
+	if (pieces[0])
+		free(pieces[0]);
+	while (pieces && pieces[i] != NULL)
 	{
 		final = ft_strjoin_free(final, pieces[i]);
 		free(pieces[i]);
+		i++;
 	}
 	if (pieces)
 		free(pieces);
-	free(arg->content);
-	arg->content = final;
+	if (arg->content)
+	{
+		free(arg->content);
+		arg->content = final;
+	}
 }
 
 char	*ft_get_var_pos(char *str, t_env *env)
@@ -80,8 +85,8 @@ void	ft_get_strings(t_arg *arg, char **pieces, char *flags, t_env *env)
 			pieces[++j] = ft_get_expanded(&arg->content[i + 1], env);
 			i += ft_check_var(&arg->content[i], env) + 1;
 		}
-		if (flags[i] == '\0' && j == -1)
-			pieces[++j] = "";
+		if (flags[i] == '\0' || j == -1)
+			pieces[++j] = NULL;
 	}
 }
 

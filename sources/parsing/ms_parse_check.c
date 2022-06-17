@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 11:55:48 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/05/19 12:08:29 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/06/15 06:36:34 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,22 @@
 /*	RET : 1 if c is an operator, 0 if not                                     */
 /* ************************************************************************** */
 
-int	ft_check_operator(char c)
+int	ft_check_op(char c)
 {
-	if (c == '|' || c == '<' || c == '>')
-		return (1);
+	if (c != '\0')
+	{
+		if (c == '|' || c == '<' || c == '>')
+			return (1);
+	}
 	return (0);
 }
 
+int	ft_check_arg(char c)
+{
+	if (c == '|' || c == ' ' || c == '\0')
+		return (1);
+	return (0);
+}
 /* ************************************************************************** */
 /*	ACT : calculate length of char to jump ahaed in case of wrong $VAR name   */
 /*	ARG : pointer to an occurence of wrong $VAR name                          */
@@ -44,7 +53,7 @@ int	ft_set_q_jump(char *str)
 /* ************************************************************************** */
 /*	ACT : check if an $ENV_VAR with name given in param exists                */
 /*	ARG : string name, a pointer to a t_env struct                            */
-/*	RET : 0 is $ENV_VAR exists, -1 if not                                     */
+/*	RET : 0 if $ENV_VAR exists, -1 if not                                     */
 /* ************************************************************************** */
 
 int	ft_check_env_var(char *str, t_env *env)

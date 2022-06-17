@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 14:13:30 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/05/18 15:15:45 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/06/15 06:47:37 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int	ft_argsize(t_arg *arg)
 /*	RET : none                                                                */
 /* ************************************************************************** */
 
-void	ft_cleararg(t_arg *arg)
+void	ft_clear_arg(t_arg *arg)
 {
 	t_arg	*clear;
 
