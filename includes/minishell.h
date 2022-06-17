@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 09:18:31 by aweaver           #+#    #+#             */
-/*   Updated: 2022/04/14 09:33:21 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/04/14 16:26:19 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,10 @@ void	ft_clearmlc(t_mlc *mlc);
 int		ft_mlcsize(t_mlc *mlc);
 
 t_arg	*ft_get_args(char *input);
-t_arg	*ft_get_quote_arg(char *input);
+t_arg	*ft_get_quote_arg(char *input, int *i, t_arg *arg);
 int		ft_set_token(t_arg *args);
 int		ft_check_quotes(char input);
+t_arg	*ft_get_arg(char *input, int *i, t_arg *arg);
+void	*ft_custom_calloc(int size);
 
 #endif
