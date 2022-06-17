@@ -1,32 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ms_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/08 09:18:40 by aweaver           #+#    #+#             */
-/*   Updated: 2022/04/14 16:45:39 by jcervoni         ###   ########.fr       */
+/*   Created: 2022/05/10 16:51:25 by jcervoni          #+#    #+#             */
+/*   Updated: 2022/05/16 18:15:48 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(int ac, char *av[], char *envp[])
+int	ft_echo(char *to_print)
 {
-	char	*test;
-	t_arg	*verif;
+	int	i;
+	int	end;
 
-	(void)envp;
-	(void)ac;
-	(void)av;
-	test = readline("Test readline :");
-	verif = ft_get_args(test);
-	ft_set_token(verif);
-	while (verif != NULL)
+	i = 0;
+	while (to_print[i] != '\0')
 	{
-		printf("content = %s,  token = %s\n", verif->content, verif->token);
-		verif = verif->next;
+		if (to_print[0] == '"')
+		{
+			end = 1;
+			while (to_print[++i] != '"' && to_print[i])
+			{
+				end++;
+			}
+		}
 	}
 	return (0);
 }
