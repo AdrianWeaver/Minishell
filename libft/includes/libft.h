@@ -6,7 +6,7 @@
 /*   By: aweaver <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 11:10:46 by aweaver           #+#    #+#             */
-/*   Updated: 2022/04/01 10:34:33 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/05/09 11:33:49 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -276,6 +276,13 @@ void	*ft_calloc(size_t nmemb, size_t size);
 #  define FT_STRDUP_H
 
 char	*ft_strdup(const char *s);
+
+# endif
+
+# ifndef FT_STRNDUP_H
+#  define FT_STRNDUP_H
+
+char	*ft_strndup(const char *s, size_t n);
 
 # endif
 
