@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 14:31:25 by aweaver           #+#    #+#             */
-/*   Updated: 2022/05/19 13:22:14 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/05/25 09:31:20 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,12 @@ void	ft_env_add_back(t_env **env_start, t_env *new)
 		last->next = new;
 	}
 }
+
+/* **************************************************************************
+ *	ACT : Used to get the content of an env var and deals with +=
+ *	ARG : the env as a list, name of var, content of var and flag + (0 or 1)
+ *	RET : returns the created content
+ * **************************************************************************/
 
 char	*ft_env_get_content(t_env *env_list, char *name, char *env_line,
 		int flag_plus)
