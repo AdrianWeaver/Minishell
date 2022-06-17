@@ -53,16 +53,20 @@ SRCS 			=	mitch_main_test.c	\
 					$(addprefix $(SRCS_UTILS),		\
 						ms_args_lst_utils.c	\
 						ms_mlc_lst_utils.c \
+					)\
 					$(addprefix $(SRCS_ENV), \
 						ms_env_to_list.c \
 						ms_env_to_char.c \
 						ms_free_env.c \
 						ms_print_env.c	\
 						ms_env_utils.c	\
-					$(addprefix $(SRCS_BUILTINS)		\
+					)\
+					$(addprefix $(SRCS_BUILTINS),		\
 						ms_export.c	\
 						ms_unset.c	\
-					)\
+						ms_pwd.c	\
+						ms_cd.c		\
+					)
 
 OBJS			=	$(addprefix $(OBJS_PATH), $(SRCS:.c=.o))
 DEPS			=	$(OBJS:.o=.d)
@@ -105,6 +109,8 @@ teststaf:			$(LIBFT)
 					$(CC) -Wall -Wextra -g3 \
 					./sources/builtins/ms_unset.c	\
 					./sources/builtins/ms_export.c	\
+					./sources/builtins/ms_pwd.c	\
+					./sources/builtins/ms_cd.c	\
 					./sources/env/ms_env_to_list.c  \
 					./sources/builtins/main_test_staf.c \
 					./sources/env/ms_free_env.c \
