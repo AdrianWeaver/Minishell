@@ -6,7 +6,7 @@
 /*   By: aweaver <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 14:31:25 by aweaver           #+#    #+#             */
-/*   Updated: 2022/05/17 16:12:18 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/05/19 13:22:14 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,31 +51,56 @@ void	ft_env_add_back(t_env **env_start, t_env *new)
 	}
 }
 
+char	*ft_env_get_content(t_env *env_list, char *name, char *env_line,
+		int flag_plus)
+{
+	t_env	*old_env;
+	char	*joined;
+
+	if (!env_line)
+		return (ft_strdup(""));
+	if (flag_plus == 0)
+		return (ft_strdup(env_line));
+	else
+	{
+		old_env = ft_find_env_elem(env_list, name);
+		if (old_env == NULL)
+			return (ft_strdup(env_line));
+		else
+		{
+			joined = ft_strjoin(old_env->content, env_line);
+			free(old_env->content);
+			return (joined);
+		}
+	}
+}
+
 /* ************************************************************************** */
 /*	ACT : Used by ft_env_to_list to retrieve one line of the env	          */
 /*	ARG : one line of the env given as a char *		                          */
 /*	RET : a pointer on the created struct with name and content filled        */
 /* ************************************************************************** */
 
-t_env	*ft_get_env_element(char *env_line)
+t_env	*ft_get_env_element(t_env *env_list, char *env_line)
 {
 	int			i;
-	char		*tmp_str;
+	int			flag_plus;
 	t_env		*tmp_element;
 
 	i = 0;
+	flag_plus = 0;
 	tmp_element = malloc(sizeof(*tmp_element) * 1);
 	while (env_line[i] && env_line[i] != '=')
-		i++;
-	tmp_str = ft_strndup(env_line, i);
-	tmp_element->name = tmp_str;
-	if (env_line[i] == '=')
 	{
-		tmp_element->content = ft_split(&env_line[i] + 1, ':');
+		if (env_line[i] == '+' && env_line[i + 1] == '=')
+			flag_plus = 1;
 		i++;
 	}
-	else
-		tmp_element->content = ft_split("", ':');
+	tmp_element->name = ft_strndup(env_line, i - flag_plus);
+	if (env_line[i] == '=')
+		i++;
+	tmp_element->content = ft_env_get_content(env_list, tmp_element->name,
+			&env_line[i], flag_plus);
 	tmp_element->next = NULL;
 	return (tmp_element);
 }
@@ -94,7 +119,7 @@ t_env	*ft_env_to_list(char **env)
 	env_start = NULL;
 	while (*env)
 	{
-		tmp_element = ft_get_env_element(*env);
+		tmp_element = ft_get_env_element(env_start, *env);
 		ft_env_add_back(&env_start, tmp_element);
 		env++;
 	}
