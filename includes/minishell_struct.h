@@ -1,18 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   minishell_struct.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/08 09:18:40 by aweaver           #+#    #+#             */
-/*   Updated: 2022/04/12 16:01:44 by jcervoni         ###   ########.fr       */
+/*   Created: 2022/04/12 14:10:20 by jcervoni          #+#    #+#             */
+/*   Updated: 2022/04/12 14:42:57 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef MINISHEL_STRUCT_H
+# define MINISHELL_STRUCT_H
 
-int	main(int ac, char *av[], char *envp[])
+typedef struct s_arg
 {
-	return (0);
-}
+	char			*token;
+	char			*content;
+	struct s_arg	*next;
+}	t_arg;
+
+typedef struct	s_mlc
+{
+	void			*ptr;
+	struct s_mlc	*next;
+}	t_mlc;
+
+#endif
