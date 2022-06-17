@@ -65,13 +65,7 @@ $(NAME):			$(OBJS) $(LIBFT)
 					@echo "Linking files and libft"
 
 $(OBJS_PATH)%.o:	$(SRCS_PATH)%.c
-					@mkdir -p $(OBJS_PATH)
-					@mkdir -p $(OBJS_PATH)$(SRCS_PARSING)
-					@mkdir -p $(OBJS_PATH)$(SRCS_EXEC)
-					@mkdir -p $(OBJS_PATH)$(SRCS_ERRORS)
-					@mkdir -p $(OBJS_PATH)$(SRCS_BUILTINS)
-					@mkdir -p $(OBJS_PATH)$(SRCS_CMDS)
-					@mkdir -p $(OBJS_PATH)$(SRCS_UTILS)
+					@mkdir -p $(dir $@)
 					$(CC) $(CFLAGS) -c $< -o $@ $(INC)
 
 $(LIBFT):			
@@ -90,6 +84,10 @@ re:					fclean
 test:				$(NAME)
 					./$(NAME)
 
+teststaf:			$(LIBFT)
+					@clear
+					$(CC) -Wall -Wextra -Werror -g3 ./sources/utils/ms_env_to_list.c ./sources/utils/main_test_staf.c ./sources/utils/ms_free_env.c -I ./includes -I ./libft/includes libft/libft.a
+					valgrind --leak-check=full ./a.out
 
 -include $(DEPS)
 .PHONY:				all clean fclean re test
