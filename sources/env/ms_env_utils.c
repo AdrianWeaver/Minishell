@@ -6,12 +6,29 @@
 /*   By: aweaver <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 13:25:39 by aweaver           #+#    #+#             */
-/*   Updated: 2022/05/19 13:25:46 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/05/23 12:23:58 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "minishell.h"
+
+/* ************************************************************************ */
+/*	ACT: finds the size of an env list										*/
+/*	ARG: an env as a list													*/
+/*	RET: the size of the env_ist as an int									*/
+/* ************************************************************************ */
+int	ft_env_size(t_env *env)
+{
+	int	i;
+
+	i = 0;
+	while (*env)
+	{
+		i++;
+		env = env->next;
+	}
+	return (i);
+}
 
 /* ************************************************************************ */
 /*	ACT: checks if str is a valid env variable								*/
