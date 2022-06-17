@@ -7,9 +7,12 @@ NAME			=		minishell
 #############################################################################
 
 CC				=	gcc
+
 CFLAGS			=	-MMD -Wall -Wextra -Werror -g3
-INC				=	-I ./includes\
-					-I ./libft/includes
+
+INC				=	-I ./includes/\
+					-I ./libft/includes/
+
 SILENT			=	--no-print-directory
 
 #############################################################################
@@ -44,7 +47,7 @@ LIBFT			=	$(addprefix $(LIBFT_PATH), libft.a)
 all:				$(NAME)
 
 $(NAME):			$(OBJS) $(LIBFT)
-					$(CC) $(CFLAGS) $(OBJS) -o $@ $(LIBFT)
+					$(CC) $(CFLAGS) $(OBJS) -o $@ $(LIBFT) -lreadline
 					@echo "Linking files and libft"
 
 $(OBJS_PATH)%.o:	$(SRCS_PATH)%.c
