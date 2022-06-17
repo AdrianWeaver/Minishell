@@ -6,7 +6,7 @@
 /*   By: aweaver <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 17:27:33 by aweaver           #+#    #+#             */
-/*   Updated: 2022/05/12 15:21:20 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/05/17 13:55:58 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,41 @@ void	ft_free_double_array(char **str)
 		free(str[i]);
 		i++;
 	}
-	printf("str addr = %p\n", str);
+	free(str);
+}
+
+/* ************************************************************************ */
+/*	ACT : deletes an element (t_env) of a t_env list saving the list pointer*/
+/*	ARG : the address of the first element of the list and the address of 	*/
+/*	the element meant to be removed											*/
+/*	RET : void																*/
+/* ************************************************************************ */
+
+//one case needs to be addressed if env is composed of only 1 element.
+void	ft_cleanly_delone_env(t_env **env_start, t_env *target)
+{
+	t_env	*env_list;
+	t_env	*env_prev;
+
+	env_list = *env_start;
+	env_prev = *env_start;
+	while (env_list && target)
+	{
+		if (env_list == target)
+		{
+			if (env_list == *env_start)
+				*env_start = env_list->next;
+			else if (env_list->next)
+				env_prev->next = env_list->next;
+			else if (env_list->next == NULL)
+				env_prev->next = NULL;
+			ft_delone_env(env_list, free);
+			return ;
+		}
+		else
+			env_prev = env_list;
+		env_list = env_list->next;
+	}
 }
 
 /* ************************************************************************ */
@@ -35,20 +69,26 @@ void	ft_free_double_array(char **str)
 /*	ARG : a t_env and a function returning void and taking a void pointer	*/
 /*	RET : void																*/
 /* ************************************************************************ */
-void	ft_env_delone(t_env *env, void (*del)(void *))
+
+void	ft_delone_env(t_env *env, void (*del)(void *))
 {
 	int	i;
 
 	i = 0;
+	if (!env)
+		return ;
 	del(env->name);
+	env->name = NULL;
 	if (env->content)
 	{
 		while ((env->content[i]))
 		{
 			del(env->content[i]);
+			env->content[i] = NULL;
 			i++;
 		}
 		del(env->content);
+		env->content = NULL;
 	}
 	del(env);
 }
@@ -66,6 +106,6 @@ void	ft_free_env(t_env *env_start)
 	{
 		tmp = env_start;
 		env_start = env_start->next;
-		ft_env_delone(tmp, free);
+		ft_delone_env(tmp, free);
 	}
 }
