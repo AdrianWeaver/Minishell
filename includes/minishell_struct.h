@@ -6,11 +6,11 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 14:10:20 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/04/12 14:42:57 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/04/12 16:44:00 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHEL_STRUCT_H
+#ifndef MINISHELL_STRUCT_H
 # define MINISHELL_STRUCT_H
 
 typedef struct s_arg
