@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 14:13:30 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/04/15 10:41:24 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/05/18 15:15:45 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,9 @@ t_arg	*ft_newarg(char *argv)
 	new = malloc(sizeof(t_arg));
 	if (!new)
 		return (NULL);
-	new->content = argv;
+	new->content = ft_strdup(argv);
+	if (!new->content)
+		return (NULL);
 	new->next = NULL;
 	return (new);
 }
@@ -38,14 +40,11 @@ t_arg	*ft_newarg(char *argv)
 
 t_arg	*ft_lastarg(t_arg *arg)
 {
-	t_arg	*temp;
-
-	temp = arg;
 	if (!arg)
 		return (NULL);
-	while (temp->next != NULL)
-		temp = temp->next;
-	return (temp);
+	while (arg->next != NULL)
+		arg = arg->next;
+	return (arg);
 }
 
 /* ************************************************************************** */
@@ -79,13 +78,11 @@ void	ft_addarg_back(t_arg **argl, t_arg *new)
 int	ft_argsize(t_arg *arg)
 {
 	int		i;
-	t_arg	*temp;
 
 	i = 0;
-	temp = arg;
-	while (temp != NULL)
+	while (arg != NULL)
 	{
-		temp = temp->next;
+		arg = arg->next;
 		i++;
 	}
 	return (i);
@@ -99,15 +96,16 @@ int	ft_argsize(t_arg *arg)
 
 void	ft_cleararg(t_arg *arg)
 {
-	t_arg	*temp;
 	t_arg	*clear;
 
-	temp = arg;
-	while (temp->next != NULL)
+	while (arg->next != NULL)
 	{
-		clear = temp;
-		temp = temp->next;
+		clear = arg;
+		arg = arg->next;
+		free(clear->content);
+		clear->content = NULL;
 		free(clear);
 	}
-	free(temp);
+	free(arg->content);
+	free(arg);
 }

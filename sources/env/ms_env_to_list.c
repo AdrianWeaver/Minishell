@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   ms_env_to_list.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aweaver <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 14:31:25 by aweaver           #+#    #+#             */
 /*   Updated: 2022/05/19 13:22:14 by aweaver          ###   ########.fr       */

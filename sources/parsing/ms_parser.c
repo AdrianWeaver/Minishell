@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 18:10:13 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/04/15 10:42:53 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/05/19 11:59:17 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,24 +24,19 @@ int	ft_set_token(t_arg *args)
 
 	temp = args;
 	while (temp != NULL)
-	{
-		if (ft_isalnum(temp->content[0]) == 1)
-			temp->token = "word";
-		else if (temp->content[0] == '|')
-			temp->token = "pipe";
-		else if (temp->content[0] == '<')
-			temp->token = "input";
-		else if (temp->content[0] == '>')
-			temp->token = "output";
-		else if (temp->content[0] == '\'')
-			temp->token = "quote";
-		else if (temp->content[0] == '"')
-			temp->token = "dquote";
+	{	
+		if (temp->content[0] == '|')
+			temp->token = TOKEN_PIPE;
+		else if (temp->content[0] == '<' && temp->content[1] != '<')
+			temp->token = TOKEN_INFILE;
+		else if (temp->content[0] == '<' && temp->content[1] == '<')
+			temp->token = TOKEN_HEREDOC;
+		else if (temp->content[0] == '>' && temp->content[1] != '>')
+			temp->token = TOKEN_OUTFILE;
+		else if (temp->content[0] == '>' && temp->content[1] == '>')
+			temp->token = TOKEN_APPENDOUT;
 		else
-		{
-			temp->token = NULL;
-			return (1);
-		}
+			temp->token = TOKEN_CMD;
 		temp = temp->next;
 	}
 	return (0);
@@ -57,22 +52,55 @@ t_arg	*ft_get_args(char *input)
 {
 	t_arg	*arg;
 	int		i;
+
+	i = 0;
+	arg = NULL;
+	while (input[i] != '\0')
+	{
+		if (input[i] != ' ' && input[i] != '\0')
+		{	
+			if (input[i] == '"')
+				arg = ft_get_quote_arg(&input[i], &i, arg, '"');
+			else if (input[i] == '\'')
+				arg = ft_get_quote_arg(&input[i], &i, arg, '\'');
+			else
+				arg = ft_get_arg(&input[i], &i, arg);
+		}
+		else if (input[i] == ' ')
+			i++;
+	}
+	return (arg);
+}
+
+/* ************************************************************************** */
+/*	ACT : check if opened quote is closed, create a t_arg element, add it     */
+/*		in queue of the list and return a pointer to the list                 */
+/*	ARG : terminal input formated as char *, input index, t_arg list          */
+/*	RET : t_arg element, NULL in case of error                                */
+/* ************************************************************************** */
+
+t_arg	*ft_get_quote_arg(char *input, int *i, t_arg *arg, char delim)
+{
+	t_arg	*new;
+	char	*sub;
 	int		j;
 
-	i = -1;
-	arg = NULL;
-	while (input[++i] != '\0')
+	j = 0;
+	new = NULL;
+	if (input[++j] != '\0')
 	{
-		while (input[i] != ' ' && input[i] != '\0')
-		{
-			j = i;
-			if (ft_check_quotes(input[i]) == 1)
-				arg = ft_get_quote_arg(&input[i], &i, arg);
-			else
-				arg = ft_get_arg(&input[j], &i, arg);
-			i++;
-		}
+		while (input[j] && input[j] != delim)
+			j++;
+		while (input[j] && input[j] != ' ' && ft_check_operator(input[j]) == 0)
+			j++;
 	}
+	sub = ft_substr(input, 0, j);
+	if (!sub)
+		return (NULL);
+	new = ft_newarg(sub);
+	ft_addarg_back(&arg, new);
+	*i += ft_strlen(new->content);
+	free(sub);
 	return (arg);
 }
 
@@ -91,8 +119,16 @@ t_arg	*ft_get_arg(char *input, int *i, t_arg *arg)
 
 	j = 0;
 	new = NULL;
-	while (ft_check_quotes(input[j]) != 1
-		&& input[j] != '\0' && input[j] != ' ')
+	if (input[j] == '|')
+	{
+		sub = ft_strdup("|");
+		new = ft_newarg(sub);
+		ft_addarg_back(&arg, new);
+		*i += ft_strlen(new->content);
+		free(sub);
+		return (arg);
+	}
+	while (input[j] != '\0' && input[j] != ' ' && input[j] != '|')
 		j++;
 	sub = ft_substr(input, 0, j);
 	if (sub == NULL)
@@ -100,52 +136,6 @@ t_arg	*ft_get_arg(char *input, int *i, t_arg *arg)
 	new = ft_newarg(sub);
 	ft_addarg_back(&arg, new);
 	*i += ft_strlen(new->content);
+	free(sub);
 	return (arg);
-}
-
-/* ************************************************************************** */
-/*	ACT : check if opened quote is closed, create a t_arg element, add it     */
-/*		in queue of the list and return a pointer to the list                 */
-/*	ARG : terminal input formated as char *, input index, t_arg list          */
-/*	RET : t_arg element, NULL in case of error                                */
-/* ************************************************************************** */
-
-t_arg	*ft_get_quote_arg(char *input, int *i, t_arg *arg)
-{
-	t_arg	*new;
-	char	*sub;
-	int		j;
-
-	j = 0;
-	new = NULL;
-	if (input[j] != '\0')
-	{
-		if (input[j] == '"')
-			while (input[++j] != '"' && input[j] != '\0')
-				;
-		else if (input[j] == '\'')
-			while (input[++j] != '\'' && input[j] != '\0')
-				;
-		if (input[j] != '\0')
-			sub = ft_substr(input, 0, j + 1);
-	}
-	if (sub == NULL)
-		return (NULL);
-	new = ft_newarg(sub);
-	ft_addarg_back(&arg, new);
-	*i += ft_strlen(new->content);
-	return (arg);
-}
-
-/* ************************************************************************** */
-/*	ACT : check if char is ' or "                                             */
-/*	ARG : a char                                                              */
-/*	RET : 1 if quote is found, 0 if not                                       */
-/* ************************************************************************** */
-
-int	ft_check_quotes(char input)
-{
-	if (input == '\'' || input == '"')
-		return (1);
-	return (0);
 }
