@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 09:18:31 by aweaver           #+#    #+#             */
-/*   Updated: 2022/05/17 13:40:48 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/05/17 16:17:51 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ t_env	*ft_get_env_element(char *env_line);
 t_env	*ft_env_to_list(char **env);
 void	ft_delone_env(t_env *env, void (*del)(void *));
 void	ft_cleanly_delone_env(t_env **env_start, t_env *target);
+void	ft_print_env(t_env *env_list);
 
 /* ************************************************************************ */
 /*								FREE FUNCTIONS								*/
@@ -81,6 +82,7 @@ void	ft_free_env(t_env *env_start);
 int		ft_is_valid_env_variable(char *str);
 t_env	*ft_find_env_elem(t_env *env_list, char *name);
 int		ft_unset(t_env **env_list, char **name);
+int		ft_export(t_env *env_list, char **to_add);
 
 /* export */
 
