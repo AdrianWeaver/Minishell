@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 09:18:31 by aweaver           #+#    #+#             */
-/*   Updated: 2022/05/25 11:39:24 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/06/15 13:56:24 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <sys/types.h>
+# include <fcntl.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <stdio.h>
@@ -45,7 +46,7 @@
 t_arg	*ft_newarg(char *argv);
 t_arg	*ft_lastarg(t_arg *arg);
 void	ft_addarg_back(t_arg **argl, t_arg *new);
-void	ft_cleararg(t_arg *arg);
+void	ft_clear_arg(t_arg *arg);
 int		ft_argsize(t_arg *arg);
 
 /* ************************************ */
@@ -72,7 +73,6 @@ void	*ft_custom_calloc(int size);
 t_env	*ft_env_last(t_env *env);
 void	ft_env_add_back(t_env **env_start, t_env *new);
 t_env	*ft_get_env_element(t_env *env, char *env_line);
-t_env	*ft_env_to_list(char **env);
 void	ft_delone_env(t_env *env, void (*del)(void *));
 void	ft_cleanly_delone_env(t_env **env_start, t_env *target);
 void	ft_print_env(t_env *env_list);
@@ -100,5 +100,13 @@ char	*ft_get_pwd(void);
 int		ft_cd(t_env *env, char *path);
 
 /* export */
+int		ft_export(t_env *env_list, char **to_add);
+
+/*  echo  */
+int		ft_echo_n_opt(t_arg *arg);
+int		ft_echo_nbr_cmd(t_arg *arg);
+int		ft_echo(t_arg *arg);
+
+void	ft_builtin_parser(t_arg *arg);
 
 #endif
