@@ -24,6 +24,11 @@ SILENT			=	--no-print-directory
 SRCS_PATH		=	./sources/
 OBJS_PATH		=	./objects/
 LIBFT_PATH		=	./libft/
+SRCS_PARSING	=	./parsing/
+SRCS_EXEC		=	./exec/
+SRCS_ERRORS		=	./errors/
+SRCS_BUILTINS	=	./builtins/
+SRCS_UTILS		=	./utils/
 
 
 #############################################################################
@@ -32,10 +37,17 @@ LIBFT_PATH		=	./libft/
 #																			#
 #############################################################################
 
-SRCS 			=	main.c \
-					ms_parser.c \
-					ms_args_lst_utils.c \
-					ms_mlc_lst_utils.c
+SRCS 			=	main.c	\
+					$(addprefix $(SRCS_PARSING),	\
+						ms_parser.c	\
+					 )\
+					$(addprefix $(SRCS_ERRORS),		\
+						ms_errors.c	\
+					 )\
+					$(addprefix $(SRCS_UTILS),		\
+						ms_args_lst_utils.c	\
+						ms_mlc_lst_utils.c
+					 )
 
 OBJS			=	$(addprefix $(OBJS_PATH), $(SRCS:.c=.o))
 DEPS			=	$(OBJS:.o=.d)
@@ -55,6 +67,12 @@ $(NAME):			$(OBJS) $(LIBFT)
 
 $(OBJS_PATH)%.o:	$(SRCS_PATH)%.c
 					@mkdir -p $(OBJS_PATH)
+					@mkdir -p $(OBJS_PATH)$(SRCS_PARSING)
+					@mkdir -p $(OBJS_PATH)$(SRCS_EXEC)
+					@mkdir -p $(OBJS_PATH)$(SRCS_ERRORS)
+					@mkdir -p $(OBJS_PATH)$(SRCS_BUILTINS)
+					@mkdir -p $(OBJS_PATH)$(SRCS_CMDS)
+					@mkdir -p $(OBJS_PATH)$(SRCS_UTILS)
 					$(CC) $(CFLAGS) -c $< -o $@ $(INC)
 
 $(LIBFT):			
