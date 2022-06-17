@@ -6,17 +6,9 @@
 /*   By: aweaver <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 14:31:25 by aweaver           #+#    #+#             */
-/*   Updated: 2022/05/10 17:15:25 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/05/12 14:46:00 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-/*
- * s_env
- * char *name;
- * char **content;
- * *next;
- * t_env;
- * */
 
 #include "minishell.h"
 
@@ -79,7 +71,7 @@ t_env	*ft_get_env_element(char *env_line)
 	tmp_element->name = tmp_str;
 	if (env_line[i] == '=')
 	{
-		tmp_element->content = ft_split(&env_line[i], ':');
+		tmp_element->content = ft_split(&env_line[i] + 1, ':');
 		i++;
 	}
 	tmp_element->next = NULL;
@@ -97,9 +89,6 @@ t_env	*ft_env_to_list(char **env)
 	t_env	*env_start;
 	t_env	*tmp_element;
 
-	//env_start = malloc(sizeof(*env_start) * 1);
-	//if (env_start == NULL)
-		//return (NULL);
 	env_start = NULL;
 	while (*env)
 	{
