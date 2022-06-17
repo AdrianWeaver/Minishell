@@ -76,6 +76,7 @@ t_env	*ft_env_to_list(char **env);
 void	ft_delone_env(t_env *env, void (*del)(void *));
 void	ft_cleanly_delone_env(t_env **env_start, t_env *target);
 void	ft_print_env(t_env *env_list);
+char	**ft_env_to_char(t_env *env);
 
 /* ************************************************************************ */
 /*								FREE FUNCTIONS								*/
