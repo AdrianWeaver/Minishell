@@ -32,7 +32,10 @@ LIBFT_PATH		=	./libft/
 #																			#
 #############################################################################
 
-SRCS 			=	main.c
+SRCS 			=	main.c \
+					ms_parser.c \
+					ms_args_lst_utils.c \
+					ms_mlc_lst_utils.c
 
 OBJS			=	$(addprefix $(OBJS_PATH), $(SRCS:.c=.o))
 DEPS			=	$(OBJS:.o=.d)
