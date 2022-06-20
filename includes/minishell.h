@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 09:18:31 by aweaver           #+#    #+#             */
-/*   Updated: 2022/06/15 13:56:24 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/06/20 13:33:29 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	ft_clearmlc(t_mlc *mlc);
 int		ft_mlcsize(t_mlc *mlc);
 
 t_arg	*ft_get_args(char *input);
-t_arg	*ft_get_quote_arg(char *input, int *i, t_arg *arg);
+t_arg	*ft_get_quote_arg(char *input, int *i, t_arg *arg, char delim);
 int		ft_set_token(t_arg *args);
 int		ft_check_quotes(char input);
 t_arg	*ft_get_arg(char *input, int *i, t_arg *arg);
@@ -77,6 +77,8 @@ void	ft_delone_env(t_env *env, void (*del)(void *));
 void	ft_cleanly_delone_env(t_env **env_start, t_env *target);
 void	ft_print_env(t_env *env_list);
 char	**ft_env_to_char(t_env *env);
+t_env	*ft_env_to_list(char **env);
+int		ft_env_size(t_env *env);
 void	ft_manually_add_one_env(t_env *env_list, char *name, char *content);
 
 /* ************************************************************************ */
