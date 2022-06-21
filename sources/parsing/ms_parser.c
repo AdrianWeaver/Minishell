@@ -62,7 +62,12 @@ t_arg	*ft_get_args(char *input)
 			if (input[i] == '"' || input[i] == '\'')
 				arg = ft_get_quote_arg(&input[i], &i, arg, input[i]);
 			else if (input[i])
-				arg = ft_get_arg(&input[i], &i, arg);
+			{
+				// if (input[i] == '<')
+				// 	arg = ft_get_redir_in_arg(&input[i], &i, arg);
+				// else
+					arg = ft_get_arg(&input[i], &i, arg);
+			}
 		}
 		if (input[i] != '\0')
 			i++;
@@ -137,3 +142,23 @@ t_arg	*ft_get_arg(char *input, int *i, t_arg *arg)
 	free(sub);
 	return (arg);
 }
+
+// t_arg *ft_get_redir_in_arg(char *str, int *i, t_arg *arg)
+// {
+// 	t_arg	*new;
+// 	int		j;
+// 	int		st;
+// 	char	*sub;
+
+// 	j = 0;
+// 	st = 0;
+// 	new = NULL;
+// 	while (str[j] == '<')
+// 		j++;
+// 	// if (j > 1)
+// 	// 	ft_error;
+// 	while (str[j] && str[j] == ' ')
+// 		j++;
+// 	while (str[j] && str[j] != ' ')
+// 		j++;
+// }

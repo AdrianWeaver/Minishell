@@ -63,12 +63,15 @@ int	main(int ac, char *av[], char *env[])
 		line = readline("Test readline :");
 		if (ft_strcmp(line, "stop") == 0)
 		{
-			free(line);
 			if (verif)
+			{
+				free(line);
 				ft_clear_arg(verif);
-			exit (1);
+			}
+			break ;
 		}
 		verif = ft_get_args(line);
+		free(line);
 		if (verif != NULL)
 		{
 			ft_set_token(verif);
@@ -101,7 +104,10 @@ int	main(int ac, char *av[], char *env[])
 				verif = verif->next;
 			}
 		}
-		free(line);
 	}
+	verif = temp;
+		if (verif)
+			ft_clear_arg(verif);
+	ft_free_env(env_list);
 	return (0);
 }
