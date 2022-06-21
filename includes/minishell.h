@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 09:18:31 by aweaver           #+#    #+#             */
-/*   Updated: 2022/06/20 13:33:29 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/06/20 15:17:29 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # define TOKEN_OUTFILE 6
 # define TOKEN_APPENDOUT 7
 
+# define FREE 0
+# define MALLOC 1
 # include <unistd.h>
 # include <stdlib.h>
 # include <sys/types.h>
@@ -87,6 +89,7 @@ void	ft_manually_add_one_env(t_env *env_list, char *name, char *content);
 
 void	ft_free_double_array(char **str);
 void	ft_free_env(t_env *env_start);
+void	*ft_magic_malloc(int function, size_t size, void *addr);
 
 /* ************************************************************************ */
 /*								BUILTIN FUNCTIONS							*/
