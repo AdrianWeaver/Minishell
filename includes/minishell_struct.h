@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 14:10:20 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/05/10 18:24:47 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/06/21 11:31:17 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ typedef struct s_arg
 
 typedef struct s_mlc
 {
-	void			*ptr;
+	void			*addr;
 	struct s_mlc	*next;
 }	t_mlc;
 

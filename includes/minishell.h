@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 09:18:31 by aweaver           #+#    #+#             */
-/*   Updated: 2022/06/20 15:17:29 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/06/22 10:14:11 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 
 # define FREE 0
 # define MALLOC 1
+# define FLUSH -1
 # include <unistd.h>
 # include <stdlib.h>
 # include <sys/types.h>
@@ -89,7 +90,11 @@ void	ft_manually_add_one_env(t_env *env_list, char *name, char *content);
 
 void	ft_free_double_array(char **str);
 void	ft_free_env(t_env *env_start);
-void	*ft_magic_malloc(int function, size_t size, void *addr);
+void	*ft_magic_malloc(int funct, size_t size, void *addr);
+void	ft_delone_mlc(t_mlc *mlc, void (*del)(void *));
+void	ft_free_mlc_and_quit(t_mlc *mlc_start);
+void	ft_cleanly_delone_mlc(t_mlc **mlc_start, void *addr);
+t_mlc	*ft_malloc_list_add_back(t_mlc **mlc_list, t_mlc *new_mlc);
 
 /* ************************************************************************ */
 /*								BUILTIN FUNCTIONS							*/

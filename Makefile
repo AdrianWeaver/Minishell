@@ -53,7 +53,9 @@ SRCS 			=	mitch_main_test.c	\
 					 )\
 					$(addprefix $(SRCS_UTILS),		\
 						ms_args_lst_utils.c	\
-						ms_mlc_lst_utils.c \
+						ms_magic_malloc.c \
+						ms_magic_malloc_utils.c \
+						ms_mlc_lst_utils.c		\
 						ms_redirection.c \
 					)\
 					$(addprefix $(SRCS_ENV), \
@@ -121,12 +123,14 @@ teststaf:			$(LIBFT)
 					./sources/builtins/ms_pwd.c	\
 					./sources/builtins/ms_cd.c	\
 					./sources/env/ms_env_to_list.c  \
-					./sources/builtins/main_test_staf.c \
+					./sources/utils/main_staf.c \
 					./sources/env/ms_free_env.c \
 					./sources/env/ms_env_utils.c	\
 					./sources/env/ms_print_env.c \
-					-I ./includes -I ./libft/includes libft/libft.a
-					valgrind --leak-check=full ./a.out
+					./sources/utils/ms_magic_malloc.c \
+					./sources/utils/ms_magic_malloc_utils.c \
+					-I ./includes -I ./libft/includes libft/libft.a 
+					valgrind --leak-check=full --show-leak-kinds=all ./a.out
 
 -include $(DEPS)
 .PHONY:				all clean fclean re test

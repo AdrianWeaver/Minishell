@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 14:34:33 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/04/14 10:45:37 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/06/22 10:36:21 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_mlc	*ft_newmlc(void *adr)
 	new = malloc(sizeof(t_mlc));
 	if (!new)
 		return (NULL);
-	new->ptr = adr;
+	new->addr = adr;
 	new->next = NULL;
 	return (new);
 }
@@ -108,11 +108,11 @@ void	ft_clearmlc(t_mlc *mlc)
 		while (temp->next != NULL)
 		{
 			clear = temp;
-			free(clear->ptr);
+			free(clear->addr);
 			free(clear);
 			temp = temp->next;
 		}
-		free(temp->ptr);
+		free(temp->addr);
 		free(temp);
 	}
 }
