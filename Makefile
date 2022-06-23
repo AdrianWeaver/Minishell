@@ -57,6 +57,7 @@ SRCS 			=	mitch_main_test.c	\
 						ms_magic_malloc_utils.c \
 						ms_mlc_lst_utils.c		\
 						ms_redirection.c \
+						ms_prompt.c \
 					)\
 					$(addprefix $(SRCS_ENV), \
 						ms_env_to_list.c \

@@ -98,14 +98,18 @@ void	ft_clear_arg(t_arg *arg)
 {
 	t_arg	*clear;
 
-	while (arg->next != NULL)
+	if (arg)
 	{
-		clear = arg;
-		arg = arg->next;
-		free(clear->content);
-		clear->content = NULL;
-		free(clear);
-	}
+		while (arg->next != NULL)
+		{
+			clear = arg;
+			arg = arg->next;
+			// printf("%s will be cleared\n", clear->content);
+			free(clear->content);
+			clear->content = NULL;
+			free(clear);
+		}
 	free(arg->content);
 	free(arg);
+	}
 }

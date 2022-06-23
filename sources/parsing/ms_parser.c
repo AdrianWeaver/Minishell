@@ -64,7 +64,7 @@ t_arg	*ft_get_args(char *input)
 			if (input[i] == '"' || input[i] == '\'')
 				arg = ft_get_quote_arg(&input[i], &i, arg, input[i]);
 			else if (input[i])
-					arg = ft_get_arg(&input[i], &i, arg);
+				arg = ft_get_arg(&input[i], &i, arg);
 		}
 		if (input[i] != '\0')
 			i++;

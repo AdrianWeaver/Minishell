@@ -64,11 +64,13 @@ int	main(int ac, char *av[], char *env[])
 
 	(void)ac;
 	(void)av;
+	verif = NULL;
 	env_list = ft_env_to_list(env);
 	while (1)
 	{
-		prompt = ft_get_pwd();
+		prompt = ft_get_prompt(env_list);
 		line = readline(prompt );
+		free(prompt);
 		if (ft_strcmp(line, "stop") == 0)
 		{
 			if (verif)
