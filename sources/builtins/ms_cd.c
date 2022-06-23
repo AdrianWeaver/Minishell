@@ -6,7 +6,7 @@
 /*   By: aweaver <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 13:04:22 by aweaver           #+#    #+#             */
-/*   Updated: 2022/05/25 11:32:30 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/06/23 13:51:54 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	ft_cd(t_env *env, char *path)
 			ft_manually_add_one_env(env, "PWD", path);
 		else
 		{
-			free(env_pwd->content);
+			env_pwd->content = ft_magic_malloc(FREE, 0, env_pwd->content);
 			env_pwd->content = ft_get_pwd();
 		}
 		env_oldpwd = ft_find_env_elem(env, "OLDPWD");
@@ -36,7 +36,7 @@ int	ft_cd(t_env *env, char *path)
 			ft_manually_add_one_env(env, "OLDPWD", pwd);
 		else
 		{
-			free(env_oldpwd->content);
+			env_oldpwd = ft_magic_malloc(FREE, 0, env_oldpwd->content);
 			env_pwd->content = pwd;
 		}
 		return (0);

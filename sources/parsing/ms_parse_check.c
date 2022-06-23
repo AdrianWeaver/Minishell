@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 11:55:48 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/06/15 06:36:34 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/06/23 14:07:30 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,11 +101,10 @@ int	ft_check_var(char *str, t_env *env)
 			return (-1);
 		if (ft_check_env_var(sub, env) == 0)
 		{
-			free(sub);
+			sub = ft_magic_malloc(FREE, 0, sub);
 			return (i - j);
 		}
-		if (sub)
-			free(sub);
+		sub = ft_magic_malloc(FREE, 0, sub);
 	}
 	return (-1);
 }

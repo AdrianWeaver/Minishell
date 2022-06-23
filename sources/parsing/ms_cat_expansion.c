@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 18:13:22 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/06/14 15:30:23 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/06/23 14:19:28 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,18 @@ void	ft_final_string(t_arg *arg, char **pieces, char *flags, t_env *env)
 	ft_get_strings(arg, pieces, flags, env);
 	final = ft_strdup(pieces[0]);
 	if (pieces[0])
-		free(pieces[0]);
+		pieces[0] = ft_magic_malloc(FREE, 0, pieces[0]);
 	while (pieces && pieces[i] != NULL)
 	{
 		final = ft_strjoin_free(final, pieces[i]);
-		free(pieces[i]);
+		pieces[i] = ft_magic_malloc(FREE, 0, pieces[i]);
 		i++;
 	}
 	if (pieces)
-		free(pieces);
+		pieces = ft_magic_malloc(FREE, 0, pieces);
 	if (arg->content)
 	{
-		free(arg->content);
+		arg->content = ft_magic_malloc(FREE, 0, arg->content);
 		arg->content = final;
 	}
 }
@@ -44,7 +44,7 @@ char	*ft_get_var_pos(char *str, t_env *env)
 	char	*flags;
 
 	i = 0;
-	flags = malloc(sizeof(char) * ft_strlen(str) + 1);
+	flags = ft_magic_malloc(MALLOC, sizeof(char) * ft_strlen(str) + 1, NULL);
 	if (!flags)
 		return (NULL);
 	while (str[i])

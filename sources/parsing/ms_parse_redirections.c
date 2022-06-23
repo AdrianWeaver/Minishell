@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_parse_type.c                                    :+:      :+:    :+:   */
+/*   ms_parse_redirections.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 16:46:46 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/04/15 17:22:47 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/06/23 14:11:46 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_arg	*ft_get_infile(t_arg *arg, t_arg *head, t_env *env)
 		&& ft_strlen(arg->content) > 1)
 	{
 		tmp = ft_strdup(&arg->content[1]);
-		free(arg->content);
+		arg->content = ft_magic_malloc(FREE, 0, arg->content);
 		arg->content = tmp;
 	}
 	else if (arg->token == TOKEN_INFILE && arg->content[0] == '<'
@@ -60,7 +60,7 @@ t_arg	*ft_get_heredoc(t_arg *arg, t_arg *head, t_env *env)
 		&& ft_strlen(arg->content) > 2)
 	{
 		tmp = ft_strdup(&arg->content[2]);
-		free(arg->content);
+		arg->content = ft_magic_malloc(FREE, 0, arg->content);
 		arg->content = tmp;
 	}
 	else if (arg->token == TOKEN_HEREDOC && arg->content[0] == '<'
@@ -93,7 +93,7 @@ t_arg	*ft_get_outfile(t_arg *arg, t_arg *head, t_env *env)
 		&& ft_strlen(arg->content) > 1)
 	{
 		tmp = ft_strdup(&arg->content[1]);
-		free(arg->content);
+		arg->content = ft_magic_malloc(FREE, 0, arg->content);
 		arg->content = tmp;
 	}
 	else if (arg->token == TOKEN_OUTFILE && arg->content[0] == '>'
@@ -123,7 +123,7 @@ t_arg	*ft_get_appendout(t_arg *arg, t_arg *head, t_env *env)
 		&& ft_strlen(arg->content) > 2)
 	{
 		tmp = ft_strdup(&arg->content[2]);
-		free(arg->content);
+		arg->content = ft_magic_malloc(FREE, 0, arg->content);
 		arg->content = tmp;
 	}
 	else if (arg->token == TOKEN_APPENDOUT && arg->content[0] == '>'

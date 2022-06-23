@@ -6,7 +6,7 @@
 /*   By: aweaver <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 17:27:33 by aweaver           #+#    #+#             */
-/*   Updated: 2022/05/19 11:48:36 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/06/23 14:01:58 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ void	ft_free_double_array(char **str)
 	i = 0;
 	while (str[i])
 	{
-		free(str[i]);
+		str[i] = ft_magic_malloc(FREE, 0, str[i]);
 		i++;
 	}
-	free(str);
+	str = ft_magic_malloc(FREE, 0, str);
 }
 
 /* ************************************************************************ */

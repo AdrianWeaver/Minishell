@@ -6,7 +6,7 @@
 /*   By: aweaver <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 10:37:54 by aweaver           #+#    #+#             */
-/*   Updated: 2022/06/23 11:42:55 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/06/23 14:13:20 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	**ft_list_to_char(t_arg *list)
 
 	i = 0;
 	size = ft_get_cmd_nb(list);
-	ret = malloc(sizeof(*ret) * size + 1);
+	ret = ft_magic_malloc(MALLOC, sizeof(*ret) * size + 1, NULL);
 	while (list)
 	{
 		if (list->token == TOKEN_PIPE)

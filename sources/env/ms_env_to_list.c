@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 14:31:25 by aweaver           #+#    #+#             */
-/*   Updated: 2022/05/25 09:31:20 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/06/23 14:17:00 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ char	*ft_env_get_content(t_env *env_list, char *name, char *env_line,
 		else
 		{
 			joined = ft_strjoin(old_env->content, env_line);
-			free(old_env->content);
+			old_env->content = ft_magic_malloc(FREE, 0, old_env->content);
 			return (joined);
 		}
 	}
@@ -95,7 +95,7 @@ t_env	*ft_get_env_element(t_env *env_list, char *env_line)
 
 	i = 0;
 	flag_plus = 0;
-	tmp_element = malloc(sizeof(*tmp_element) * 1);
+	tmp_element = ft_magic_malloc(MALLOC, sizeof(*tmp_element) * 1, NULL);
 	while (env_line[i] && env_line[i] != '=')
 	{
 		if (env_line[i] == '+' && env_line[i + 1] == '=')

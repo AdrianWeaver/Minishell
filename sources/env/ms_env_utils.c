@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 13:25:39 by aweaver           #+#    #+#             */
-/*   Updated: 2022/06/15 13:55:50 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/06/23 14:18:51 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,12 +84,12 @@ void	ft_manually_add_one_env(t_env *env_list, char *name, char *content)
 		env_set = ft_find_env_elem(env_list, name);
 		if (env_set)
 		{
-			free(env_set->content);
+			env_set->content = ft_magic_malloc(FREE, 0, env_set->content);
 			env_set->content = ft_strdup(content);
 		}
 		else
 		{
-			env_new = malloc(sizeof(*env_new) * 1);
+			env_new = ft_magic_malloc(MALLOC, sizeof(*env_new) * 1, NULL);
 			env_new->name = ft_strdup(name);
 			env_new->content = ft_strdup(content);
 			ft_env_add_back(&env_list, env_new);

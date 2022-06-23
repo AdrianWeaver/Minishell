@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 14:34:33 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/06/22 10:36:21 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/06/23 14:13:51 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_mlc	*ft_newmlc(void *adr)
 {
 	t_mlc	*new;
 
-	new = malloc(sizeof(t_mlc));
+	new = ft_magic_malloc(MALLOC, sizeof(t_mlc), NULL);
 	if (!new)
 		return (NULL);
 	new->addr = adr;

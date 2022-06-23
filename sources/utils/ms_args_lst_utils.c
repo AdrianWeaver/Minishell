@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 14:13:30 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/06/15 06:47:37 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/06/23 14:12:30 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_arg	*ft_newarg(char *argv)
 {
 	t_arg	*new;
 
-	new = malloc(sizeof(t_arg));
+	new = ft_magic_malloc(MALLOC, sizeof(t_arg), NULL);
 	if (!new)
 		return (NULL);
 	new->content = ft_strdup(argv);
@@ -102,7 +102,6 @@ void	ft_clear_arg(t_arg *arg)
 	{
 		clear = arg;
 		arg = arg->next;
-		// printf("%s will be cleared\n", clear->content);
 		free(clear->content);
 		clear->content = NULL;
 		free(clear);

@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 18:10:13 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/06/15 06:37:01 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/06/23 14:21:08 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,7 @@ t_arg	*ft_get_args(char *input)
 			if (input[i] == '"' || input[i] == '\'')
 				arg = ft_get_quote_arg(&input[i], &i, arg, input[i]);
 			else if (input[i])
-			{
-				// if (input[i] == '<')
-				// 	arg = ft_get_redir_in_arg(&input[i], &i, arg);
-				// else
 					arg = ft_get_arg(&input[i], &i, arg);
-			}
 		}
 		if (input[i] != '\0')
 			i++;
@@ -105,7 +100,7 @@ t_arg	*ft_get_quote_arg(char *input, int *i, t_arg *arg, char delim)
 	new = ft_newarg(sub);
 	ft_addarg_back(&arg, new);
 	*i += ft_strlen(new->content);
-	free(sub);
+	sub = ft_magic_malloc(FREE, 0, sub);
 	return (arg);
 }
 
@@ -130,7 +125,7 @@ t_arg	*ft_get_arg(char *input, int *i, t_arg *arg)
 		new = ft_newarg(sub);
 		ft_addarg_back(&arg, new);
 		*i += ft_strlen(new->content);
-		free(sub);
+		sub = ft_magic_malloc(FREE, 0, sub);
 		return (arg);
 	}
 	while (ft_check_arg(input[j]) == 0)
@@ -141,7 +136,7 @@ t_arg	*ft_get_arg(char *input, int *i, t_arg *arg)
 	new = ft_newarg(sub);
 	ft_addarg_back(&arg, new);
 	*i += ft_strlen(new->content);
-	free(sub);
+	sub = ft_magic_malloc(FREE, 0, sub);
 	return (arg);
 }
 
@@ -154,22 +149,3 @@ int	ft_check_double_pipe(t_arg *arg, t_arg *head, t_env *env)
 	}
 	return (0);
 }
-// t_arg *ft_get_redir_in_arg(char *str, int *i, t_arg *arg)
-// {
-// 	t_arg	*new;
-// 	int		j;
-// 	int		st;
-// 	char	*sub;
-
-// 	j = 0;
-// 	st = 0;
-// 	new = NULL;
-// 	while (str[j] == '<')
-// 		j++;
-// 	// if (j > 1)
-// 	// 	ft_error;
-// 	while (str[j] && str[j] == ' ')
-// 		j++;
-// 	while (str[j] && str[j] != ' ')
-// 		j++;
-// }

@@ -6,7 +6,7 @@
 /*   By: aweaver <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 12:02:09 by aweaver           #+#    #+#             */
-/*   Updated: 2022/06/20 13:37:50 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/06/23 14:16:22 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	**ft_env_to_char(t_env *env)
 
 	i = 0;
 	env_size = ft_env_size(env);
-	tab = malloc(sizeof(*tab) * env_size + 1);
+	tab = ft_magic_malloc(MALLOC, sizeof(*tab) * env_size + 1, NULL);
 	tab[env_size] = 0;
 	while (env)
 	{

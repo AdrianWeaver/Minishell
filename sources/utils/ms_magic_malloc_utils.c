@@ -6,7 +6,7 @@
 /*   By: aweaver <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 16:40:03 by aweaver           #+#    #+#             */
-/*   Updated: 2022/06/21 16:40:24 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/06/23 13:59:18 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void	ft_cleanly_delone_mlc(t_mlc **mlc_start, void *addr)
 			mlc_prev = mlc_list;
 		mlc_list = mlc_list->next;
 	}
+	free(addr);
 }
 
 t_mlc	*ft_malloc_list_add_back(t_mlc **mlc_list, t_mlc *new_mlc)
