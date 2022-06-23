@@ -28,6 +28,12 @@ int	ft_check_op(char c)
 	return (0);
 }
 
+/* ************************************************************************** */
+/*	ACT : check is char given is a quote delimiter                            */
+/*	ARG : each char from the input                                            */
+/*	RET : 1 if c is an delimiter, 0 if not                                    */
+/* ************************************************************************** */
+
 int	ft_check_arg(char c)
 {
 	if (c == '|' || c == ' ' || c == '\0')
@@ -69,6 +75,12 @@ int	ft_check_env_var(char *str, t_env *env)
 	}
 	return (-1);
 }
+
+/* ************************************************************************** */
+/*	ACT : for each char '$', check if $string is an existing env var name     */
+/*	ARG : string input, a pointer to a t_env struct                           */
+/*	RET : lenght of var's name if $ENV_VAR exists, -1 if not                  */
+/* ************************************************************************** */
 
 int	ft_check_var(char *str, t_env *env)
 {

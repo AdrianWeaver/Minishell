@@ -27,11 +27,13 @@ int	ft_set_token(t_arg *args)
 	{	
 		if (temp->content[0] == '|')
 			temp->token = TOKEN_PIPE;
-		else if (temp->content[0] == '<' && temp->content[1] != '<')
+		else if ((temp->content[0] == '<' && ft_strlen(temp->content) == 1)
+			|| (temp->content[0] == '<' && temp->content[1] != '<'))
 			temp->token = TOKEN_INFILE;
 		else if (temp->content[0] == '<' && temp->content[1] == '<')
 			temp->token = TOKEN_HEREDOC;
-		else if (temp->content[0] == '>' && temp->content[1] != '>')
+		else if ((temp->content[0] == '>' && ft_strlen(temp->content) == 1)
+			|| (temp->content[0] == '>' && temp->content[1] != '>'))
 			temp->token = TOKEN_OUTFILE;
 		else if (temp->content[0] == '>' && temp->content[1] == '>')
 			temp->token = TOKEN_APPENDOUT;
@@ -143,6 +145,15 @@ t_arg	*ft_get_arg(char *input, int *i, t_arg *arg)
 	return (arg);
 }
 
+int	ft_check_double_pipe(t_arg *arg, t_arg *head, t_env *env)
+{
+	if (arg->token == TOKEN_PIPE)
+	{
+		if (arg->next == NULL || arg->next->token == TOKEN_PIPE)
+			ft_clear_and_quit(arg->next, head, env);
+	}
+	return (0);
+}
 // t_arg *ft_get_redir_in_arg(char *str, int *i, t_arg *arg)
 // {
 // 	t_arg	*new;

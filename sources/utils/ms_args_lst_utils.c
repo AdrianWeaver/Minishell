@@ -102,7 +102,7 @@ void	ft_clear_arg(t_arg *arg)
 	{
 		clear = arg;
 		arg = arg->next;
-		printf("%s will be cleared\n", clear->content);
+		// printf("%s will be cleared\n", clear->content);
 		free(clear->content);
 		clear->content = NULL;
 		free(clear);

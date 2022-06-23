@@ -44,12 +44,12 @@ SRCS 			=	mitch_main_test.c	\
 						ms_parser.c	\
 						ms_parse_check.c \
 						ms_parse_redirections.c \
-						ms_parse_dquote.c \
+						ms_parse_quote.c \
 						ms_expansion.c \
 						ms_cat_expansion.c \
 					 )\
 					$(addprefix $(SRCS_ERRORS),		\
-						ms_errors.c	\
+						ms_syntaxe_errors.c	\
 					 )\
 					$(addprefix $(SRCS_UTILS),		\
 						ms_args_lst_utils.c	\

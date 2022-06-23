@@ -21,7 +21,7 @@
 /*	RET : a pointer to a t_arg element                                        */
 /* ************************************************************************** */
 
-t_arg	*ft_get_infile(t_arg *arg)
+t_arg	*ft_get_infile(t_arg *arg, t_arg *head, t_env *env)
 {
 	t_arg	*temp;
 	char	*tmp;
@@ -36,6 +36,8 @@ t_arg	*ft_get_infile(t_arg *arg)
 	else if (arg->token == TOKEN_INFILE && arg->content[0] == '<'
 		&& ft_strlen(arg->content) == 1)
 	{
+		if (arg->next == NULL || arg->next->token != TOKEN_CMD)
+			ft_clear_and_quit(arg->next, head, env);
 		temp = arg->next;
 		temp->token = TOKEN_INFILE;
 		return (temp);
@@ -49,25 +51,26 @@ t_arg	*ft_get_infile(t_arg *arg)
 /*	RET : a pointer to a t_arg element                                        */
 /* ************************************************************************** */
 
-t_arg	*ft_get_heredoc(t_arg *arg)
+t_arg	*ft_get_heredoc(t_arg *arg, t_arg *head, t_env *env)
 {
 	t_arg	*temp;
+	char	*tmp;
 
 	if (arg->token == TOKEN_HEREDOC && arg->content[0] == '<'
 		&& ft_strlen(arg->content) > 2)
-		arg->content = &arg->content[2];
+	{
+		tmp = ft_strdup(&arg->content[2]);
+		free(arg->content);
+		arg->content = tmp;
+	}
 	else if (arg->token == TOKEN_HEREDOC && arg->content[0] == '<'
 		&& ft_strlen(arg->content) == 2)
 	{
-		if (arg->next->token != TOKEN_CMD)
-			// ft_parse_error(arg->next);
-			return(NULL);
-		else
-		{
-			temp = arg->next;
-			temp->token = TOKEN_HEREDOC;
-			return (temp);
-		}
+		if (arg->next == NULL || arg->next->token != TOKEN_CMD)
+			ft_clear_and_quit(arg->next, head, env);
+		temp = arg->next;
+		temp->token = TOKEN_HEREDOC;
+		return (temp);
 	}
 	return (arg);
 }
@@ -81,27 +84,26 @@ t_arg	*ft_get_heredoc(t_arg *arg)
 /*	RET : a pointer to a t_arg element                                        */
 /* ************************************************************************** */
 
-t_arg	*ft_get_outfile(t_arg *arg)
+t_arg	*ft_get_outfile(t_arg *arg, t_arg *head, t_env *env)
 {
 	t_arg	*temp;
+	char	*tmp;
 
 	if (arg->token == TOKEN_OUTFILE && arg->content[0] == '>'
 		&& ft_strlen(arg->content) > 1)
-			arg->content = &arg->content[1];
+	{
+		tmp = ft_strdup(&arg->content[1]);
+		free(arg->content);
+		arg->content = tmp;
+	}
 	else if (arg->token == TOKEN_OUTFILE && arg->content[0] == '>'
 		&& ft_strlen(arg->content) == 1)
 	{
-		if (arg->next->token == TOKEN_INFILE || arg->next->token == TOKEN_HEREDOC)
-		{
-			printf("erreur de syntaxe pres du symbole inattendu ' > '\n");
-			return (NULL);
-		}
-		else
-		{
-			temp = arg->next;
-			temp->token = TOKEN_OUTFILE;
-			return (temp);
-		}
+		if (arg->next == NULL || arg->next->token != TOKEN_CMD)
+			ft_clear_and_quit(arg->next, head, env);
+		temp = arg->next;
+		temp->token = TOKEN_OUTFILE;
+		return (temp);
 	}
 	return (arg);
 }
@@ -112,52 +114,26 @@ t_arg	*ft_get_outfile(t_arg *arg)
 /*	RET : a pointer to a t_arg element                                        */
 /* ************************************************************************** */
 
-t_arg	*ft_get_appendout(t_arg *arg)
+t_arg	*ft_get_appendout(t_arg *arg, t_arg *head, t_env *env)
 {
 	t_arg	*temp;
+	char	*tmp;
 
 	if (arg->token == TOKEN_APPENDOUT && arg->content[0] == '>'
 		&& ft_strlen(arg->content) > 2)
-		arg->content = &arg->content[2];
+	{
+		tmp = ft_strdup(&arg->content[2]);
+		free(arg->content);
+		arg->content = tmp;
+	}
 	else if (arg->token == TOKEN_APPENDOUT && arg->content[0] == '>'
 		&& ft_strlen(arg->content) == 2)
 	{
-		if (arg->next->token == TOKEN_APPENDOUT)
-		{
-			printf("erreur de syntaxe pres du symbole inattendu ' << '\n");
-			exit (1);
-		}
-		else
-		{
-			temp = arg->next;
-			temp->token = TOKEN_APPENDOUT;
-			return (temp);
-		}
+		if (arg->next == NULL || arg->next->token != TOKEN_CMD)
+			ft_clear_and_quit(arg->next, head, env);
+		temp = arg->next;
+		temp->token = TOKEN_APPENDOUT;
+		return (temp);
 	}
 	return (arg);
 }
-
-// t_arg	*ft_clean_args(t_arg *arg)
-// {
-// 	t_arg	*temp;
-// 	t_arg	**start;
-
-// 	start = &arg;
-// 	if (arg->token != TOKEN_CMD && (arg->content[0] == '<' 
-// 		|| arg->content[0] == '>'))
-// 	{
-// 		*start = arg->next;
-// 		free(arg->content);
-// 		free(arg);
-// 		arg = *start;
-// 	}
-// 	if (arg->next && arg->next->token != TOKEN_CMD && 
-// 		(arg->next->content[0] == '<' || arg->next->content[0] == '>'))
-// 	{
-// 		temp = arg->next;
-// 		arg->next = temp->next;
-// 		free(temp->content);
-// 		free(temp);
-// 	}
-
-// }

@@ -37,20 +37,27 @@ int	ft_test(t_arg *arg, t_env *env)
 	return (0);
 }
 
-void	ft_get_redirections(t_arg *arg)
+void	ft_get_redirections(t_arg *arg, t_env *env)
 {
-	if (arg)
+	t_arg	*head;
+
+	head = arg;
+	while (arg)
 	{
-		arg = ft_get_infile(arg);
-		arg = ft_get_heredoc(arg);
-		arg = ft_get_outfile(arg);
-		arg = ft_get_appendout(arg);
+		arg = ft_get_infile(arg, head, env);
+		arg = ft_get_heredoc(arg, head, env);
+		arg = ft_get_outfile(arg, head, env);
+		arg = ft_get_appendout(arg, head, env);
+		ft_check_double_pipe(arg, head, env);
+		printf("redirect, content = %s, token = %d\n", arg->content, arg->token);
+		arg = arg->next;
 	}
 }
 
 int	main(int ac, char *av[], char *env[])
 {
 	char	*line;
+	char	*prompt;
 	t_arg	*verif;
 	t_arg	*temp;
 	t_env	*env_list;
@@ -60,7 +67,8 @@ int	main(int ac, char *av[], char *env[])
 	env_list = ft_env_to_list(env);
 	while (1)
 	{
-		line = readline("Test readline :");
+		prompt = ft_get_pwd();
+		line = readline(prompt );
 		if (ft_strcmp(line, "stop") == 0)
 		{
 			if (verif)
@@ -76,15 +84,16 @@ int	main(int ac, char *av[], char *env[])
 		{
 			ft_set_token(verif);
 			temp = verif;
+			ft_get_redirections(verif, env_list);
 			while (verif != NULL)
 			{
-				ft_get_redirections(verif);
 				if (verif->token == TOKEN_CMD)
 				{
 					if (ft_test(verif, env_list) == -1)
 					{
 						printf("Missing or extra dquote\n");
 						ft_clear_arg(temp);
+						ft_free_env(env_list);
 						free(line);
 						exit(1);
 					}
@@ -103,11 +112,10 @@ int	main(int ac, char *av[], char *env[])
 				printf("final content = %s,  token = %d\n", verif->content, verif->token);
 				verif = verif->next;
 			}
+			if (temp)
+				ft_clear_arg(temp);
 		}
 	}
-	verif = temp;
-		if (verif)
-			ft_clear_arg(verif);
 	ft_free_env(env_list);
 	return (0);
 }
