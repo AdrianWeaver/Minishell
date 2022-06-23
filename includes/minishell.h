@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 09:18:31 by aweaver           #+#    #+#             */
-/*   Updated: 2022/06/23 11:43:01 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/06/23 17:22:14 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 
 # define FREE 0
 # define MALLOC 1
+# define ADD 2
 # define FLUSH -1
 # include <unistd.h>
 # include <stdlib.h>
@@ -77,7 +78,7 @@ char	**ft_list_to_char(t_arg *list);
 t_env	*ft_env_last(t_env *env);
 void	ft_env_add_back(t_env **env_start, t_env *new);
 t_env	*ft_get_env_element(t_env *env, char *env_line);
-void	ft_delone_env(t_env *env, void (*del)(void *));
+void	ft_delone_env(t_env *env);
 void	ft_cleanly_delone_env(t_env **env_start, t_env *target);
 void	ft_print_env(t_env *env_list);
 char	**ft_env_to_char(t_env *env);

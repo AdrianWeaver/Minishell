@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 14:31:25 by aweaver           #+#    #+#             */
-/*   Updated: 2022/06/23 14:17:00 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/06/23 17:27:39 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,10 +103,12 @@ t_env	*ft_get_env_element(t_env *env_list, char *env_line)
 		i++;
 	}
 	tmp_element->name = ft_strndup(env_line, i - flag_plus);
+	ft_magic_malloc(ADD, 0, tmp_element->name);
 	if (env_line[i] == '=')
 		i++;
 	tmp_element->content = ft_env_get_content(env_list, tmp_element->name,
 			&env_line[i], flag_plus);
+	ft_magic_malloc(ADD, 0, tmp_element->content);
 	tmp_element->next = NULL;
 	return (tmp_element);
 }

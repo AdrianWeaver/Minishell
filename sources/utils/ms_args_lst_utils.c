@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 14:13:30 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/06/23 14:12:30 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/06/23 16:46:17 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,12 +104,10 @@ void	ft_clear_arg(t_arg *arg)
 		{
 			clear = arg;
 			arg = arg->next;
-			// printf("%s will be cleared\n", clear->content);
-			free(clear->content);
-			clear->content = NULL;
-			free(clear);
+			clear->content = ft_magic_malloc(FREE, 0, clear->content);
+			clear = ft_magic_malloc(FREE, 0, clear);
 		}
-	free(arg->content);
-	free(arg);
+	arg->content = ft_magic_malloc(FREE, 0, arg->content);
+	arg = ft_magic_malloc(FREE, 0, arg);
 	}
 }

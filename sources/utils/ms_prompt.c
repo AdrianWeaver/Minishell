@@ -6,13 +6,13 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 11:35:51 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/06/23 11:37:25 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/06/23 16:48:02 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char *ft_get_prompt(t_env *env_list)
+char	*ft_get_prompt(t_env *env_list)
 {
 	t_env	*tmp;
 	char	*name;
@@ -25,13 +25,13 @@ char *ft_get_prompt(t_env *env_list)
 	tmp = ft_find_env_elem(env_list, "USER");
 	path = ft_get_short_path(tmp, cwd);
 	if (!tmp || !cwd)
-	return (NULL);
+		return (NULL);
 	name = ft_strdup(tmp->content);
 	name = ft_strjoin_free(name, ":");
 	name = ft_strjoin_free(name, path);
 	name = ft_strjoin_free(name, "$ ");
-	free(path);
-	free(cwd);
+	path = ft_magic_malloc(FREE, 0, path);
+	cwd = ft_magic_malloc(FREE, 0, cwd);
 	return (name);
 }
 
@@ -53,7 +53,7 @@ char	*ft_get_short_path(t_env *user, char *cwd)
 			{
 				tmp = ft_strdup(&path[ft_strlen(user->content) + 1]);
 				path = ft_strjoin("~/", tmp);
-				free(tmp);
+				tmp = ft_magic_malloc(FREE, 0, tmp);
 				return (path);
 			}
 		}

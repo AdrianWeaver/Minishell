@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 10:32:14 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/06/15 06:38:41 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/06/23 16:48:29 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_redirection(t_arg *arg)
 {
-	int			fd;
+	int	fd;
 
 	if (arg->token == TOKEN_OUTFILE || arg->token == TOKEN_APPENDOUT)
 		fd = ft_redirection_out(arg);

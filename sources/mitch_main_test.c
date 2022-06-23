@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 09:18:40 by aweaver           #+#    #+#             */
-/*   Updated: 2022/06/15 11:41:42 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/06/23 17:22:41 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ int	main(int ac, char *av[], char *env[])
 				ft_clear_arg(temp);
 		}
 	}
-	ft_free_env(env_list);
+	//ft_free_env(env_list);
+	ft_magic_malloc(FLUSH, 0, NULL);
 	return (0);
 }
