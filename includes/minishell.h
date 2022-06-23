@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 09:18:31 by aweaver           #+#    #+#             */
-/*   Updated: 2022/06/22 10:14:11 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/06/23 11:43:01 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ int		ft_set_token(t_arg *args);
 int		ft_check_quotes(char input);
 t_arg	*ft_get_arg(char *input, int *i, t_arg *arg);
 void	*ft_custom_calloc(int size);
+char	**ft_list_to_char(t_arg *list);
 
 /* ************************************************************************ */
 /*								ENV FUNCTIONS								*/
