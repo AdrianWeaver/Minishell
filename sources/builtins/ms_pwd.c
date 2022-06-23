@@ -6,7 +6,7 @@
 /*   By: aweaver <aweaver@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 08:42:01 by aweaver           #+#    #+#             */
-/*   Updated: 2022/05/25 11:37:21 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/06/23 09:49:21 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*ft_get_pwd(void)
 			free(buff);
 		}
 	}
-	return (cwd);
+	return (buff);
 }
 
 void	ft_print_pwd(void)
