@@ -12,6 +12,17 @@
 
 #include "minishell.h"
 
+static void	ft_check_pwd(t_env *env, char *path, t_env *env_pwd)
+{
+	if (env_pwd == NULL)
+		ft_manually_add_one_env(env, "PWD", path);
+	else
+	{
+		env_pwd->content = ft_magic_malloc(FREE, 0, env_pwd->content);
+		env_pwd->content = ft_get_pwd();
+	}
+}
+
 int	ft_cd(t_env *env, char *path)
 {
 	char	*pwd;
@@ -24,13 +35,7 @@ int	ft_cd(t_env *env, char *path)
 	if (success == 0)
 	{
 		env_pwd = ft_find_env_elem(env, "PWD");
-		if (env_pwd == NULL)
-			ft_manually_add_one_env(env, "PWD", path);
-		else
-		{
-			env_pwd->content = ft_magic_malloc(FREE, 0, env_pwd->content);
-			env_pwd->content = ft_get_pwd();
-		}
+		ft_check_pwd(env, path, env_pwd);
 		env_oldpwd = ft_find_env_elem(env, "OLDPWD");
 		if (env_oldpwd == NULL)
 			ft_manually_add_one_env(env, "OLDPWD", pwd);
@@ -41,6 +46,6 @@ int	ft_cd(t_env *env, char *path)
 		}
 		return (0);
 	}
-	fprintf(stderr, "cd: no such file or directory: %s", path);
+	ft_eprintf("cd: no such file or directory: %s", path);
 	return (1);
 }

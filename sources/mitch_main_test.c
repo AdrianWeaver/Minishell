@@ -69,7 +69,7 @@ int	main(int ac, char *av[], char *env[])
 	while (1)
 	{
 		prompt = ft_get_prompt(env_list);
-		line = readline(prompt );
+		line = readline(prompt);
 		free(prompt);
 		if (ft_strcmp(line, "stop") == 0)
 		{
@@ -111,14 +111,14 @@ int	main(int ac, char *av[], char *env[])
 			verif = temp;
 			while (verif)
 			{
-				printf("final content = %s,  token = %d\n", verif->content, verif->token);
+				printf("final content = %s,  token = %d\n", verif->content,
+					verif->token);
 				verif = verif->next;
 			}
 			if (temp)
 				ft_clear_arg(temp);
 		}
 	}
-	//ft_free_env(env_list);
 	ft_magic_malloc(FLUSH, 0, NULL);
 	return (0);
 }

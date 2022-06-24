@@ -24,7 +24,7 @@ int	main(int argc, char **argv, char **env)
 	(void)argc;
 	(void)argv;
 	unset_tester = ft_split("_toto", ' ');
-	export_tester = ft_split("wesh=nedoitpasetrevisible wesh=jesuis:un:path wesh2 wesh3=debut_ wesh3_+=suite", ' ');
+	export_tester = ft_split("h=notvisible h=Im:a:path h2 h3=sta h3_+=rt", ' ');
 	env_list = ft_env_to_list(env);
 	ret = ft_unset(&env_list, unset_tester);
 	export_ret = ft_export(env_list, export_tester);

@@ -12,4 +12,6 @@
 
 #include "minishell.h"
 
-int	ft_parse_builtin()
+int	ft_parse_builtin(void)
+{
+}

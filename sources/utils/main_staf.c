@@ -19,7 +19,7 @@ int	main(void)
 	int	*test2;
 	int	*test3;
 	int	*test4;
-	int *test_hard;
+	int	*test_hard;
 
 	test_hard = malloc(12);
 	test = ft_magic_malloc(MALLOC, (sizeof(*test) * 1), NULL);
@@ -31,8 +31,6 @@ int	main(void)
 	test = ft_magic_malloc(FREE, 0, test);
 	test3 = ft_magic_malloc(FREE, 0, test3);
 	test4 = ft_magic_malloc(FREE, 0, test4);
-	//printf("%i\n", *test);
-	//printf("%p\n", test);
-	//test = ft_magic_malloc(FLUSH, 0, NULL);
 	return (0);
 }
+	//test = ft_magic_malloc(FLUSH, 0, NULL);
