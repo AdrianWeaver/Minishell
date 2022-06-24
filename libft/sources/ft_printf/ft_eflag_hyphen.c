@@ -1,25 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_flag_hyphen.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aweaver <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: aweaver <aweaver@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/30 13:43:38 by aweaver           #+#    #+#             */
-/*   Updated: 2021/12/01 14:09:32 by aweaver          ###   ########.fr       */
+/*   Created: 2022/01/24 17:35:19 by aweaver           #+#    #+#             */
+/*   Updated: 2022/01/24 17:45:57 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libftprintf.h"
 #include "libft.h"
 
-int	ft_putstr_fd(char *s, int fd)
+void	ft_flag_hyphen(t_list_printf *list)
 {
-	int	ret;
-
-	ret = 0;
-	if (!s)
-		return (0);
-	while (*s)
-		ret += ft_putchar_fd(*s++, fd);
-	return (ret);
+	while (list->flag_hyphen == 1 && list->width > 0)
+	{
+		list->ret += ft_putchar(' ');
+		list->width--;
+	}
 }

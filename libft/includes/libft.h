@@ -421,14 +421,14 @@ int		ft_putchar_colour(char c, char *colour);
 # ifndef FT_PUTCHAR_FD_H
 #  define FT_PUTCHAR_FD_H
 
-void	ft_putchar_fd(char c, int fd);
+int		ft_putchar_fd(char c, int fd);
 
 # endif
 
 # ifndef FT_PUTSTR_FD_H
 #  define FT_PUTSTR_FD_H
 
-void	ft_putstr_fd(char *s, int fd);
+int		ft_putstr_fd(char *s, int fd);
 
 # endif
 

@@ -99,7 +99,16 @@ SRCS		=	$(addprefix $(LIBFT_PATH),\
 				ft_flag_hyphen.c			\
 				ft_printf_check_flags.c		\
 				ft_printf_parse.c			\
-				ft_printf.c)
+				ft_printf.c					\
+				ft_eflag_hyphen.c			\
+				ft_eprintf.c				\
+				ft_eprintf_c.c				\
+				ft_eprintf_id.c				\
+				ft_eprintf_o.c				\
+				ft_eprintf_p.c				\
+				ft_eprintf_s.c				\
+				ft_eprintf_u.c				\
+				ft_eprintf_x.c)
 
 OBJS		=	$(addprefix $(OBJS_PATH),$(SRCS:.c=.o))
 

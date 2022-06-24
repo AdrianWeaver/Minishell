@@ -149,4 +149,70 @@ void			ft_printf_parse(const char *str, t_list_printf *list,
 
 void			ft_lstreset(t_list_printf *list);
 # endif
+
+# ifndef FT_ECHECK_PERCENT
+#  define FT_ECHECK_PERCENT
+
+void			ft_echeck_percent(const char *str,
+					t_list_printf *list, va_list params);
+
+# endif
+
+int				ft_eprintf_conversion(const char *str,
+					t_list_printf *list, va_list params);
+# ifndef FT_EPRINTF
+#  define FT_EPRINTF
+
+int				ft_eprintf(const char *str, ...);
+
+# endif
+# ifndef FT_EPRINTF_C
+#  define FT_EPRINTF_C
+
+void			ft_eprintf_c(int c, t_list_printf *list);
+
+# endif
+
+# ifndef FT_EPRINTF_ID
+#  define FT_EPRINTF_ID
+
+void			ft_eprintf_id(int nbr, t_list_printf *list);
+
+# endif
+
+# ifndef FT_EPRINTF_O
+#  define FT_EPRINTF_O
+
+void			ft_eprintf_o(unsigned int unbr,
+					t_list_printf *list, const char *src);
+# endif
+
+# ifndef FT_EPRINTF_P
+#  define FT_EPRINTF_P
+
+void			ft_eprintf_p(unsigned long int addr, t_list_printf *list);
+
+# endif
+
+# ifndef FT_EPRINTF_S
+#  define FT_EPRINTF_S
+
+void			ft_eprintf_s(char *str, t_list_printf *list);
+
+# endif
+
+# ifndef FT_EPRINTF_U
+#  define FT_EPRINTF_U
+
+void			ft_eprintf_u(unsigned int unbr, t_list_printf *list);
+
+# endif
+
+# ifndef FT_EPRINTF_X
+#  define FT_EPRINTF_X
+
+void			ft_eprintf_x(unsigned int unbr,
+					t_list_printf *list, const char *src);
+
+# endif
 #endif
