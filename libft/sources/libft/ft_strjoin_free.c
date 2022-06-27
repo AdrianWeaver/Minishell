@@ -30,6 +30,7 @@ char	*ft_strjoin_free(char *s1, char *s2)
 	str_joined[0] = 0;
 	ft_strcat(str_joined, s1);
 	free(s1);
+	s1 = NULL;
 	ft_strcat(str_joined, s2);
 	return (str_joined);
 }

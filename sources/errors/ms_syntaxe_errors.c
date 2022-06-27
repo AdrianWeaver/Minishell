@@ -15,18 +15,19 @@
 int	ft_clear_and_quit(t_arg *arg, t_arg *head, t_env *env)
 {
 	if (arg == NULL)
-		printf("minishell: syntax error near unexpected token `newline\'\n");
+		ft_eprintf("minishell: syntax error near unexpected token `newline\'\n"
+			);
 	else if (arg->token == TOKEN_INFILE)
-		printf("minishell: syntax error near unexpected token `<\'\n");
+		ft_eprintf("minishell: syntax error near unexpected token `<\'\n");
 	else if (arg->token == TOKEN_HEREDOC)
-		printf("minishell: syntax error near unexpected token `<<\'\n");
+		ft_eprintf("minishell: syntax error near unexpected token `<<\'\n");
 	else if (arg->token == TOKEN_OUTFILE)
-		printf("minishell: syntax error near unexpected token `>\'\n");
+		ft_eprintf("minishell: syntax error near unexpected token `>\'\n");
 	else if (arg->token == TOKEN_APPENDOUT)
-		printf("minishell: syntax error near unexpected token `>>\'\n");
+		ft_eprintf("minishell: syntax error near unexpected token `>>\'\n");
 	else if (arg->token == TOKEN_PIPE)
-		printf("minishell: syntax error near unexpected token `|\'\n");
+		ft_eprintf("minishell: syntax error near unexpected token `|\'\n");
 	ft_clear_arg(head);
-	ft_free_env(env);
+	ft_magic_malloc(FLUSH, 0, NULL);
 	exit(0);
 }

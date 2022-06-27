@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   ms_env_to_char.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aweaver <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: aweaver <aweaver@42.fr>                     +#+  +:+       +#+       */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 12:02:09 by aweaver           #+#    #+#             */
 /*   Updated: 2022/06/23 14:16:22 by aweaver          ###   ########.fr       */

@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   main_staf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aweaver <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: aweaver <aweaver@42.fr>                     +#+  +:+       +#+       */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 15:14:06 by aweaver           #+#    #+#             */
 /*   Updated: 2022/06/23 13:55:05 by aweaver          ###   ########.fr       */

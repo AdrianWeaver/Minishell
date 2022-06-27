@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   ms_free_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aweaver <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: aweaver <aweaver@42.fr>                     +#+  +:+       +#+       */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 17:27:33 by aweaver           #+#    #+#             */
 /*   Updated: 2022/06/23 16:38:57 by aweaver          ###   ########.fr       */
@@ -37,7 +37,6 @@ void	ft_free_double_array(char **str)
 /*	RET : void																*/
 /* ************************************************************************ */
 
-//one case needs to be addressed if env is composed of only 1 element.
 void	ft_cleanly_delone_env(t_env **env_start, t_env *target)
 {
 	t_env	*env_list;

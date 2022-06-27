@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   ms_print_env.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aweaver <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: aweaver <aweaver@42.fr>                     +#+  +:+       +#+       */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 14:29:57 by aweaver           #+#    #+#             */
 /*   Updated: 2022/05/19 11:41:43 by aweaver          ###   ########.fr       */

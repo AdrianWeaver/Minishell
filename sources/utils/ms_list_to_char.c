@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ms_list_to_char.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aweaver <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: aweaver <aweaver@42.fr>                     +#+  +:+       +#+       */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 10:37:54 by aweaver           #+#    #+#             */
 /*   Updated: 2022/06/23 14:13:20 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "minishell.h"
 
 static int	ft_get_cmd_nb(t_arg *list)
 {

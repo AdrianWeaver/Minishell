@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   ms_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aweaver <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: aweaver <aweaver@42.fr>                     +#+  +:+       +#+       */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 17:58:52 by aweaver           #+#    #+#             */
 /*   Updated: 2022/05/17 14:31:23 by aweaver          ###   ########.fr       */
@@ -37,7 +37,7 @@ int	ft_unset(t_env **env_list, char **to_erase)
 		else
 		{
 			ret++;
-			fprintf(stderr, "unset: '%s': not a valid identifier\n", *to_erase);
+			ft_eprintf("unset: '%s': not a valid identifier\n", *to_erase);
 		}
 		to_erase++;
 	}

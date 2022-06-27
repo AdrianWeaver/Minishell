@@ -84,6 +84,8 @@ void	ft_print_env(t_env *env_list);
 char	**ft_env_to_char(t_env *env);
 t_env	*ft_env_to_list(char **env);
 int		ft_env_size(t_env *env);
+int		ft_is_valid_env_variable(char *str);
+void	ft_deal_with_existing_env_var(t_env **env_list, t_env *to_add);
 void	ft_manually_add_one_env(t_env *env_list, char *name, char *content);
 
 /* ************************************************************************ */
@@ -103,16 +105,14 @@ t_mlc	*ft_malloc_list_add_back(t_mlc **mlc_list, t_mlc *new_mlc);
 /* ************************************************************************ */
 
 /* unset */
-int		ft_is_valid_env_variable(char *str);
 t_env	*ft_find_env_elem(t_env *env_list, char *name);
 int		ft_unset(t_env **env_list, char **name);
-int		ft_export(t_env *env_list, char **to_add);
 void	ft_print_pwd(void);
 char	*ft_get_pwd(void);
 int		ft_cd(t_env *env, char *path);
 
 /* export */
-int		ft_export(t_env *env_list, char **to_add);
+int		ft_export(t_env **env_list, char **to_add);
 
 /*  echo  */
 int		ft_echo_n_opt(t_arg *arg);

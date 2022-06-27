@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   ms_magic_malloc.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aweaver <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: aweaver <aweaver@42.fr>                     +#+  +:+       +#+       */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 14:24:51 by aweaver           #+#    #+#             */
 /*   Updated: 2022/06/23 17:20:46 by aweaver          ###   ########.fr       */

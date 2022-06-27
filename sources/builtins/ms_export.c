@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aweaver <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: aweaver <aweaver@42.fr>                     +#+  +:+       +#+       */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 14:29:15 by aweaver           #+#    #+#             */
-/*   Updated: 2022/06/23 16:40:02 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/06/27 16:46:18 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,28 @@
 /*	RET: returns the address of the element seeked for						*/
 /* ************************************************************************ */
 
-void	ft_export_check_haters(t_env *env_list, t_env *to_add)
+void	ft_export_check_haters(t_env **env_list, t_env *to_add)
 {
 	int		i;
 	t_env	*old_env_var;
 
 	i = 0;
-	old_env_var = ft_find_env_elem(env_list, to_add->name);
+	old_env_var = ft_find_env_elem(*env_list, to_add->name);
 	while (to_add->name[i])
 	{
 		if (to_add->name[i] == '+' && to_add->name[i + 1] == '\0')
-			ft_strjoin(old_env_var->content, to_add->content);
+		{
+			old_env_var->content = ft_strjoin_free(old_env_var->content,
+					to_add->content);
+			ft_magic_malloc(FREE, 0, to_add);
+			break ;
+		}
+		else if (to_add->name[i] != '\0' && to_add->name[i + 1] == '\0')
+		{
+			ft_env_add_back(env_list, to_add);
+			ft_cleanly_delone_env(env_list, old_env_var);
+			break ;
+		}
 		i++;
 	}
 }
@@ -39,15 +50,18 @@ void	ft_export_check_haters(t_env *env_list, t_env *to_add)
  * RET: void
  * *************************************************************************/
 
-void	ft_deal_with_double_env_var(t_env *env_list, t_env *to_add)
+void	ft_deal_with_existing_env_var(t_env **env_list, t_env *to_add)
 {
 	t_env	*old_env_var;
 
-	old_env_var = ft_find_env_elem(env_list, to_add->name);
+	old_env_var = ft_find_env_elem(*env_list, to_add->name);
 	if (old_env_var != NULL)
 	{
 		ft_export_check_haters(env_list, to_add);
-		ft_cleanly_delone_env(&env_list, old_env_var);
+	}
+	else
+	{
+		ft_env_add_back(env_list, to_add);
 	}
 }
 
@@ -58,7 +72,7 @@ void	ft_deal_with_double_env_var(t_env *env_list, t_env *to_add)
  * 		here returns 0 or >0 if one of the args failed
  * *************************************************************************/
 
-int	ft_export(t_env *env_list, char **to_add)
+int	ft_export(t_env **env_list, char **to_add)
 {
 	t_env	*tmp_element;
 	int		ret;
@@ -66,15 +80,14 @@ int	ft_export(t_env *env_list, char **to_add)
 	ret = 0;
 	while (*to_add)
 	{
-		tmp_element = ft_get_env_element(env_list, *to_add);
+		tmp_element = ft_get_env_element(*env_list, *to_add);
 		if (ft_is_valid_env_variable(tmp_element->name) == 1)
 		{
-			ft_deal_with_double_env_var(env_list, tmp_element);
-			ft_env_add_back(&env_list, tmp_element);
+			ft_deal_with_existing_env_var(env_list, tmp_element);
 		}
 		else
 		{
-			fprintf(stderr, "export: '%s': not valid identifier",
+			ft_eprintf("export: '%s': not valid identifier",
 				tmp_element->name);
 			ft_delone_env(tmp_element);
 			ret++;
