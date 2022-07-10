@@ -49,7 +49,7 @@ SRCS 			=	mitch_main_test.c	\
 						ms_cat_expansion.c \
 					 )\
 					$(addprefix $(SRCS_ERRORS),		\
-						ms_syntaxe_errors.c	\
+						ms_syntax_errors.c	\
 					 )\
 					$(addprefix $(SRCS_UTILS),		\
 						ms_args_lst_utils.c	\

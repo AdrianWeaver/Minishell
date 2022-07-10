@@ -18,15 +18,15 @@
 
 t_arg	*ft_get_args(char *input);
 t_arg	*ft_get_arg(char *input, int *i, t_arg *arg);
-t_arg	*ft_get_infile(t_arg *arg, t_arg *head, t_env *env);
-t_arg	*ft_get_heredoc(t_arg *arg, t_arg *head, t_env *env);
-t_arg	*ft_get_outfile(t_arg *arg, t_arg *head, t_env *env);
-t_arg	*ft_get_appendout(t_arg *arg, t_arg *head, t_env *env);
+t_arg	*ft_get_infile(t_arg *arg, t_arg *head);
+t_arg	*ft_get_heredoc(t_arg *arg, t_arg *head);
+t_arg	*ft_get_outfile(t_arg *arg, t_arg *head);
+t_arg	*ft_get_appendout(t_arg *arg, t_arg *head);
 char	*ft_get_prompt(t_env *env_list);
 char	*ft_get_short_path(t_env *user, char *cwd);
-void	ft_get_redirections(t_arg *arg, t_env *env);
-int		ft_check_double_pipe(t_arg *arg, t_arg *head, t_env *env);
-int		ft_clear_and_quit(t_arg *arg, t_arg *head, t_env *env);
+void	ft_get_redirections(t_arg *arg);
+int		ft_check_double_pipe(t_arg *arg, t_arg *head);
+int		ft_clear_and_quit(t_arg *arg, t_arg *head);
 int		ft_set_token(t_arg *args);
 int		ft_check_op(char c);
 int		ft_check_arg(char c);

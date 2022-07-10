@@ -140,12 +140,12 @@ t_arg	*ft_get_arg(char *input, int *i, t_arg *arg)
 	return (arg);
 }
 
-int	ft_check_double_pipe(t_arg *arg, t_arg *head, t_env *env)
+int	ft_check_double_pipe(t_arg *arg, t_arg *head)
 {
 	if (arg->token == TOKEN_PIPE)
 	{
 		if (arg->next == NULL || arg->next->token == TOKEN_PIPE)
-			ft_clear_and_quit(arg->next, head, env);
+			ft_clear_and_quit(arg->next, head);
 	}
 	return (0);
 }

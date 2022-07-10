@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int	ft_clear_and_quit(t_arg *arg, t_arg *head, t_env *env)
+int	ft_clear_and_quit(t_arg *arg, t_arg *head)
 {
 	if (arg == NULL)
 		ft_eprintf("minishell: syntax error near unexpected token `newline\'\n"

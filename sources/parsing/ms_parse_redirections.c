@@ -21,7 +21,7 @@
 /*	RET : a pointer to a t_arg element                                        */
 /* ************************************************************************** */
 
-t_arg	*ft_get_infile(t_arg *arg, t_arg *head, t_env *env)
+t_arg	*ft_get_infile(t_arg *arg, t_arg *head)
 {
 	t_arg	*temp;
 	char	*tmp;
@@ -37,7 +37,7 @@ t_arg	*ft_get_infile(t_arg *arg, t_arg *head, t_env *env)
 		&& ft_strlen(arg->content) == 1)
 	{
 		if (arg->next == NULL || arg->next->token != TOKEN_CMD)
-			ft_clear_and_quit(arg->next, head, env);
+			ft_clear_and_quit(arg->next, head);
 		temp = arg->next;
 		temp->token = TOKEN_INFILE;
 		return (temp);
@@ -51,7 +51,7 @@ t_arg	*ft_get_infile(t_arg *arg, t_arg *head, t_env *env)
 /*	RET : a pointer to a t_arg element                                        */
 /* ************************************************************************** */
 
-t_arg	*ft_get_heredoc(t_arg *arg, t_arg *head, t_env *env)
+t_arg	*ft_get_heredoc(t_arg *arg, t_arg *head)
 {
 	t_arg	*temp;
 	char	*tmp;
@@ -67,7 +67,7 @@ t_arg	*ft_get_heredoc(t_arg *arg, t_arg *head, t_env *env)
 		&& ft_strlen(arg->content) == 2)
 	{
 		if (arg->next == NULL || arg->next->token != TOKEN_CMD)
-			ft_clear_and_quit(arg->next, head, env);
+			ft_clear_and_quit(arg->next, head);
 		temp = arg->next;
 		temp->token = TOKEN_HEREDOC;
 		return (temp);
@@ -84,7 +84,7 @@ t_arg	*ft_get_heredoc(t_arg *arg, t_arg *head, t_env *env)
 /*	RET : a pointer to a t_arg element                                        */
 /* ************************************************************************** */
 
-t_arg	*ft_get_outfile(t_arg *arg, t_arg *head, t_env *env)
+t_arg	*ft_get_outfile(t_arg *arg, t_arg *head)
 {
 	t_arg	*temp;
 	char	*tmp;
@@ -100,7 +100,7 @@ t_arg	*ft_get_outfile(t_arg *arg, t_arg *head, t_env *env)
 		&& ft_strlen(arg->content) == 1)
 	{
 		if (arg->next == NULL || arg->next->token != TOKEN_CMD)
-			ft_clear_and_quit(arg->next, head, env);
+			ft_clear_and_quit(arg->next, head);
 		temp = arg->next;
 		temp->token = TOKEN_OUTFILE;
 		return (temp);
@@ -114,7 +114,7 @@ t_arg	*ft_get_outfile(t_arg *arg, t_arg *head, t_env *env)
 /*	RET : a pointer to a t_arg element                                        */
 /* ************************************************************************** */
 
-t_arg	*ft_get_appendout(t_arg *arg, t_arg *head, t_env *env)
+t_arg	*ft_get_appendout(t_arg *arg, t_arg *head)
 {
 	t_arg	*temp;
 	char	*tmp;
@@ -130,7 +130,7 @@ t_arg	*ft_get_appendout(t_arg *arg, t_arg *head, t_env *env)
 		&& ft_strlen(arg->content) == 2)
 	{
 		if (arg->next == NULL || arg->next->token != TOKEN_CMD)
-			ft_clear_and_quit(arg->next, head, env);
+			ft_clear_and_quit(arg->next, head);
 		temp = arg->next;
 		temp->token = TOKEN_APPENDOUT;
 		return (temp);

@@ -37,18 +37,18 @@ int	ft_test(t_arg *arg, t_env *env)
 	return (0);
 }
 
-void	ft_get_redirections(t_arg *arg, t_env *env)
+void	ft_get_redirections(t_arg *arg)
 {
 	t_arg	*head;
 
 	head = arg;
 	while (arg)
 	{
-		arg = ft_get_infile(arg, head, env);
-		arg = ft_get_heredoc(arg, head, env);
-		arg = ft_get_outfile(arg, head, env);
-		arg = ft_get_appendout(arg, head, env);
-		ft_check_double_pipe(arg, head, env);
+		arg = ft_get_infile(arg, head);
+		arg = ft_get_heredoc(arg, head);
+		arg = ft_get_outfile(arg, head);
+		arg = ft_get_appendout(arg, head);
+		ft_check_double_pipe(arg, head);
 		printf("redirect, content = %s, token = %d\n", arg->content, arg->token);
 		arg = arg->next;
 	}
@@ -86,7 +86,7 @@ int	main(int ac, char *av[], char *env[])
 		{
 			ft_set_token(verif);
 			temp = verif;
-			ft_get_redirections(verif, env_list);
+			ft_get_redirections(verif);
 			while (verif != NULL)
 			{
 				if (verif->token == TOKEN_CMD)
