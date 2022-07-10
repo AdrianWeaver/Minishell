@@ -30,10 +30,9 @@ int	ft_test(t_arg *arg, t_env *env)
 		return (-1);
 	ft_final_string(arg, pieces, flags, env);
 	if (flags)
-		free(flags);
+		flags = ft_magic_malloc(FREE, 0, flags);
 	ft_remove_quotes(arg, dq);
-	if (dq)
-		free(dq);
+	dq = ft_magic_malloc(FREE, 0, dq);
 	return (0);
 }
 
@@ -70,18 +69,18 @@ int	main(int ac, char *av[], char *env[])
 	{
 		prompt = ft_get_prompt(env_list);
 		line = readline(prompt);
-		free(prompt);
+		prompt = ft_magic_malloc(FREE, 0, prompt);
 		if (ft_strcmp(line, "stop") == 0)
 		{
 			if (verif)
 			{
-				free(line);
+				line = ft_magic_malloc(FREE, 0, line);
 				ft_clear_arg(verif);
 			}
 			break ;
 		}
 		verif = ft_get_args(line);
-		free(line);
+		line = ft_magic_malloc(FREE, 0, line);
 		if (verif != NULL)
 		{
 			ft_set_token(verif);
@@ -96,7 +95,7 @@ int	main(int ac, char *av[], char *env[])
 						printf("Missing or extra dquote\n");
 						ft_clear_arg(temp);
 						ft_free_env(env_list);
-						free(line);
+						line = ft_magic_malloc(FREE, 0, line);
 						exit(1);
 					}
 				}
