@@ -30,6 +30,7 @@
 # include <stdlib.h>
 # include <sys/types.h>
 # include <fcntl.h>
+# include <wait.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <stdio.h>
@@ -38,6 +39,7 @@
 # include "minishell_parsing.h"
 # include "libft.h"
 # include "libftprintf.h"
+# include "get_next_line.h"
 
 /* ************************************************************************ */
 /*								PARSING										*/
@@ -109,6 +111,8 @@ t_env	*ft_find_env_elem(t_env *env_list, char *name);
 int		ft_unset(t_env **env_list, char **name);
 void	ft_print_pwd(void);
 char	*ft_get_pwd(void);
+
+/* cd */
 int		ft_cd(t_env *env, char *path);
 
 /* export */
@@ -116,9 +120,21 @@ int		ft_export(t_env **env_list, char **to_add);
 
 /*  echo  */
 int		ft_echo_n_opt(t_arg *arg);
-int		ft_echo_nbr_cmd(t_arg *arg);
+t_arg	*ft_echo_skip_opt(t_arg *arg, int *n_opt);
 int		ft_echo(t_arg *arg);
 
 void	ft_builtin_parser(t_arg *arg);
+
+/* ************************************************************************ */
+/*								REDIRECTION FUNCTIONS            			*/
+/* ************************************************************************ */
+
+int		ft_heredoc(t_arg *arg, t_env *env);
+void	ft_fill_heredoc(int file, char *delim, int flag, t_env *env);
+int		ft_check_delim(t_arg *arg);
+char	*ft_expand_heredoc(char *line, t_env *env);
+int		ft_count_hd_expand(char *line, char *flags, t_env *env);
+char	*ft_final_hd_string(char *line, char **pieces, char *flags, t_env *env);
+void	ft_get_hd_strings(char *line, char **pieces, char *flags, t_env *env);
 
 #endif

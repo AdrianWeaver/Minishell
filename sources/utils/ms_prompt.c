@@ -46,14 +46,15 @@ char	*ft_get_short_path(t_env *user, char *cwd)
 	i = 0;
 	while (cwd[i])
 	{
-		path = ft_strchr(cwd, user->content[0]);
+		path = ft_strchr(&cwd[i], user->content[0]);
 		if (path)
 		{
 			if (ft_strncmp(path, user->content, ft_strlen(user->content)) == 0)
 			{
 				tmp = ft_strdup(&path[ft_strlen(user->content) + 1]);
+				ft_magic_malloc(ADD, 0, tmp);
 				path = ft_strjoin("~/", tmp);
-				tmp = ft_magic_malloc(FREE, 0, tmp);
+				tmp = ft_magic_malloc(FREE, 0, NULL);
 				return (path);
 			}
 		}

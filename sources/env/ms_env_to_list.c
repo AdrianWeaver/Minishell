@@ -51,11 +51,11 @@ void	ft_env_add_back(t_env **env_start, t_env *new)
 	}
 }
 
-/* **************************************************************************
- *	ACT : Used to get the content of an env var and deals with +=
- *	ARG : the env as a list, name of var, content of var and flag + (0 or 1)
- *	RET : returns the created content
- * **************************************************************************/
+/* ************************************************************************** */
+/*	ACT : Used to get the content of an env var and deals with +=             */
+/*	ARG : the env as a list, name of var, content of var and flag + (0 or 1)  */
+/*	RET : returns the created content                                         */
+/* ************************************************************************** */
 
 char	*ft_env_get_content(t_env *env_list, char *name, char *env_line,
 		int flag_plus)

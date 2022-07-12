@@ -14,9 +14,9 @@
 
 int	ft_count_expand(t_arg *arg, char *flags, t_env *env)
 {
-	int		exp;
-	int		i;
-	int		st;
+	int	exp;
+	int	i;
+	int	st;
 
 	exp = 0;
 	i = 0;
@@ -25,17 +25,17 @@ int	ft_count_expand(t_arg *arg, char *flags, t_env *env)
 	while (arg->content[i] != '\0')
 	{
 		st = i;
-		while (arg->content[i] && flags[i] != '2' && flags[i] != '1')
+		while (flags[i] && flags[i] != '2' && flags[i] != '1')
 			i++;
 		if (i > st)
 			exp++;
-		if (arg->content[i] && flags[i] == '2'
+		if (flags[i] && flags[i] == '2'
 			&& ft_check_var(&arg->content[i], env) > 0)
 		{
 			exp++;
 			i += ft_set_q_jump(&arg->content[i + 1]) + 1;
 		}
-		else if (arg->content[i] && flags[i] == '1')
+		else if (flags[i] && flags[i] == '1')
 			i += ft_set_q_jump(&arg->content[i + 1]) + 1;
 	}
 	return (exp);
@@ -83,28 +83,28 @@ int	ft_expand_size(char *str, t_env *env)
 
 char	*ft_get_expanded(char *str, t_env *env)
 {
-	t_env	*temp;
 	char	*var_ret;
 	char	*name;
 	int		len;
 
 	len = 0;
-	temp = env;
 	var_ret = NULL;
 	while (ft_isalnum(str[len]) == 1 || str[len] == '_')
 		len++;
 	name = ft_substr(str, 0, len);
+	ft_magic_malloc(ADD, 0, name);
 	if (!name)
 		return (NULL);
-	while (temp != NULL)
+	while (env != NULL)
 	{
-		if (ft_strcmp(temp->name, name) == 0)
+		if (ft_strcmp(env->name, name) == 0)
 		{
-			var_ret = ft_strdup(temp->content);
+			var_ret = ft_strdup(env->content);
+			ft_magic_malloc(ADD, 0, var_ret);
 			break ;
 		}
-		temp = temp->next;
+		env = env->next;
 	}
-	free(name);
+	name = ft_magic_malloc(FREE, 0, name);
 	return (var_ret);
 }

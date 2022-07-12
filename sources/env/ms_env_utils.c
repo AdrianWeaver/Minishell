@@ -42,6 +42,10 @@ int	ft_is_valid_env_variable(char *str)
 	int	i;
 
 	i = 0;
+	if (str == NULL)
+		return (0);
+	if (ft_isdigit(str[0]) == 1)
+		return (0);
 	while (str[i])
 	{
 		if (ft_isalnum(str[i]) == 0 && str[i] != '_')

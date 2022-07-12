@@ -49,7 +49,7 @@ char	*ft_get_var_pos(char *str, t_env *env)
 		return (NULL);
 	while (str[i])
 	{
-		if (str[i] == '$' && ft_check_var(&str[i], env) > 0)
+		if (str[i] == '$' && str[i + 1] && ft_check_var(&str[i], env) > 0)
 			flags[i] = '2';
 		else if (str[i] == '$' && str[i + 1] && ft_set_q_jump(&str[i + 1]) > 0)
 			flags[i] = '1';

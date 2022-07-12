@@ -32,8 +32,6 @@ int	ft_remove_quotes(t_arg *arg, int *dq_nbr)
 	t = -1;
 	temp = ft_magic_malloc(MALLOC, sizeof(char) * (ft_strlen(arg->content)
 				+ 1), NULL);
-	if (!temp)
-		return (-1);
 	while (arg->content[i] != '\0')
 	{
 		if (j <= dq_nbr[0] && i == dq_nbr[j])
@@ -45,6 +43,7 @@ int	ft_remove_quotes(t_arg *arg, int *dq_nbr)
 	temp[++t] = '\0';
 	arg->content = ft_magic_malloc(FREE, 0, arg->content);
 	arg->content = ft_strdup(temp);
+	ft_magic_malloc(ADD, 0, arg->content);
 	temp = ft_magic_malloc(FREE, 0, temp);
 	return (0);
 }
@@ -73,7 +72,7 @@ int	*ft_count_quotes(t_arg *arg)
 			delim = arg->content[i];
 			dq++;
 		}
-		while (delim != 'n' && arg->content[++i] && arg->content[i] != delim)
+		while (delim != '\0' && arg->content[++i] && arg->content[i] != delim)
 			;
 		if (arg->content[i] && arg->content[i] == delim)
 			dq++;
@@ -93,6 +92,7 @@ int	*ft_lock_quote_pos(t_arg *arg, int dq)
 	dq_nbr = calloc(sizeof(int), dq + 1);
 	if (!dq_nbr)
 		return (NULL);
+	ft_magic_malloc(ADD, 0, dq_nbr);
 	dq_nbr[0] = dq;
 	ft_fill_q_tab(arg->content, dq_nbr);
 	return (dq_nbr);
@@ -149,7 +149,7 @@ void	ft_fill_q_tab(char *str, int *dq_nbr)
 			delim = str[i];
 			dq_nbr[++j] = i;
 		}
-		if (delim != 'n')
+		if (delim != '\0')
 		{
 			while (str[++i] && str[i] != delim)
 				;

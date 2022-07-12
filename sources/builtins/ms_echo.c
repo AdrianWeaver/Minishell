@@ -14,44 +14,48 @@
 
 int	ft_echo_n_opt(t_arg *arg)
 {
-	int	n_opt;
+	int		n_opt;
+	size_t	i;
 
 	n_opt = 0;
-	if (arg && ft_strcmp(arg->content, "-n") == 0)
-		n_opt = 1;
+	i = 1;
+	if (arg && arg->content[0] == '-')
+	{
+		while (arg->content[i] && arg->content[i] == 'n')
+			i++;
+		if (i == ft_strlen(arg->content))
+			n_opt = 1;
+	}
 	return (n_opt);
 }
 
-int	ft_echo_nbr_cmd(t_arg *arg)
+t_arg	*ft_echo_skip_opt(t_arg *arg, int *n_opt)
 {
-	int	nbr_cmd;
-
-	nbr_cmd = 0;
-	while (arg && arg->token != TOKEN_PIPE)
+	while (arg)
 	{
-		if (arg->token == TOKEN_CMD)
-			nbr_cmd++;
-		arg = arg->next;
+		if (ft_echo_n_opt(arg) == 1)
+		{
+			arg = arg->next;
+			*n_opt = 1;
+		}
+		else
+			break ;
 	}
-	return (nbr_cmd);
+	return (arg);
 }
 
 int	ft_echo(t_arg *arg)
 {
 	char	*to_print;
-	int		nbr_cmd;
 	int		n_opt;
 
-	n_opt = ft_echo_n_opt(arg);
-	if (n_opt == 1)
-		arg = arg->next;
-	nbr_cmd = ft_echo_nbr_cmd(arg);
+	n_opt = 0;
+	arg = ft_echo_skip_opt(arg, &n_opt);
 	to_print = ft_calloc(1, 1);
 	while (arg && arg->token == TOKEN_CMD)
 	{
 		to_print = ft_strjoin_free(to_print, arg->content);
-		nbr_cmd--;
-		if (nbr_cmd > 0)
+		if (arg->next && arg->next->token == TOKEN_CMD)
 			to_print = ft_strjoin_free(to_print, " ");
 		arg = arg->next;
 	}

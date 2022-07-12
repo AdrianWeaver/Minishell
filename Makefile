@@ -30,7 +30,7 @@ SRCS_ERRORS		=	./errors/
 SRCS_BUILTINS	=	./builtins/
 SRCS_ENV		=	./env/
 SRCS_UTILS		=	./utils/
-SRCS_ENV		=	./env/
+SRCS_REDIRECT	=	./redirections/
 
 
 #############################################################################
@@ -73,6 +73,10 @@ SRCS 			=	mitch_main_test.c	\
 						ms_cd.c		\
 						ms_builtin_parser.c \
 						ms_echo.c \
+					)\
+					$(addprefix $(SRCS_REDIRECT),		\
+						ms_heredoc.c \
+						ms_expand_heredoc.c \
 					)
 
 OBJS			=	$(addprefix $(OBJS_PATH), $(SRCS:.c=.o))

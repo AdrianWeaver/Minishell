@@ -70,7 +70,7 @@ int	main(int ac, char *av[], char *env[])
 		prompt = ft_get_prompt(env_list);
 		line = readline(prompt);
 		prompt = ft_magic_malloc(FREE, 0, prompt);
-		if (ft_strcmp(line, "stop") == 0)
+		if (line == NULL || ft_strcmp(line, "stop") == 0)
 		{
 			if (verif)
 			{
@@ -88,7 +88,10 @@ int	main(int ac, char *av[], char *env[])
 			ft_get_redirections(verif);
 			while (verif != NULL)
 			{
-				if (verif->token == TOKEN_CMD)
+				if (verif->token == TOKEN_HEREDOC && verif->content[0] != '<')
+					ft_heredoc(verif, env_list);
+				printf("token == %d\n", verif->token);
+				if (ft_test(verif, env_list) == -1)
 				{
 					if (ft_test(verif, env_list) == -1)
 					{
@@ -118,6 +121,9 @@ int	main(int ac, char *av[], char *env[])
 				ft_clear_arg(temp);
 		}
 	}
+	// free(line);
+	ft_clear_arg(verif);
+	// ft_free_env(env_list);
 	ft_magic_malloc(FLUSH, 0, NULL);
 	return (0);
 }
