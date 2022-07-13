@@ -107,7 +107,7 @@ int	main(int ac, char *av[], char *env[])
 			verif = temp;
 			while (verif)
 			{
-				ft_builtin_parser(verif);
+				ft_builtin_parser(&env_list, verif);
 				verif = verif->next;
 			}
 			verif = temp;

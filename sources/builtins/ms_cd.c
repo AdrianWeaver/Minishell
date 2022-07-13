@@ -6,7 +6,7 @@
 /*   By: aweaver <aweaver@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 13:04:22 by aweaver           #+#    #+#             */
-/*   Updated: 2022/06/27 19:11:06 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/07/12 17:32:30 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,6 @@ int	ft_cd(t_env *env, char *path)
 		}
 		return (0);
 	}
-	ft_eprintf("cd: no such file or directory: %s", path);
+	ft_eprintf("cd: no such file or directory: %s\n", path);
 	return (1);
 }

@@ -59,7 +59,6 @@ void	ft_final_string(t_arg *arg, char **pieces, char *flags, t_env *env);
 void	ft_get_strings(t_arg *arg, char **pieces, char *flags, t_env *env);
 int		ft_test(t_arg *arg, t_env *env);
 
-void	ft_builtin_parser(t_arg *arg);
 int		ft_redirection(t_arg *arg);
 int		ft_redirection_in(t_arg *arg);
 int		ft_redirection_out(t_arg *arg);

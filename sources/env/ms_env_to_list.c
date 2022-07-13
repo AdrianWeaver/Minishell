@@ -64,17 +64,18 @@ char	*ft_env_get_content(t_env *env_list, char *name, char *env_line,
 	char	*joined;
 
 	if (!env_line)
-		return (ft_strdup(""));
+		return (ft_magic_malloc(ADD, 0, ft_strdup("")));
 	if (flag_plus == 0)
-		return (ft_strdup(env_line));
+		return (ft_magic_malloc(ADD, 0, ft_strdup(env_line)));
 	else
 	{
 		old_env = ft_find_env_elem(env_list, name);
 		if (old_env == NULL)
-			return (ft_strdup(env_line));
+			return (ft_magic_malloc(ADD, 0, ft_strdup(env_line)));
 		else
 		{
-			joined = ft_strjoin(old_env->content, env_line);
+			joined = ft_magic_malloc(ADD, 0, ft_strjoin(old_env->content,
+						env_line));
 			old_env->content = ft_magic_malloc(FREE, 0, old_env->content);
 			return (joined);
 		}
@@ -108,7 +109,6 @@ t_env	*ft_get_env_element(t_env *env_list, char *env_line)
 		i++;
 	tmp_element->content = ft_env_get_content(env_list, tmp_element->name,
 			&env_line[i], flag_plus);
-	ft_magic_malloc(ADD, 0, tmp_element->content);
 	tmp_element->next = NULL;
 	return (tmp_element);
 }

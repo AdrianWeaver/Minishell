@@ -58,6 +58,7 @@ SRCS 			=	mitch_main_test.c	\
 						ms_mlc_lst_utils.c		\
 						ms_redirection.c \
 						ms_prompt.c \
+						ms_list_to_char.c\
 					)\
 					$(addprefix $(SRCS_ENV), \
 						ms_env_to_list.c \

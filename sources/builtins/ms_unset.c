@@ -29,10 +29,10 @@ int	ft_unset(t_env **env_list, char **to_erase)
 		if (ft_is_valid_env_variable(*to_erase) == 1)
 		{
 			target = ft_find_env_elem(*env_list, *to_erase);
-			if (target != 0)
-				ft_cleanly_delone_env(env_list, target);
-			else if (target == NULL)
+			if (target == NULL)
 				ret++;
+			else
+				ft_cleanly_delone_env(env_list, target);
 		}
 		else
 		{

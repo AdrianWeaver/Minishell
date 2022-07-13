@@ -123,7 +123,7 @@ int		ft_echo_n_opt(t_arg *arg);
 t_arg	*ft_echo_skip_opt(t_arg *arg, int *n_opt);
 int		ft_echo(t_arg *arg);
 
-void	ft_builtin_parser(t_arg *arg);
+void	ft_builtin_parser(t_env **env, t_arg *arg);
 
 /* ************************************************************************ */
 /*								REDIRECTION FUNCTIONS            			*/
