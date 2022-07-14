@@ -78,6 +78,10 @@ SRCS 			=	mitch_main_test.c	\
 					$(addprefix $(SRCS_REDIRECT),		\
 						ms_heredoc.c \
 						ms_expand_heredoc.c \
+					)\
+					$(addprefix $(SRCS_EXEC),	\
+						ms_exec.c \
+						ms_exec_tools.c\
 					)
 
 OBJS			=	$(addprefix $(OBJS_PATH), $(SRCS:.c=.o))
