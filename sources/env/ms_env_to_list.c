@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 14:31:25 by aweaver           #+#    #+#             */
-/*   Updated: 2022/06/23 17:27:39 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/07/14 17:58:54 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,8 @@ char	*ft_env_get_content(t_env *env_list, char *name, char *env_line,
 	char	*joined;
 
 	if (!env_line)
-		return (ft_magic_malloc(ADD, 0, ft_strdup("")));
+		return (NULL);
+		//return (ft_magic_malloc(ADD, 0, ft_strdup("")));
 	if (flag_plus == 0)
 		return (ft_magic_malloc(ADD, 0, ft_strdup(env_line)));
 	else
@@ -106,9 +107,13 @@ t_env	*ft_get_env_element(t_env *env_list, char *env_line)
 	tmp_element->name = ft_strndup(env_line, i - flag_plus);
 	ft_magic_malloc(ADD, 0, tmp_element->name);
 	if (env_line[i] == '=')
+	{
 		i++;
-	tmp_element->content = ft_env_get_content(env_list, tmp_element->name,
-			&env_line[i], flag_plus);
+		tmp_element->content = ft_env_get_content(env_list, tmp_element->name,
+				&env_line[i], flag_plus);
+	}
+	else
+		tmp_element->content = NULL;
 	tmp_element->next = NULL;
 	return (tmp_element);
 }
