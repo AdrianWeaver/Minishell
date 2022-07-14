@@ -21,14 +21,17 @@ void	ft_final_string(t_arg *arg, char **pieces, char *flags, t_env *env)
 	final = NULL;
 	ft_get_strings(arg, pieces, flags, env);
 	final = ft_strdup(pieces[0]);
+	if (pieces[0] != NULL)
+	{
+		while (pieces && pieces[i] != NULL)
+		{
+			final = ft_strjoin_free(final, pieces[i]);
+			pieces[i] = ft_magic_malloc(FREE, 0, pieces[i]);
+			i++;
+		}
+	}
 	if (pieces[0])
 		pieces[0] = ft_magic_malloc(FREE, 0, pieces[0]);
-	while (pieces && pieces[i] != NULL)
-	{
-		final = ft_strjoin_free(final, pieces[i]);
-		pieces[i] = ft_magic_malloc(FREE, 0, pieces[i]);
-		i++;
-	}
 	if (pieces)
 		pieces = ft_magic_malloc(FREE, 0, pieces);
 	if (arg->content)
