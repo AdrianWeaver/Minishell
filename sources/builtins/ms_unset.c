@@ -6,7 +6,7 @@
 /*   By: aweaver <aweaver@42.fr>                     +#+  +:+       +#+       */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 17:58:52 by aweaver           #+#    #+#             */
-/*   Updated: 2022/05/17 14:31:23 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/07/14 15:26:52 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	ft_unset(t_env **env_list, char **to_erase)
 		else
 		{
 			ret++;
-			ft_eprintf("unset: '%s': not a valid identifier\n", *to_erase);
+			ft_eprintf("unset: `%s': not a valid identifier\n", *to_erase);
 		}
 		to_erase++;
 	}

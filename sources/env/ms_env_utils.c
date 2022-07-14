@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 13:25:39 by aweaver           #+#    #+#             */
-/*   Updated: 2022/06/23 14:18:51 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/07/14 15:21:42 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	ft_is_valid_env_variable(char *str)
 	int	i;
 
 	i = 0;
-	if (str == NULL)
+	if (str == NULL || str[0] == 0)
 		return (0);
 	if (ft_isdigit(str[0]) == 1)
 		return (0);
