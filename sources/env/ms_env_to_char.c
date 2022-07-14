@@ -25,7 +25,7 @@ char	**ft_env_to_char(t_env *env)
 	while (env)
 	{
 		tab[i] = ft_strjoin(env->name, "=");
-		tab[i] = ft_strjoin(tab[i], "=");
+		tab[i] = ft_strjoin(tab[i], env->content);
 		i++;
 		env = env->next;
 	}
