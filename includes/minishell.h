@@ -126,7 +126,7 @@ int		ft_echo(t_arg *arg);
 void	ft_builtin_parser(t_env **env, t_arg *arg);
 
 /* ************************************************************************ */
-/*								REDIRECTION FUNCTIONS            			*/
+/*                           REDIRECTION FUNCTIONS                          */
 /* ************************************************************************ */
 
 int		ft_heredoc(t_arg *arg, t_env *env);
@@ -138,15 +138,14 @@ char	*ft_final_hd_string(char *line, char **pieces, char *flags, t_env *env);
 void	ft_get_hd_strings(char *line, char **pieces, char *flags, t_env *env);
 
 /* ************************************************************************ */
-/*								REDIRECTION FUNCTIONS            			*/
+/*                            EXECUTION FUNCTIONS                           */
 /* ************************************************************************ */
 
-int		ft_heredoc(t_arg *arg, t_env *env);
-void	ft_fill_heredoc(int file, char *delim, int flag, t_env *env);
-int		ft_check_delim(t_arg *arg);
-char	*ft_expand_heredoc(char *line, t_env *env);
-int		ft_count_hd_expand(char *line, char *flags, t_env *env);
-char	*ft_final_hd_string(char *line, char **pieces, char *flags, t_env *env);
-void	ft_get_hd_strings(char *line, char **pieces, char *flags, t_env *env);
-
+t_arg	*ft_get_next_pipe(t_arg *arg);
+char	**ft_get_path(t_env *env);
+void	ft_final_path(char **paths);
+char	*ft_get_cmd(char *arg, char **paths);
+int		ft_exec(char **args, char **paths, char **env);
+void	ft_freetab(char **tab);
+int		ft_try(t_arg *arg, t_env *env);
 #endif
