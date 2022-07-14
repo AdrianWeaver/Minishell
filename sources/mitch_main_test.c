@@ -67,8 +67,10 @@ int	main(int ac, char *av[], char *env[])
 	env_list = ft_env_to_list(env);
 	while (1)
 	{
-		prompt = ft_get_prompt(env_list);
+		prompt = ft_get_prompt();
 		line = readline(prompt);
+		add_history(line);
+		ft_magic_malloc(ADD, 0, prompt);
 		prompt = ft_magic_malloc(FREE, 0, prompt);
 		if (line == NULL || ft_strcmp(line, "stop") == 0)
 		{
@@ -123,6 +125,7 @@ int	main(int ac, char *av[], char *env[])
 	}
 	// free(line);
 	ft_clear_arg(verif);
+	rl_clear_history();
 	// ft_free_env(env_list);
 	ft_magic_malloc(FLUSH, 0, NULL);
 	return (0);

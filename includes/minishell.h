@@ -137,4 +137,16 @@ int		ft_count_hd_expand(char *line, char *flags, t_env *env);
 char	*ft_final_hd_string(char *line, char **pieces, char *flags, t_env *env);
 void	ft_get_hd_strings(char *line, char **pieces, char *flags, t_env *env);
 
+/* ************************************************************************ */
+/*								REDIRECTION FUNCTIONS            			*/
+/* ************************************************************************ */
+
+int		ft_heredoc(t_arg *arg, t_env *env);
+void	ft_fill_heredoc(int file, char *delim, int flag, t_env *env);
+int		ft_check_delim(t_arg *arg);
+char	*ft_expand_heredoc(char *line, t_env *env);
+int		ft_count_hd_expand(char *line, char *flags, t_env *env);
+char	*ft_final_hd_string(char *line, char **pieces, char *flags, t_env *env);
+void	ft_get_hd_strings(char *line, char **pieces, char *flags, t_env *env);
+
 #endif
