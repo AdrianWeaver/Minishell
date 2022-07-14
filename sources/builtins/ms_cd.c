@@ -6,7 +6,7 @@
 /*   By: aweaver <aweaver@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 13:04:22 by aweaver           #+#    #+#             */
-/*   Updated: 2022/07/12 17:32:30 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/07/14 11:37:47 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,9 @@ int	ft_cd(t_env *env, char *path)
 			ft_manually_add_one_env(env, "OLDPWD", pwd);
 		else
 		{
-			env_oldpwd = ft_magic_malloc(FREE, 0, env_oldpwd->content);
-			env_pwd->content = pwd;
+			env_oldpwd->content = ft_magic_malloc(FREE, 0,
+					env_oldpwd->content);
+			env_oldpwd->content = pwd;
 		}
 		return (0);
 	}
