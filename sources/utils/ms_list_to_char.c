@@ -6,7 +6,7 @@
 /*   By: aweaver <aweaver@42.fr>                     +#+  +:+       +#+       */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 10:37:54 by aweaver           #+#    #+#             */
-/*   Updated: 2022/06/23 14:13:20 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/07/15 13:31:25 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,14 @@ char	**ft_list_to_char(t_arg *list)
 	{
 		if (list->token == TOKEN_PIPE)
 			break ;
-		if (list->token == TOKEN_CMD)
+		else if (list->token == TOKEN_CMD)
 		{
 			ret[i] = list->content;
 			i++;
 		}
+		else if (list->token == TOKEN_OUTFILE || list->token == TOKEN_INFILE
+			|| list->token == TOKEN_APPENDOUT)
+			ft_redirection(list);
 		list = list->next;
 	}
 	return (ret);

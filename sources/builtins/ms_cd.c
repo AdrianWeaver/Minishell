@@ -6,7 +6,7 @@
 /*   By: aweaver <aweaver@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 13:04:22 by aweaver           #+#    #+#             */
-/*   Updated: 2022/07/14 11:37:47 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/07/15 12:12:08 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,21 @@ static void	ft_check_pwd(t_env *env, char *path, t_env *env_pwd)
 	}
 }
 
-int	ft_cd(t_env *env, char *path)
+int	ft_cd(t_env *env, char **path)
 {
 	char	*pwd;
 	t_env	*env_pwd;
 	t_env	*env_oldpwd;
 	int		success;
 
+	if (ft_array_size(path) > 1)
+		return (ft_eprintf("cd: too may arguments"), 1);
 	pwd = ft_get_pwd();
-	success = chdir(path);
+	success = chdir(*path);
 	if (success == 0)
 	{
 		env_pwd = ft_find_env_elem(env, "PWD");
-		ft_check_pwd(env, path, env_pwd);
+		ft_check_pwd(env, *path, env_pwd);
 		env_oldpwd = ft_find_env_elem(env, "OLDPWD");
 		if (env_oldpwd == NULL)
 			ft_manually_add_one_env(env, "OLDPWD", pwd);
@@ -47,6 +49,5 @@ int	ft_cd(t_env *env, char *path)
 		}
 		return (0);
 	}
-	ft_eprintf("cd: no such file or directory: %s\n", path);
-	return (1);
+	return (ft_eprintf("cd: no such file or directory: %s\n", path), 1);
 }

@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 09:18:31 by aweaver           #+#    #+#             */
-/*   Updated: 2022/06/23 17:22:14 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/07/15 12:27:31 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	ft_env_add_back(t_env **env_start, t_env *new);
 t_env	*ft_get_env_element(t_env *env, char *env_line);
 void	ft_delone_env(t_env *env);
 void	ft_cleanly_delone_env(t_env **env_start, t_env *target);
-void	ft_print_env(t_env *env_list);
+int		ft_print_env(t_env *env_list, char **arg);
 char	**ft_env_to_char(t_env *env);
 t_env	*ft_env_to_list(char **env);
 int		ft_env_size(t_env *env);
@@ -109,11 +109,11 @@ t_mlc	*ft_malloc_list_add_back(t_mlc **mlc_list, t_mlc *new_mlc);
 /* unset */
 t_env	*ft_find_env_elem(t_env *env_list, char *name);
 int		ft_unset(t_env **env_list, char **name);
-void	ft_print_pwd(void);
+int		ft_print_pwd(char **arg);
 char	*ft_get_pwd(void);
 
 /* cd */
-int		ft_cd(t_env *env, char *path);
+int		ft_cd(t_env *env, char **path);
 
 /* export */
 int		ft_export(t_env **env_list, char **to_add);

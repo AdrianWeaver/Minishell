@@ -6,7 +6,7 @@
 /*   By: aweaver <aweaver@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 08:42:01 by aweaver           #+#    #+#             */
-/*   Updated: 2022/06/23 14:16:12 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/07/15 12:22:54 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,14 @@ char	*ft_get_pwd(void)
 	return (buff);
 }
 
-void	ft_print_pwd(void)
+int	ft_print_pwd(char **arg)
 {
 	char	*pwd;
 
+	if (ft_array_size(arg) != 1)
+		return (ft_eprintf("pwd: Too many arguments\n", 1));
 	pwd = ft_get_pwd();
 	printf("%s\n", pwd);
 	pwd = ft_magic_malloc(FREE, 0, pwd);
+	return (0);
 }
