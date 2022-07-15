@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_exec_tools.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mitch <mitch@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 08:34:23 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/07/13 08:34:50 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/07/15 18:58:59 by mitch            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,23 +21,6 @@ t_arg	*ft_get_next_pipe(t_arg *arg)
 		arg = arg->next;
 	}
 	return (arg);
-}
-
-char	**ft_get_path(t_env *env)
-{
-	char	*path;
-	char	**paths;
-
-	env = ft_find_env_elem(env, "PATH");
-	if (!env)
-		return (NULL);
-	path = env->content;
-	if (!path)
-		return (NULL);
-	paths = ft_split(path, ':');
-	if (paths)
-		ft_final_path(paths);
-	return (paths);
 }
 
 void	ft_final_path(char **paths)
@@ -56,6 +39,23 @@ void	ft_final_path(char **paths)
 		free(temp);
 		i++;
 	}
+}
+
+char	**ft_get_path(char **env)
+{
+	char	**paths;
+	int		i;
+
+	i = 0;
+	while (env[i])
+	{
+		if (strncmp(env[i], "PATH=", 5) == 0)
+			paths = ft_split(&env[i][5], ':');
+		i++;
+	}
+	if (paths)
+		ft_final_path(paths);
+	return (paths);
 }
 
 char	*ft_get_cmd(char *arg, char **paths)

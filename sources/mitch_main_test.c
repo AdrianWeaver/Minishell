@@ -6,7 +6,7 @@
 /*   By: mitch <mitch@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 09:18:40 by aweaver           #+#    #+#             */
-/*   Updated: 2022/07/17 12:23:46 by mitch            ###   ########.fr       */
+/*   Updated: 2022/07/15 20:46:24 by mitch            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,10 @@ void	ft_get_redirections(t_arg *arg)
 
 int	main(int ac, char *av[], char *env[])
 {
-	char	*line;
-	char	*prompt;
 	t_arg	*verif;
 	t_arg	*temp;
 	t_env	*env_list;
+	char	*line;
 
 	(void)ac;
 	(void)av;
@@ -66,13 +65,8 @@ int	main(int ac, char *av[], char *env[])
 	env_list = ft_env_to_list(env);
 	while (1)
 	{
-		prompt = ft_get_prompt();
-		line = readline(prompt);
-		add_history(line);
-		ft_magic_malloc(ADD, 0, prompt);
-		ft_magic_malloc(ADD, 0, line);
-		prompt = ft_magic_malloc(FREE, 0, prompt);
-		if (line == NULL || ft_strcmp(line, "stop") == 0)
+		line = ft_display_prompt();
+		if (line == NULL)
 			break ;
 		verif = ft_get_args(line);
 		line = ft_magic_malloc(FREE, 0, line);
@@ -83,7 +77,7 @@ int	main(int ac, char *av[], char *env[])
 			ft_get_redirections(verif);
 			while (verif != NULL)
 			{
-				ft_redirection(verif);
+				// ft_redirection(verif);
 				if (verif->token == TOKEN_HEREDOC && verif->content[0] != '<')
 					ft_heredoc(verif, env_list);
 				if (ft_test(verif, env_list) == -1)

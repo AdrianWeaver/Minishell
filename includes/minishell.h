@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mitch <mitch@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 09:18:31 by aweaver           #+#    #+#             */
-/*   Updated: 2022/07/15 12:27:31 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/07/15 19:26:48 by mitch            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,10 +143,16 @@ void	ft_get_hd_strings(char *line, char **pieces, char *flags, t_env *env);
 /* ************************************************************************ */
 
 t_arg	*ft_get_next_pipe(t_arg *arg);
-char	**ft_get_path(t_env *env);
+int		ft_count_pipes(t_arg *arg);
+char	**ft_get_path(char **env);
 void	ft_final_path(char **paths);
 char	*ft_get_cmd(char *arg, char **paths);
-int		ft_exec(char **args, char **paths, char **env);
+int		ft_executor(char **args_tab, char **paths, char **env);
+int		ft_piped_child(t_arg *arg, char **args_tab, char **env);
+int		ft_child(t_arg *arg, char **args_tab, char **env);
 void	ft_freetab(char **tab);
 int		ft_try(t_arg *arg, t_env *env);
+
+char	*ft_display_prompt();
+
 #endif
