@@ -6,14 +6,18 @@
 /*   By: aweaver <aweaver@42.fr>                     +#+  +:+       +#+       */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 14:29:57 by aweaver           #+#    #+#             */
-/*   Updated: 2022/07/14 17:53:01 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/07/15 12:17:55 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	ft_print_env(t_env *env_list)
+int	ft_print_env(t_env *env_list, char **arg)
 {
+	if (ft_array_size(arg) != 2)
+	{
+		return (ft_eprintf("env: Too many arguments\n", 1), 1);
+	}
 	while (env_list)
 	{
 		if (env_list->content)
@@ -23,4 +27,5 @@ void	ft_print_env(t_env *env_list)
 		}
 		env_list = env_list->next;
 	}
+	return (0);
 }
