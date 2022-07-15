@@ -60,3 +60,21 @@ char	*ft_get_short_path(char *cwd)
 	}
 	return (cwd);
 }
+
+char	*ft_display_prompt(void)
+{
+	char	*line;
+	char	*prompt;
+
+	prompt = ft_get_prompt();
+	line = readline(prompt);
+	add_history(line);
+	ft_magic_malloc(ADD, 0, prompt);
+	prompt = ft_magic_malloc(FREE, 0, prompt);
+	if (line == NULL || ft_strcmp(line, "stop") == 0)
+	{
+		line = ft_magic_malloc(FREE, 0, line);
+		return (NULL);
+	}
+	return (line);
+}
