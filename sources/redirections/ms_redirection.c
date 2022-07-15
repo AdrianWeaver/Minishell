@@ -44,14 +44,3 @@ int	ft_redirection_in(t_arg *arg)
 	dup2(fd, STDIN_FILENO);
 	return (fd);
 }
-
-int	*ft_save_std_fds(void)
-{
-	int	*std;
-
-	std = ft_magic_malloc(MALLOC, sizeof(int) * 3, NULL);
-	std[0] = dup(0);
-	std[1] = dup(1);
-	std[2] = dup(2);
-	return (std);
-}
