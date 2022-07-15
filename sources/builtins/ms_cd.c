@@ -6,7 +6,7 @@
 /*   By: aweaver <aweaver@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 13:04:22 by aweaver           #+#    #+#             */
-/*   Updated: 2022/07/15 12:12:08 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/07/15 14:40:26 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,16 @@ static void	ft_check_pwd(t_env *env, char *path, t_env *env_pwd)
 	}
 }
 
+static int	ft_check_cd_args(char **path)
+{
+	if (ft_array_size(path) > 1)
+		return (ft_eprintf("cd: too may arguments\n"), 1);
+	else if (ft_array_size(path) < 1)
+		return (ft_eprintf("cd: not enough arguments\n"), 1);
+	else
+		return (0);
+}
+
 int	ft_cd(t_env *env, char **path)
 {
 	char	*pwd;
@@ -30,8 +40,8 @@ int	ft_cd(t_env *env, char **path)
 	t_env	*env_oldpwd;
 	int		success;
 
-	if (ft_array_size(path) > 1)
-		return (ft_eprintf("cd: too may arguments"), 1);
+	if (ft_check_cd_args(path) == 1)
+		return (1);
 	pwd = ft_get_pwd();
 	success = chdir(*path);
 	if (success == 0)
