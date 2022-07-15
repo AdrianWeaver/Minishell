@@ -19,8 +19,7 @@ int	ft_heredoc(t_arg *arg, t_env *env)
 	pid_t	doc;
 
 	flag = ft_check_delim(arg);
-	tmp_file = open(".tmp_doc", O_CREAT | O_WRONLY, 0644);
-	unlink(".tmp_doc");
+	tmp_file = open("/tmp", __O_TMPFILE | O_RDWR, 0600);
 	if (tmp_file < 0)
 		return (-1);
 	doc = fork();
@@ -29,8 +28,8 @@ int	ft_heredoc(t_arg *arg, t_env *env)
 		dup2(tmp_file, STDOUT_FILENO);
 		ft_fill_heredoc(tmp_file, arg->content, flag, env);
 		ft_clear_arg(arg);
-		ft_magic_malloc(FLUSH, 0, NULL);
 		close(tmp_file);
+		ft_magic_malloc(FLUSH, 0, NULL);
 		exit(EXIT_SUCCESS);
 	}
 	else

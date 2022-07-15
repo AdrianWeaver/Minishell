@@ -18,7 +18,7 @@ int	ft_redirection(t_arg *arg)
 
 	if (arg->token == TOKEN_OUTFILE || arg->token == TOKEN_APPENDOUT)
 		fd = ft_redirection_out(arg);
-	else if (arg->token == TOKEN_INFILE || arg->token == TOKEN_HEREDOC)
+	else if (arg->token == TOKEN_INFILE)
 		fd = ft_redirection_in(arg);
 	return (fd);
 }

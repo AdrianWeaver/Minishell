@@ -69,11 +69,12 @@ char	*ft_get_cmd(char *arg, char **paths)
 	while (paths[i])
 	{
 		cmd = ft_strjoin(paths[i], arg);
+		ft_magic_malloc(ADD, 0, cmd);
 		if (access(cmd, F_OK) == 0 && access(cmd, X_OK) == 0)
 		{
 			return (cmd);
 		}
-		free(cmd);
+		cmd = ft_magic_malloc(FREE, 0, cmd);
 		i++;
 	}
 	return (NULL);
@@ -86,11 +87,9 @@ int	ft_exec(char **args, char **paths, char **env)
 	if (execve(args[0], args, env) == -1 && env != NULL)
 	{
 		commande = ft_get_cmd(args[0], paths);
-		fprintf(stderr, "5\n");
 		execve(commande, args, env);
-		//if (execve(commande, args, env) == -1)
-			//free(commande);
-		fprintf(stderr, "6\n");
+		if (execve(commande, args, env) == -1)
+			commande = ft_magic_malloc(FREE, 0, commande);
 	}
 	return (0);
 }

@@ -83,6 +83,7 @@ int	main(int ac, char *av[], char *env[])
 			ft_get_redirections(verif);
 			while (verif != NULL)
 			{
+				ft_redirection(verif);
 				if (verif->token == TOKEN_HEREDOC && verif->content[0] != '<')
 					ft_heredoc(verif, env_list);
 				if (ft_test(verif, env_list) == -1)
@@ -96,6 +97,7 @@ int	main(int ac, char *av[], char *env[])
 						exit(1);
 					}
 				}
+				
 				verif = verif->next;
 			}
 			verif = temp;
