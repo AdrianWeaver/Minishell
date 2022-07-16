@@ -6,7 +6,7 @@
 /*   By: mitch <mitch@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 09:18:31 by aweaver           #+#    #+#             */
-/*   Updated: 2022/07/15 19:26:48 by mitch            ###   ########.fr       */
+/*   Updated: 2022/07/16 16:14:51 by mitch            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ void	ft_final_path(char **paths);
 char	*ft_get_cmd(char *arg, char **paths);
 int		ft_executor(char **args_tab, char **paths, char **env);
 int		ft_piped_child(t_arg *arg, char **args_tab, char **env);
-int		ft_child(t_arg *arg, char **args_tab, char **env);
+int		ft_child(t_arg *arg, char **args_tab, char **env, int std[2]);
 void	ft_freetab(char **tab);
 int		ft_try(t_arg *arg, t_env *env);
 

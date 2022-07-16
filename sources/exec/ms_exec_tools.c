@@ -6,7 +6,7 @@
 /*   By: mitch <mitch@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 08:34:23 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/07/15 18:58:59 by mitch            ###   ########.fr       */
+/*   Updated: 2022/07/16 16:26:05 by mitch            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,11 @@ void	ft_final_path(char **paths)
 	slash = "/";
 	while (paths[i])
 	{
-		temp = ft_strjoin(paths[i], slash);
-		free(paths[i]);
-		paths[i] = ft_strdup(temp);
-		free(temp);
+		temp = ft_strjoin_free(paths[i], slash);
+		// free(paths[i]);
+		paths[i] = ft_strjoin_free(temp, "");
+		ft_magic_malloc(ADD, 0, paths[i]);
+		// free(temp);
 		i++;
 	}
 }
@@ -50,7 +51,10 @@ char	**ft_get_path(char **env)
 	while (env[i])
 	{
 		if (strncmp(env[i], "PATH=", 5) == 0)
+		{
 			paths = ft_split(&env[i][5], ':');
+			ft_magic_malloc(ADD, 0, paths);
+		}
 		i++;
 	}
 	if (paths)
