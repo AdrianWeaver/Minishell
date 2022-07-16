@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_redirection.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mitch <mitch@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 10:32:14 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/06/23 16:48:29 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/07/16 19:01:18 by mitch            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,20 @@ int	ft_redirection_in(t_arg *arg)
 		fd = open(arg->content, O_RDONLY);
 	dup2(fd, STDIN_FILENO);
 	return (fd);
+}
+
+void	ft_get_redirections(t_arg *arg)
+{
+	t_arg	*head;
+
+	head = arg;
+	while (arg)
+	{
+		arg = ft_get_infile(arg, head);
+		arg = ft_get_heredoc(arg, head);
+		arg = ft_get_outfile(arg, head);
+		arg = ft_get_appendout(arg, head);
+		ft_check_double_pipe(arg, head);
+		arg = arg->next;
+	}
 }

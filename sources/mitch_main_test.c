@@ -6,7 +6,7 @@
 /*   By: mitch <mitch@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 09:18:40 by aweaver           #+#    #+#             */
-/*   Updated: 2022/07/16 15:29:03 by mitch            ###   ########.fr       */
+/*   Updated: 2022/07/16 19:01:21 by mitch            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,22 +34,6 @@ int	ft_test(t_arg *arg, t_env *env)
 	ft_remove_quotes(arg, dq);
 	dq = ft_magic_malloc(FREE, 0, dq);
 	return (0);
-}
-
-void	ft_get_redirections(t_arg *arg)
-{
-	t_arg	*head;
-
-	head = arg;
-	while (arg)
-	{
-		arg = ft_get_infile(arg, head);
-		arg = ft_get_heredoc(arg, head);
-		arg = ft_get_outfile(arg, head);
-		arg = ft_get_appendout(arg, head);
-		ft_check_double_pipe(arg, head);
-		arg = arg->next;
-	}
 }
 
 int	main(int ac, char *av[], char *env[])
