@@ -14,7 +14,7 @@
 
 int	ft_print_env(t_env *env_list, char **arg)
 {
-	if (ft_array_size(arg) != 2)
+	if (ft_array_size(arg) != 0)
 	{
 		return (ft_eprintf("env: Too many arguments\n", 1), 1);
 	}

@@ -37,7 +37,7 @@ int	ft_print_pwd(char **arg)
 {
 	char	*pwd;
 
-	if (ft_array_size(arg) != 1)
+	if (ft_array_size(arg) != 0)
 		return (ft_eprintf("pwd: Too many arguments\n", 1));
 	pwd = ft_get_pwd();
 	printf("%s\n", pwd);

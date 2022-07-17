@@ -24,6 +24,8 @@ int	ft_unset(t_env **env_list, char **to_erase)
 	int		ret;
 
 	ret = 0;
+	if (ft_array_size(to_erase) == 0)
+		return (ft_eprintf("unset: not enough arguments\n"), 1);
 	while (*to_erase)
 	{
 		if (ft_is_valid_env_variable(*to_erase) == 1)
