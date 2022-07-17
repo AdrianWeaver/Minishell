@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_prompt.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mitch <mitch@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 11:35:51 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/06/23 16:48:02 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/07/17 12:20:20 by mitch            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	*ft_get_short_path(char *cwd)
 	tmp = NULL;
 	i = 6;
 	j = 0;
-	while (ft_strncmp(&cwd[j], "homes", 5) != 0)
+	while (ft_strncmp(&cwd[j], "home", 4) != 0)
 		j++;
 	path = ft_strdup(&cwd[j + i]);
 	ft_magic_malloc(ADD, 0, path);

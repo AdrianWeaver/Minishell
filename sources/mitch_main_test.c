@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mitch_main_test.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mitch <mitch@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 09:18:40 by aweaver           #+#    #+#             */
-/*   Updated: 2022/06/23 17:22:41 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/07/17 12:23:46 by mitch            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void	ft_get_redirections(t_arg *arg)
 		arg = ft_get_outfile(arg, head);
 		arg = ft_get_appendout(arg, head);
 		ft_check_double_pipe(arg, head);
-		printf("redirect, content = %s, token = %d\n", arg->content, arg->token);
 		arg = arg->next;
 	}
 }
@@ -71,16 +70,10 @@ int	main(int ac, char *av[], char *env[])
 		line = readline(prompt);
 		add_history(line);
 		ft_magic_malloc(ADD, 0, prompt);
+		ft_magic_malloc(ADD, 0, line);
 		prompt = ft_magic_malloc(FREE, 0, prompt);
 		if (line == NULL || ft_strcmp(line, "stop") == 0)
-		{
-			if (verif)
-			{
-				line = ft_magic_malloc(FREE, 0, line);
-				ft_clear_arg(verif);
-			}
 			break ;
-		}
 		verif = ft_get_args(line);
 		line = ft_magic_malloc(FREE, 0, line);
 		if (verif != NULL)
@@ -92,7 +85,6 @@ int	main(int ac, char *av[], char *env[])
 			{
 				if (verif->token == TOKEN_HEREDOC && verif->content[0] != '<')
 					ft_heredoc(verif, env_list);
-				printf("token == %d\n", verif->token);
 				if (ft_test(verif, env_list) == -1)
 				{
 					if (ft_test(verif, env_list) == -1)
@@ -112,21 +104,9 @@ int	main(int ac, char *av[], char *env[])
 				ft_builtin_parser(&env_list, verif);
 				verif = verif->next;
 			}
-			verif = temp;
-			while (verif)
-			{
-				printf("final content = %s,  token = %d\n", verif->content,
-					verif->token);
-				verif = verif->next;
-			}
-			if (temp)
-				ft_clear_arg(temp);
 		}
 	}
-	// free(line);
-	ft_clear_arg(verif);
 	rl_clear_history();
-	// ft_free_env(env_list);
 	ft_magic_malloc(FLUSH, 0, NULL);
 	return (0);
 }
