@@ -78,6 +78,8 @@ int	ft_export(t_env **env_list, char **to_add)
 	int		ret;
 
 	ret = 0;
+	if (ft_array_size(to_add) == 0)
+		return (ft_eprintf("export: not enough arguments\n"), 1);
 	while (*to_add)
 	{
 		tmp_element = ft_get_env_element(*env_list, *to_add);

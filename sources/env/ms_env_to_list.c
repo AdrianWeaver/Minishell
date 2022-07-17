@@ -65,7 +65,6 @@ char	*ft_env_get_content(t_env *env_list, char *name, char *env_line,
 
 	if (!env_line)
 		return (NULL);
-		//return (ft_magic_malloc(ADD, 0, ft_strdup("")));
 	if (flag_plus == 0)
 		return (ft_magic_malloc(ADD, 0, ft_strdup(env_line)));
 	else
