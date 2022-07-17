@@ -6,7 +6,7 @@
 /*   By: mitch <mitch@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 09:18:40 by aweaver           #+#    #+#             */
-/*   Updated: 2022/07/16 19:01:21 by mitch            ###   ########.fr       */
+/*   Updated: 2022/07/17 13:37:13 by mitch            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int	ft_test(t_arg *arg, t_env *env)
 	char	*flags;
 	char	**pieces;
 
+	if (!arg)
+		return (0);
 	dq = ft_count_quotes(arg);
 	if (!dq)
 		return (-1);
@@ -63,29 +65,26 @@ int	main(int ac, char *av[], char *env[])
 			{
 				// ft_redirection(verif);
 				if (verif->token == TOKEN_HEREDOC && verif->content[0] != '<')
+				{
 					ft_heredoc(verif, env_list);
+					verif = verif->next;
+				}
 				if (ft_test(verif, env_list) == -1)
 				{
 					if (ft_test(verif, env_list) == -1)
 					{
 						printf("Missing or extra dquote\n");
-						ft_clear_arg(temp);
-						ft_free_env(env_list);
-						line = ft_magic_malloc(FREE, 0, line);
-						exit(1);
+						ft_magic_malloc(FLUSH, 0, NULL);
 					}
 				}
-				
-				verif = verif->next;
-			}
-			verif = temp;
-			while (verif)
-			{
-				ft_builtin_parser(&env_list, verif);
-				verif = verif->next;
+				if (verif)
+					verif = verif->next;
 			}
 		}
 	}
+	close(0);
+	close(1);
+	close(2);
 	rl_clear_history();
 	ft_magic_malloc(FLUSH, 0, NULL);
 	return (0);

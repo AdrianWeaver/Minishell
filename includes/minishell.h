@@ -6,7 +6,7 @@
 /*   By: mitch <mitch@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 09:18:31 by aweaver           #+#    #+#             */
-/*   Updated: 2022/07/16 16:14:51 by mitch            ###   ########.fr       */
+/*   Updated: 2022/07/17 16:31:34 by mitch            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ int		ft_echo_n_opt(t_arg *arg);
 t_arg	*ft_echo_skip_opt(t_arg *arg, int *n_opt);
 int		ft_echo(t_arg *arg);
 
-void	ft_builtin_parser(t_env **env, t_arg *arg);
+int		ft_builtin_parser(t_env **env, t_arg *arg);
 
 /* ************************************************************************ */
 /*                           REDIRECTION FUNCTIONS                          */
@@ -147,12 +147,15 @@ int		ft_count_pipes(t_arg *arg);
 char	**ft_get_path(char **env);
 void	ft_final_path(char **paths);
 char	*ft_get_cmd(char *arg, char **paths);
-int		ft_executor(char **args_tab, char **paths, char **env);
-int		ft_piped_child(t_arg *arg, char **args_tab, char **env);
+int		ft_executor(t_arg *arg, char **args_tab, char **paths, char **env);
+int		ft_piped_child(t_arg *arg, char **args_tab, char **env, int std[2]);
 int		ft_child(t_arg *arg, char **args_tab, char **env, int std[2]);
 void	ft_freetab(char **tab);
-int		ft_try(t_arg *arg, t_env *env);
+int		ft_try(t_arg *arg, t_env *env, int pipes);
+
+int		ft_check_pipes(t_arg *arg, t_env *env);
 
 char	*ft_display_prompt();
+int		*ft_save_std_fd(void);
 
 #endif

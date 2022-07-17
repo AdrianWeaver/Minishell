@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_heredoc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcervoni <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mitch <mitch@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 16:17:05 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/06/23 16:17:08 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/07/17 13:29:47 by mitch            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,12 @@ int	ft_heredoc(t_arg *arg, t_env *env)
 	if (tmp_file < 0)
 		return (-1);
 	doc = fork();
+	dup2(tmp_file, STDOUT_FILENO);
 	if (doc == 0)
 	{
-		dup2(tmp_file, STDOUT_FILENO);
+		
 		ft_fill_heredoc(tmp_file, arg->content, flag, env);
-		ft_clear_arg(arg);
+		// ft_clear_arg(arg);
 		close(tmp_file);
 		ft_magic_malloc(FLUSH, 0, NULL);
 		exit(EXIT_SUCCESS);
@@ -35,6 +36,7 @@ int	ft_heredoc(t_arg *arg, t_env *env)
 	else
 	{
 		waitpid(0, NULL, 0);
+		dup2(tmp_file, STDOUT_FILENO);
 		close(tmp_file);
 	}
 	return (0);
@@ -46,10 +48,11 @@ void	ft_fill_heredoc(int file, char *delim, int flag, t_env *env)
 	char	*stop;
 	char	*ret;
 
+	(void)file;
 	line = NULL;
 	ret = NULL;
 	stop = ft_strjoin(delim, "\n");
-	dup2(file, STDOUT_FILENO);
+	// dup2(file, STDOUT_FILENO);
 	line = get_next_line(0);
 	while (strcmp(line, stop) != 0)
 	{

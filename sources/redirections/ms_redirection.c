@@ -6,7 +6,7 @@
 /*   By: mitch <mitch@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 10:32:14 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/07/16 19:01:18 by mitch            ###   ########.fr       */
+/*   Updated: 2022/07/17 12:44:22 by mitch            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,17 @@ int	ft_redirection_in(t_arg *arg)
 		fd = open(arg->content, O_RDONLY);
 	dup2(fd, STDIN_FILENO);
 	return (fd);
+}
+
+int	*ft_save_std_fd(void)
+{
+	int	*std;
+
+	std = ft_magic_malloc(MALLOC, sizeof(int) * 3, NULL);
+	std[0] = dup(STDIN_FILENO);
+	std[1] = dup(STDOUT_FILENO);
+	std[2] = dup(STDERR_FILENO);
+	return (std);
 }
 
 void	ft_get_redirections(t_arg *arg)
