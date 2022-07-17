@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mitch <mitch@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 16:51:25 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/06/23 13:51:44 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/07/17 12:20:51 by mitch            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	ft_echo(t_arg *arg)
 	}
 	if (n_opt == 0)
 		to_print = ft_strjoin_free(to_print, "\n");
-	printf("echo returns %s", to_print);
+	printf("%s", to_print);
 	to_print = ft_magic_malloc(FREE, 0, to_print);
 	return (0);
 }
