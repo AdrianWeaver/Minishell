@@ -31,3 +31,29 @@ int	ft_clear_and_quit(t_arg *arg, t_arg *head)
 	ft_magic_malloc(FLUSH, 0, NULL);
 	exit(0);
 }
+
+int	ft_check_redir(t_arg *arg)
+{
+	int	i;
+
+	i = 0;
+	if (arg->token == TOKEN_HEREDOC)
+	{
+		while (arg->content[i] == '<')
+			i++;
+		if ( i > 2)
+			printf("minishell: syntax error near unexpected token `%c\'\n"
+				, arg->content[i]);
+	}
+	else if (arg->token == TOKEN_APPENDOUT)
+	{
+		while (arg->content[i] == '>')
+			i++;
+		if (i > 2)
+			printf("minishell: syntax error near unexpected token `%c\'\n"
+				, arg->content[i]);
+	}
+	if (i > 2)
+		return (1);
+	return (0);
+}

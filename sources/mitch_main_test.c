@@ -41,8 +41,8 @@ int	ft_test(t_arg *arg, t_env *env)
 int	main(int ac, char *av[], char *env[])
 {
 	t_arg	*verif;
-	t_arg	*temp;
 	t_env	*env_list;
+	t_arg	*temp;
 	char	*line;
 
 	(void)ac;
@@ -56,31 +56,35 @@ int	main(int ac, char *av[], char *env[])
 			break ;
 		verif = ft_get_args(line);
 		line = ft_magic_malloc(FREE, 0, line);
+		temp = verif;
 		if (verif != NULL)
 		{
 			ft_set_token(verif);
-			temp = verif;
-			ft_get_redirections(verif);
-			while (verif != NULL)
+			if (ft_get_redirections(verif) == 0)
 			{
-				// ft_redirection(verif);
-				if (verif->token == TOKEN_HEREDOC && verif->content[0] != '<')
+				while (verif != NULL)
 				{
-					ft_heredoc(verif, env_list);
-					verif = verif->next;
-				}
-				if (ft_test(verif, env_list) == -1)
-				{
+					// ft_redirection(verif);
+					if (verif->token == TOKEN_HEREDOC && verif->content[0] != '<')
+					{
+						ft_heredoc(verif, env_list);
+						verif = verif->next;
+					}
 					if (ft_test(verif, env_list) == -1)
 					{
-						printf("Missing or extra dquote\n");
-						ft_magic_malloc(FLUSH, 0, NULL);
+						if (ft_test(verif, env_list) == -1)
+						{
+							printf("Missing or extra dquote\n");
+							ft_magic_malloc(FLUSH, 0, NULL);
+						}
 					}
+					if (verif)
+						verif = verif->next;
 				}
-				if (verif)
-					verif = verif->next;
 			}
 		}
+		verif = temp;
+		ft_check_pipes(verif, env_list);
 	}
 	close(0);
 	close(1);

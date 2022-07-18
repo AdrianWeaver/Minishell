@@ -56,13 +56,15 @@ int	*ft_save_std_fd(void)
 	return (std);
 }
 
-void	ft_get_redirections(t_arg *arg)
+int	ft_get_redirections(t_arg *arg)
 {
 	t_arg	*head;
 
 	head = arg;
 	while (arg)
 	{
+		if (ft_check_redir(arg) == 1)
+			return (1);
 		arg = ft_get_infile(arg, head);
 		arg = ft_get_heredoc(arg, head);
 		arg = ft_get_outfile(arg, head);
@@ -70,4 +72,5 @@ void	ft_get_redirections(t_arg *arg)
 		ft_check_double_pipe(arg, head);
 		arg = arg->next;
 	}
+	return (0);
 }
