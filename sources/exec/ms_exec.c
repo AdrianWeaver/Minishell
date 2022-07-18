@@ -83,7 +83,6 @@ int	ft_try(t_arg *arg, t_env *env, int pipes)
 	return (0);
 }
 
-
 int	ft_piped_child(t_arg *arg, char **args_tab, char **env_tab, int std[2])
 {
 	char	**paths;
@@ -98,14 +97,9 @@ int	ft_piped_child(t_arg *arg, char **args_tab, char **env_tab, int std[2])
 	if (child == 0)
 	{
 		dup2(fds[1], STDOUT_FILENO);
-		// close(fds[0]);
 		paths = ft_get_path(env_tab);
-		fprintf(stderr, "on est dans les pipes !!!!!!!!\n");
 		ft_executor(arg, args_tab, paths, env_tab);
-		close(fds[1]);
-		close(fds[0]);
-		close(std[1]);
-		close(std[0]);
+		ft_close_child(fds, std);
 		ft_magic_malloc(FLUSH, 0, NULL);
 	}
 	else
@@ -130,28 +124,15 @@ int	ft_child(t_arg *arg, char **args_tab, char **env_tab, int std[2])
 		return (1);
 	if (child == 0)
 	{
-		dup2(fds[0], STDIN_FILENO);
 		paths = ft_get_path(env_tab);
-		fprintf(stderr, "on est plus dans les pipes !!!!!!!!\n");
 		ft_executor(arg, args_tab, paths, env_tab);
-			// close(1);
-			// close(0);
-		close(fds[1]);
-		close(fds[0]);
-		close(std[1]);
-		close(std[0]);
+		ft_close_child(fds, std);
 		ft_magic_malloc(FLUSH, 0, NULL);
 	}
-	// else
-	// {
-	// 	// close(1);
-	// 	// close(0);
 	close(fds[1]);
 	close(fds[0]);
-	waitpid(0, NULL, 0);
 	dup2(std[1], STDOUT_FILENO);
-		
-	// }
+	waitpid(0, NULL, 0);
 	return (0);
 }
 
@@ -174,4 +155,12 @@ int	ft_executor(t_arg *arg, char **args_tab, char **paths, char **env_tab)
 		}
 	}
 	return (1);
+}
+
+void	ft_close_child(int fds[2], int std[2])
+{
+	close(fds[1]);
+	close(fds[0]);
+	close(std[1]);
+	close(std[0]);
 }
