@@ -156,7 +156,7 @@ int		ft_try(t_arg *arg, t_env *env, int pipes);
 int		ft_check_pipes(t_arg *arg, t_env *env);
 void	ft_close_child(int fds[2], int std[2]);
 
-char	*ft_display_prompt();
+char	*ft_display_prompt(void);
 int		*ft_save_std_fd(void);
 
 #endif
