@@ -56,17 +56,23 @@ launch_test(){
 }
 
 launch_env(){
-	echo "launch_env started"
+	echo -en "\033[33mlaunch_env started\n\033[m"
 }
 
 launch_pwd(){
-	echo "launch_pwd started"
+	echo -en "\033[33mlaunch_pwd started\n\033[m"
 	launch_test "pwd"
+	launch_test "pwd pwd"
 }
 
 launch_parsing(){
+	echo -en "\033[33mlaunch_parsing started\n\033[m"
 	launch_test ":"
 	launch_test "!"
+	launch_test "#"
+	#######################################
+	#             REDIRECTION             #
+	#######################################
 	launch_test ">"
 	launch_test "<"
 	launch_test ">>"
@@ -79,6 +85,9 @@ launch_parsing(){
 	launch_test "> > > >"
 	launch_test ">> >> >> >>"
 	launch_test ">>>> >> >> >>"
+	#######################################
+	#               MOVEMENT              #
+	#######################################
 	launch_test "/"
 	launch_test "//"
 	launch_test "/."
@@ -88,6 +97,9 @@ launch_parsing(){
 	launch_test "\\\\"
 	launch_test "\\\\\\\\"
 	launch_test "-"
+	#######################################
+	#                PIPES                #
+	#######################################
 	launch_test "|"
 	launch_test "| yo"
 	launch_test "| | |"
@@ -95,33 +107,35 @@ launch_parsing(){
 	launch_test "||||"
 	launch_test "|||||||||||||||"
 	launch_test ">>|<<"
+	#######################################
+	#                &&AND                #
+	#######################################
 	launch_test "&&"
 	launch_test "&&&&&"
 	launch_test "&&&&&&&&&&&&"
-	launch_test ""
-	launch_test "yo"
-	launch_test "'yo'"
-	launch_test '"yo"'
-	launch_test "yo je fais nimp"
-	launch_test "Makefile"
 }
 
 launch_cd(){
-	echo "launch_cd started"
+	echo -en "\033[33mlaunch_cd started\n\033[m"
 }
 
 launch_unset(){
-	echo "launch_unset started"
+	echo -en "\033[33mlaunch_unset started\n\033[m"
 }
 
 launch_export(){
-	echo "launch_export started"
+	echo -en "\033[33mlaunch_export started\n\033[m"
 }
 
 launch_echo(){
-	echo "launch_echo"
+	echo -en "\033[33mlaunch_echo\n\033[m"
 	launch_test "echo"
 	launch_test "echo -n"
+	launch_test "echo -nnnnnnn"
+	launch_test "echo -nnnnnnn rubber"
+	launch_test "echo -nnnnnnl rubber"
+	launch_test "echo -n-n-n duckers"
+	launch_test "echo -n -n -n duckers"
 	launch_test "echo yo"
 	launch_test "echoyo"
 	launch_test "echo-nyo"
@@ -132,8 +146,21 @@ launch_echo(){
 	launch_test "echo yo mon bichon"
 	launch_test "echo                  yo"
 	launch_test "echo    yo     mon    bichon"
-	launch_test "\"             \" | cat -e"
+}
+
+launch_cmd(){
+	echo -en "\033[33mlaunch_cmd started\n\033[m"
 	launch_test "ls | wc"
+	launch_test "sleep 3 | ls"
+	launch_test "cat Makefile | wc -l"
+	launch_test "cat Makefile | wc -l | ls | sleep 3"
+	launch_test "\"             \" | cat -e"
+	launch_test ""
+	launch_test "yo"
+	launch_test "'yo'"
+	launch_test '"yo"'
+	launch_test "yo je fais nimp"
+	launch_test "Makefile"
 }
 
 chose_tests(){
@@ -146,6 +173,7 @@ chose_tests(){
 		launch_unset;
 		launch_export;
 		launch_echo;
+		launch_cmd;
 	fi
 	if [[ "$@" == *"parsing"* ]]
 	then
@@ -174,6 +202,10 @@ chose_tests(){
 	if [[ "$@" == *"echo"* ]]
 	then
 		launch_echo;
+	fi
+	if [[ "$@" == *"cmd"* ]]
+	then
+		launch_cmd;
 	fi
 }
 
