@@ -14,7 +14,7 @@ check_results(){
 	if [[ "$test_diff1" -eq "1" || "$test_diff2" -eq "1" ]]
 	then
 		echo -en "\033[31mTEST FAILED: \033[m"
-		echo "'$@'"
+		printf '[ %s ]\n' "$1"
 		if [[ -s ".test_bash" || -s ".test_minishell" ]]
 		then
 			echo "Expected output:"
@@ -33,7 +33,7 @@ check_results(){
 		fi
 	else
 		echo -en "\033[32mTEST PASSED: \033[m"
-		echo "$@"
+		printf '[ %s ]\n' "$1"
 	fi
 }
 
@@ -46,13 +46,24 @@ check_err_bash_output(){
 	fi
 }
 
+clean_minishell_output(){
+	var=$(printf '%s' "$1" | sed "s,/,\\\/,g")
+	if [[ -s ".test_minishell" ]]
+	then
+		prompt=$(cat .test_minishell | sed -n '1p' | sed "s/$var//g")
+		prompt=$(echo "$prompt" | sed "s,/,\\\/,g")
+		sed -i '1d' .test_minishell
+		sed -i "\$ s/$prompt//g" .test_minishell
+	fi
+}
+
 launch_test(){
-	echo -n "$@" | bash >.test_bash 2>.test_err_bash
-	check_err_bash_output $@
-	echo -n "$@" | ./minishell 2>.test_err_tmp | sed -n '1!p' | sed 's/M-pM-^_M-&M-^FRubberduckersM-pM-^_M-&M-^F:/bash:/g' | sed -n '$!p' >.test_minishell
-	cat .test_err_tmp | sed 's/M-pM-^_M-&M-^FRubberduckersM-pM-^_M-&M-^F:/bash:/g'  >.test_err_minishell
-	rm .test_err_tmp
-	check_results $@;
+	printf '%s' "$1" | bash >.test_bash 2>.test_err_bash
+	check_err_bash_output $1
+	printf '%s' "$1" | ./minishell 2>.test_err_minishell >.test_minishell
+	sed -i 's/bash:/minishell:/g' .test_err_bash
+	clean_minishell_output "$1";
+	check_results "$1";
 }
 
 launch_env(){
@@ -61,58 +72,58 @@ launch_env(){
 
 launch_pwd(){
 	echo -en "\033[33mlaunch_pwd started\n\033[m"
-	launch_test "pwd"
-	launch_test "pwd pwd"
+	launch_test 'pwd'
+	launch_test 'pwd pwd'
 }
 
 launch_parsing(){
 	echo -en "\033[33mlaunch_parsing started\n\033[m"
-	launch_test ":"
-	launch_test "!"
-	launch_test "#"
+	launch_test ':'
+	launch_test '!'
+	launch_test '#'
 	#######################################
 	#             REDIRECTION             #
 	#######################################
-	launch_test ">"
-	launch_test "<"
-	launch_test ">>"
-	launch_test "<<"
-	launch_test "<>"
-	launch_test ">>>>>"
-	launch_test ">>>>>>>>>>>>>>>>>>"
-	launch_test "<<<<<"
-	launch_test "<<<<<<<<<<<<<<<<<<"
-	launch_test "> > > >"
-	launch_test ">> >> >> >>"
-	launch_test ">>>> >> >> >>"
+	launch_test '>'
+	launch_test '<'
+	launch_test '>>'
+	launch_test '<<'
+	launch_test '<>'
+	launch_test '>>>>>'
+	launch_test '>>>>>>>>>>>>>>>>>>'
+	launch_test '<<<<<'
+	launch_test '<<<<<<<<<<<<<<<<<<'
+	launch_test '> > > >'
+	launch_test '>> >> >> >>'
+	launch_test '>>>> >> >> >>'
 	#######################################
 	#               MOVEMENT              #
 	#######################################
-	launch_test "/"
-	launch_test "//"
-	launch_test "/."
-	launch_test "/./../../../../.."
-	launch_test "////////"
-	launch_test "\\"
-	launch_test "\\\\"
-	launch_test "\\\\\\\\"
-	launch_test "-"
+	launch_test '/'
+	launch_test '//'
+	launch_test '/.'
+	launch_test '/./../../../../..'
+	launch_test '////////'
+	launch_test '\\'
+	launch_test '\\\\'
+	launch_test '\\\\\\\\'
+	launch_test '-'
 	#######################################
 	#                PIPES                #
 	#######################################
-	launch_test "|"
-	launch_test "| yo"
-	launch_test "| | |"
-	launch_test "||"
-	launch_test "||||"
-	launch_test "|||||||||||||||"
-	launch_test ">>|<<"
+	launch_test '|'
+	launch_test '| yo'
+	launch_test '| | |'
+	launch_test '||'
+	launch_test '||||'
+	launch_test '|||||||||||||||'
+	launch_test '>>|<<'
 	#######################################
 	#                &&AND                #
 	#######################################
-	launch_test "&&"
-	launch_test "&&&&&"
-	launch_test "&&&&&&&&&&&&"
+	launch_test '&&'
+	launch_test '&&&&&'
+	launch_test '&&&&&&&&&&&&'
 }
 
 launch_cd(){
@@ -129,38 +140,38 @@ launch_export(){
 
 launch_echo(){
 	echo -en "\033[33mlaunch_echo\n\033[m"
-	launch_test "echo"
-	launch_test "echo -n"
-	launch_test "echo -nnnnnnn"
-	launch_test "echo -nnnnnnn rubber"
-	launch_test "echo -nnnnnnl rubber"
-	launch_test "echo -n-n-n duckers"
-	launch_test "echo -n -n -n duckers"
-	launch_test "echo yo"
-	launch_test "echoyo"
-	launch_test "echo-nyo"
-	launch_test "echo -n yo"
-	launch_test 'echo "-n" yo'
-	launch_test "echo -nyo"
-	launch_test "echo yo -n" 
-	launch_test "echo yo mon bichon"
-	launch_test "echo                  yo"
-	launch_test "echo    yo     mon    bichon"
+	launch_test 'echo'
+	launch_test 'echo -n'
+	launch_test 'echo -nnnnnnn'
+	launch_test 'echo -nnnnnnn rubber'
+	launch_test 'echo -nnnnnnl rubber'
+	launch_test 'echo -n-n-n duckers'
+	launch_test 'echo -n -n -n duckers'
+	launch_test 'echo yo'
+	launch_test 'echoyo'
+	launch_test 'echo-nyo'
+	launch_test 'echo -n yo'
+	launch_test 'echo '-n' yo'
+	launch_test 'echo -nyo'
+	launch_test 'echo yo -n' 
+	launch_test 'echo yo mon bichon'
+	launch_test 'echo                  yo'
+	launch_test 'echo    yo     mon    bichon'
 }
 
 launch_cmd(){
 	echo -en "\033[33mlaunch_cmd started\n\033[m"
-	launch_test "ls | wc"
-	launch_test "sleep 3 | ls"
-	launch_test "cat Makefile | wc -l"
-	launch_test "cat Makefile | wc -l | ls | sleep 3"
-	launch_test "\"             \" | cat -e"
-	launch_test ""
-	launch_test "yo"
+	launch_test 'ls | wc'
+	launch_test 'sleep 3 | ls'
+	launch_test 'cat Makefile | wc -l'
+	launch_test 'cat Makefile | wc -l | ls | sleep 3'
+	launch_test '"             " | cat -e'
+	launch_test ''
+	launch_test 'yo'
 	launch_test "'yo'"
 	launch_test '"yo"'
-	launch_test "yo je fais nimp"
-	launch_test "Makefile"
+	launch_test 'yo je fais nimp'
+	launch_test 'Makefile'
 }
 
 chose_tests(){

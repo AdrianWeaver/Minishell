@@ -25,7 +25,6 @@ SRCS_PATH		=	./sources/
 OBJS_PATH		=	./objects/
 LIBFT_PATH		=	./libft/
 SRCS_PARSING	=	./parsing/
-SRCS_EXEC		=	./exec/
 SRCS_ERRORS		=	./errors/
 SRCS_BUILTINS	=	./builtins/
 SRCS_ENV		=	./env/
@@ -78,10 +77,6 @@ SRCS 			=	mitch_main_test.c	\
 					$(addprefix $(SRCS_REDIRECT),		\
 						ms_heredoc.c \
 						ms_expand_heredoc.c \
-					)\
-					$(addprefix $(SRCS_EXEC),	\
-						ms_exec.c \
-						ms_exec_tools.c\
 					)
 
 OBJS			=	$(addprefix $(OBJS_PATH), $(SRCS:.c=.o))
