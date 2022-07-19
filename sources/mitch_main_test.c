@@ -6,7 +6,7 @@
 /*   By: mitch <mitch@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 09:18:40 by aweaver           #+#    #+#             */
-/*   Updated: 2022/07/17 13:37:13 by mitch            ###   ########.fr       */
+/*   Updated: 2022/07/19 13:13:03 by mitch            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,10 @@ int	main(int ac, char *av[], char *env[])
 					if (verif)
 						verif = verif->next;
 				}
+				verif = temp;
+				ft_check_pipes(verif, env_list);
 			}
 		}
-		verif = temp;
-		ft_check_pipes(verif, env_list);
 	}
 	close(0);
 	close(1);
