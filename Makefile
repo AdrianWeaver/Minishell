@@ -82,6 +82,7 @@ SRCS 			=	mitch_main_test.c	\
 					$(addprefix $(SRCS_EXEC),	\
 						ms_exec.c \
 						ms_exec_tools.c\
+						ms_check_cmd.c \
 					)
 
 OBJS			=	$(addprefix $(OBJS_PATH), $(SRCS:.c=.o))

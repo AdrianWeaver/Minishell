@@ -6,7 +6,7 @@
 /*   By: mitch <mitch@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 09:18:31 by aweaver           #+#    #+#             */
-/*   Updated: 2022/07/17 16:31:34 by mitch            ###   ########.fr       */
+/*   Updated: 2022/07/19 12:51:54 by mitch            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,5 +158,6 @@ void	ft_close_child(int fds[2], int std[2]);
 
 char	*ft_display_prompt(void);
 int		*ft_save_std_fd(void);
+int		ft_check_cmd(char *cmd);
 
 #endif
