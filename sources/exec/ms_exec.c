@@ -6,7 +6,7 @@
 /*   By: mitch <mitch@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 08:30:54 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/07/19 13:11:02 by mitch            ###   ########.fr       */
+/*   Updated: 2022/07/19 13:20:15 by mitch            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,12 +152,12 @@ int	ft_executor(t_arg *arg, char **args_tab, char **paths, char **env_tab)
 			cmd = ft_get_cmd(args_tab[0], paths);
 			if (cmd == NULL)
 			{
-				ft_eprintf("minishell: command not found: %s\n", args_tab[0]);
+				write(2, "minishell: command not found\n", 29);
 				return (1);
 			}
 			if (execve(cmd, args_tab, env_tab) == -1)
 			{
-				ft_eprintf("minishell: command not found: %s\n", args_tab[0]);
+				write(2, "minishell: command not found\n", 29);
 				cmd = ft_magic_malloc(FREE, 0, cmd);
 				return (-1);
 			}

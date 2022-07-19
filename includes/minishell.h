@@ -6,7 +6,7 @@
 /*   By: mitch <mitch@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 09:18:31 by aweaver           #+#    #+#             */
-/*   Updated: 2022/07/19 12:51:54 by mitch            ###   ########.fr       */
+/*   Updated: 2022/07/19 13:31:56 by mitch            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@
 # define TOKEN_HEREDOC 1
 # define TOKEN_CMD 2
 # define TOKEN_PIPE 3
-# define TOKEN_QUOTE 4
-# define TOKEN_DQUOTE 5
+# define TOKEN_AND 4
 # define TOKEN_OUTFILE 6
 # define TOKEN_APPENDOUT 7
 

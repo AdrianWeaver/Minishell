@@ -5,7 +5,7 @@ int	ft_check_cmd(char * cmd)
 {
 	if (access(cmd, F_OK) == -1)
 	{
-		ft_eprintf("minishell: command not found: %s\n", cmd);
+		write(2, "minishell: command not found\n", 29);
 		return (-1);
 	}
 	if (access(cmd, X_OK) == -1)

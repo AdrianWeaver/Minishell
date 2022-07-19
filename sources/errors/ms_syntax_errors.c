@@ -6,7 +6,7 @@
 /*   By: mitch <mitch@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 18:15:00 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/07/19 13:11:47 by mitch            ###   ########.fr       */
+/*   Updated: 2022/07/19 13:33:55 by mitch            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int	ft_clear_and_quit(t_arg *arg, t_arg *head)
 {
+	(void)head;
 	if (arg == NULL)
 		ft_eprintf("minishell: syntax error near unexpected token `newline\'\n"
 			);
@@ -27,9 +28,10 @@ int	ft_clear_and_quit(t_arg *arg, t_arg *head)
 		ft_eprintf("minishell: syntax error near unexpected token `>>\'\n");
 	else if (arg->token == TOKEN_PIPE)
 		ft_eprintf("minishell: syntax error near unexpected token `|\'\n");
-	ft_clear_arg(head);
+	else if (arg->token == TOKEN_AND)
+		ft_eprintf("minishell: syntax error near unexpected token `&&\'\n");
 	ft_magic_malloc(FLUSH, 0, NULL);
-	exit(0);
+	return (0);
 }
 
 int	ft_check_redir(t_arg *arg)
