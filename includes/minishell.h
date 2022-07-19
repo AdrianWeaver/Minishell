@@ -6,7 +6,7 @@
 /*   By: mitch <mitch@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 09:18:31 by aweaver           #+#    #+#             */
-/*   Updated: 2022/07/19 13:31:56 by mitch            ###   ########.fr       */
+/*   Updated: 2022/07/19 18:18:05 by mitch            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
 # define MALLOC 1
 # define ADD 2
 # define FLUSH -1
+
+# define NOT_FOUND "command not found"
 # include <unistd.h>
 # include <stdlib.h>
 # include <sys/types.h>

@@ -6,7 +6,7 @@
 /*   By: mitch <mitch@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 10:32:14 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/07/17 12:44:22 by mitch            ###   ########.fr       */
+/*   Updated: 2022/07/19 18:19:26 by mitch            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,16 +61,64 @@ int	ft_get_redirections(t_arg *arg)
 	t_arg	*head;
 
 	head = arg;
+	if (ft_check_first_arg(arg) == 1)
+		return (1);
 	while (arg)
 	{
-		if (ft_check_redir(arg) == 1)
+		if (ft_check_wrong_arg(arg) == 1)
 			return (1);
-		arg = ft_get_infile(arg, head);
-		arg = ft_get_heredoc(arg, head);
-		arg = ft_get_outfile(arg, head);
-		arg = ft_get_appendout(arg, head);
-		ft_check_double_pipe(arg, head);
+		if (ft_check_double_redir(arg) != 0 || ft_check_single_redir(arg) != 0)
+			return(1);
+		ft_set_redirections(arg, head);
 		arg = arg->next;
+	}
+	return (0);
+}
+
+void	ft_set_redirections(t_arg *arg, t_arg *head)
+{
+	arg = ft_get_infile(arg, head);
+	arg = ft_get_heredoc(arg, head);
+	arg = ft_get_outfile(arg, head);
+	arg = ft_get_appendout(arg, head);
+	ft_check_double_pipe(arg, head);
+}
+
+int	ft_check_first_arg(t_arg *arg)
+{
+	char	*tok;
+
+	tok = NULL;
+	if (arg && arg->token == TOKEN_PIPE)
+		tok = "|";
+	else if (arg && arg->token == TOKEN_AND)
+		tok = "&&";
+	else if (arg && arg->content[0] == '(')
+		tok = "(";
+	if (tok)
+	{
+		ft_eprintf("minishell: syntax error near unexpected token `%s\'\n"
+			, tok);
+		return (1);
+	}
+	return (0);
+	
+}
+
+int	ft_check_wrong_arg(t_arg *arg)
+{
+	char	*tok;
+
+	tok = NULL;
+	if (arg && arg->token == TOKEN_AND)
+		tok = "&&";
+	else if (arg && arg->content[0] == '(')
+		tok = "(";
+	if (tok)
+	{
+		ft_eprintf("minishell: syntax error near unexpected token `%s\'\n"
+			, tok);
+		return (1);
 	}
 	return (0);
 }
