@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ms_syntax_errors.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mitch <mitch@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 18:15:00 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/07/20 09:33:24 by mitch            ###   ########.fr       */
+/*   Updated: 2022/07/20 09:43:39 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_clear_and_quit(t_arg *arg, t_arg *head)
+void	ft_clear_and_quit(t_arg *arg, t_arg *head)
 {
 	(void)head;
 	if (arg == NULL)
@@ -28,7 +28,6 @@ int	ft_clear_and_quit(t_arg *arg, t_arg *head)
 	else if (arg->token == TOKEN_PIPE)
 		ft_eprintf("%s `|\'\n", SYNTAX_ERROR);
 	ft_magic_malloc(FLUSH, 0, NULL);
-	return (1);
 }
 
 int	ft_check_double_redir(t_arg *arg)
@@ -40,7 +39,7 @@ int	ft_check_double_redir(t_arg *arg)
 		i = 0;
 		if (arg->token == TOKEN_HEREDOC)
 		{
-			if ( i > 2)
+			if (i > 2)
 				ft_eprintf("%s `%c\'\n", SYNTAX_ERROR, arg->content[2]);
 		}
 		else if (arg->token == TOKEN_APPENDOUT)

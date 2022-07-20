@@ -6,7 +6,7 @@
 /*   By: mitch <mitch@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 18:10:13 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/07/19 13:31:58 by mitch            ###   ########.fr       */
+/*   Updated: 2022/07/20 09:35:58 by mitch            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	ft_set_token(t_arg *args)
 			temp->token = TOKEN_OUTFILE;
 		else if (temp->content[0] == '>' && temp->content[1] == '>')
 			temp->token = TOKEN_APPENDOUT;
-		else if (temp->content[0] == '&' 
+		else if (temp->content[0] == '&'
 			&& temp->content[1] && temp->content[1] == '&')
 			temp->token = TOKEN_AND;
 		else
