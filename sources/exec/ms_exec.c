@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_exec.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mitch <mitch@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 08:30:54 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/07/19 18:19:59 by mitch            ###   ########.fr       */
+/*   Updated: 2022/07/20 10:27:03 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,11 @@ int	ft_try(t_arg *arg, t_env *env, int pipes)
 	char	**env_tab;
 	char	**args_tab;
 	int		std[2];
-	int	i = 0;
+	int		i;
 
 	std[0] = dup(0);
 	std[1] = dup(1);
-	
+	i = 0;	
 	env_tab = ft_env_to_char(env);
 	while (arg)
 	{
@@ -145,15 +145,15 @@ int	ft_executor(t_arg *arg, char **args_tab, char **paths, char **env_tab)
 	env = ft_env_to_list(env_tab);
 	if (ft_builtin_parser(&env, arg) == 42)
 	{
-		// if (ft_check_cmd(args_tab[0]) != 0)
-		// 	return (-1);
+		if (ft_check_cmd(args_tab[0]) != 0)
+			return (-1);
 		if (execve(args_tab[0], args_tab, env_tab) == -1 && env_tab)
 		{
 			cmd = ft_get_cmd(args_tab[0], paths);
 			if (cmd == NULL)
 			{
 				ft_eprintf("%s: %s\n", args_tab[0], NOT_FOUND);
-				return (1);
+				return (-1);
 			}
 			if (execve(cmd, args_tab, env_tab) == -1)
 			{
@@ -163,7 +163,7 @@ int	ft_executor(t_arg *arg, char **args_tab, char **paths, char **env_tab)
 			}
 		}
 	}
-	return (1);
+	return (-1);
 }
 
 void	ft_close_child(int fds[2], int std[2])
