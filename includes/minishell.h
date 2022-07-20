@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 09:18:31 by aweaver           #+#    #+#             */
-/*   Updated: 2022/07/20 11:24:54 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/07/20 17:13:26 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <fcntl.h>
-# include "errno.h"
+# include <errno.h>
 # include <wait.h>
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -48,7 +48,14 @@
 # include "get_next_line.h"
 
 /* ************************************************************************ */
-/*								PARSING										*/
+/*                              MAIN FUNCTIONS                              */
+/* ************************************************************************ */
+
+t_arg	*ft_init_shell(void);
+int		ft_main_loop(t_arg *arg, t_env *env, int std[2]);
+
+/* ************************************************************************ */
+/*                                 PARSING                                  */
 /* ************************************************************************ */
 
 /* ************************************ */
@@ -128,7 +135,7 @@ t_arg	*ft_echo_skip_opt(t_arg *arg, int *n_opt);
 int		ft_echo(t_arg *arg);
 int		ft_echo_n_opt(t_arg *arg);
 
-int		ft_builtin_parser(t_env **env, t_arg *arg);
+int		ft_builtin_parser(t_env **env, t_arg *arg, int std[2]);
 
 /* ************************************************************************ */
 /*                           REDIRECTION FUNCTIONS                          */
@@ -153,16 +160,17 @@ char	**ft_get_path(char **env);
 char	*ft_get_cmd(char *arg, char **paths);
 int		ft_count_pipes(t_arg *arg);
 int		ft_try(t_arg *arg, t_env *env, int pipes, int fds[2]);
-int		ft_child(t_arg *arg, char **args_tab, char **env, int std[2]);
-int		ft_executor(t_arg *arg, char **args_tab, char **paths, char **env);
-int		ft_piped_child(t_arg *arg, char **args_tab, char **env, int std[2]);
+int		ft_child(t_arg *arg, char **env, int std[2]);
+int		ft_executor(t_arg *arg, char **paths, char **env, int std[2]);
+int		ft_piped_child(t_arg *arg, char **env, int std[2]);
 
 void	ft_close_child(int fds[2], int std[2]);
 void	ft_close_parent(int std[2]);
-int		ft_check_pipes(t_arg *arg, t_env *env);
+int		ft_check_pipes(t_arg *arg, t_env *env, int std[2]);
 
 char	*ft_display_prompt(void);
 int		*ft_save_std_fd(void);
 int		ft_check_cmd(char *cmd);
+int		ft_error(char *file);
 
 #endif

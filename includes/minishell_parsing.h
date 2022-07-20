@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 13:24:57 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/07/20 09:59:30 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/07/20 17:12:56 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	ft_flag_char(char *str, char *flags);
 void	ft_get_strings(t_arg *arg, char **pieces, char *flags, t_env *env);
 void	ft_final_string(t_arg *arg, char **pieces, char *flags, t_env *env);
 
-int		ft_test(t_arg *arg, t_env *env);
+int		ft_check_and_expand(t_arg *arg, t_env *env);
 int		ft_check_var(char *str, t_env *env);
 int		ft_expand_size(char *str, t_env *env);
 int		ft_check_env_var(char *str, t_env *env);
