@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 10:02:08 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/07/20 11:01:53 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/07/20 12:15:52 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ int	ft_check_wrong_arg(t_arg *arg)
 		tok = "&&";
 	else if (arg && arg->content[0] == '(')
 		tok = "(";
+	else if (arg && arg->content[0] == ';')
+		tok = ";";
 	if (tok)
 	{
 		ft_eprintf("%s `%s\'\n", SYNTAX_ERROR, tok);
