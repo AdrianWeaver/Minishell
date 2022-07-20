@@ -78,6 +78,7 @@ SRCS 			=	mitch_main_test.c	\
 						ms_heredoc.c \
 						ms_expand_heredoc.c \
 						ms_redirection.c \
+						ms_check_redirections.c \
 					)\
 					$(addprefix $(SRCS_EXEC),	\
 						ms_exec.c \
