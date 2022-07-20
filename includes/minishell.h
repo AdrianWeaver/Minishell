@@ -6,7 +6,7 @@
 /*   By: mitch <mitch@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 09:18:31 by aweaver           #+#    #+#             */
-/*   Updated: 2022/07/19 18:18:05 by mitch            ###   ########.fr       */
+/*   Updated: 2022/07/20 09:32:06 by mitch            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # define FLUSH -1
 
 # define NOT_FOUND "command not found"
+# define SYNTAX_ERROR "minishell: syntax error near unexpected token"
 # include <unistd.h>
 # include <stdlib.h>
 # include <sys/types.h>
