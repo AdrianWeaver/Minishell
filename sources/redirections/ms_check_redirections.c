@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 10:02:08 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/07/20 10:03:14 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/07/20 11:01:53 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,18 @@ int	ft_check_first_arg(t_arg *arg)
 	tok = NULL;
 	if (arg && arg->token == TOKEN_PIPE)
 		tok = "|";
-	else if (arg && arg->token == TOKEN_AND)
-		tok = "&&";
-	else if (arg && arg->content[0] == '(')
-		tok = "(";
+	else if (arg && arg->content[0] == '#')
+		tok = "#";
+	else if (arg && arg->content[0] == '!')
+		tok = "!";
+	else if (arg && arg->content[0] == ':')
+		tok = ":";
+	else if (arg && ft_strcmp(arg->content, "\\") == 0)
+		tok = "\\";
 	if (tok)
 	{
-		ft_eprintf("%s `%s\'\n", SYNTAX_ERROR, tok);
+		if (ft_strcmp(tok, "|") == 0)
+			ft_eprintf("%s `%s\'\n", SYNTAX_ERROR, tok);
 		return (1);
 	}
 	return (0);

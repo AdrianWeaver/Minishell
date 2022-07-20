@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 08:30:54 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/07/20 10:27:03 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/07/20 10:47:31 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,17 +53,16 @@ int	ft_try(t_arg *arg, t_env *env, int pipes)
 
 	std[0] = dup(0);
 	std[1] = dup(1);
-	i = 0;	
+	i = -1;	
 	env_tab = ft_env_to_char(env);
 	while (arg)
 	{
 		args_tab = ft_list_to_char(arg);
-		if (i < pipes)
+		if (++i < pipes)
 		{
 			args_tab = ft_list_to_char(arg);
 			ft_piped_child(arg, args_tab, env_tab, std);
 			args_tab = ft_magic_malloc(FREE, 0, args_tab);
-			i++;
 		}
 		else
 			ft_child(arg, args_tab, env_tab, std);
@@ -71,11 +70,8 @@ int	ft_try(t_arg *arg, t_env *env, int pipes)
 		arg = ft_get_next_pipe(arg);
 	}
 	env_tab = ft_magic_malloc(FREE, 0, env_tab);
-	while (pipes >= 0)
-	{
+	while (pipes-- >= 0)
 		waitpid(0, NULL, 0);
-		pipes--;
-	}
 	dup2(std[0], STDIN_FILENO);
 	dup2(std[1], STDOUT_FILENO);
 	close(std[0]);
@@ -150,12 +146,7 @@ int	ft_executor(t_arg *arg, char **args_tab, char **paths, char **env_tab)
 		if (execve(args_tab[0], args_tab, env_tab) == -1 && env_tab)
 		{
 			cmd = ft_get_cmd(args_tab[0], paths);
-			if (cmd == NULL)
-			{
-				ft_eprintf("%s: %s\n", args_tab[0], NOT_FOUND);
-				return (-1);
-			}
-			if (execve(cmd, args_tab, env_tab) == -1)
+			if (cmd == NULL || execve(cmd, args_tab, env_tab) == -1)
 			{
 				ft_eprintf("%s: %s\n", args_tab[0], NOT_FOUND);
 				cmd = ft_magic_malloc(FREE, 0, cmd);

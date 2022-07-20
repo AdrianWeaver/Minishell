@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 18:15:00 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/07/20 09:43:39 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/07/20 11:05:41 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ int	ft_check_double_redir(t_arg *arg)
 		i = 0;
 		if (arg->token == TOKEN_HEREDOC)
 		{
+			while (arg->content[i] == '<')
+				i++;
 			if (i > 2)
 				ft_eprintf("%s `%c\'\n", SYNTAX_ERROR, arg->content[2]);
 		}

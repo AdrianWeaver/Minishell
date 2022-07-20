@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 09:18:31 by aweaver           #+#    #+#             */
-/*   Updated: 2022/07/20 10:19:23 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/07/20 11:12:36 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@
 
 # define NOT_FOUND "command not found"
 # define SYNTAX_ERROR "minishell: syntax error near unexpected token"
-# define IS_DIR "is a directory"
+# define IS_DIR "Is a directory"
+
 # include <unistd.h>
 # include <stdlib.h>
 # include <sys/types.h>
