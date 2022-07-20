@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 10:32:14 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/07/20 10:06:33 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/07/20 17:15:27 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,24 @@ int	ft_redirection(t_arg *arg)
 {
 	int	fd;
 
-	if (arg->token == TOKEN_OUTFILE || arg->token == TOKEN_APPENDOUT)
-		fd = ft_redirection_out(arg);
-	else if (arg->token == TOKEN_INFILE)
-		fd = ft_redirection_in(arg);
+	fd = 0;
+	while (arg && arg->token != TOKEN_PIPE)
+	{
+		if (arg->token == TOKEN_OUTFILE || arg->token == TOKEN_APPENDOUT)
+		{
+			if (arg->content[0] == '>')
+				arg = arg->next;
+			fd = ft_redirection_out(arg);
+		}
+		else if (arg->token == TOKEN_INFILE)
+		{
+			if (arg->content[0] == '<')
+				arg = arg->next;
+			fd = ft_redirection_in(arg);
+		}
+		if (arg)
+			arg = arg->next;
+	}
 	return (fd);
 }
 
@@ -28,10 +42,13 @@ int	ft_redirection_out(t_arg *arg)
 	int	fd;
 
 	if (arg->token == TOKEN_OUTFILE)
-		fd = open(arg->content, O_CREAT | O_TRUNC | O_RDWR, 0644);
+		fd = open(arg->content, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	else if (arg->token == TOKEN_APPENDOUT)
 		fd = open(arg->content, O_CREAT | O_RDWR | O_APPEND, 0644);
+	if (fd == -1)
+		return (ft_error(arg->content));
 	dup2(fd, STDOUT_FILENO);
+	close(fd);
 	return (fd);
 }
 
@@ -41,7 +58,10 @@ int	ft_redirection_in(t_arg *arg)
 
 	if (arg->token == TOKEN_INFILE)
 		fd = open(arg->content, O_RDONLY);
+	if (fd == -1)
+		return (ft_error(arg->content));
 	dup2(fd, STDIN_FILENO);
+	close(fd);
 	return (fd);
 }
 

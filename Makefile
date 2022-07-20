@@ -50,6 +50,7 @@ SRCS 			=	mitch_main_test.c	\
 					 )\
 					$(addprefix $(SRCS_ERRORS),		\
 						ms_syntax_errors.c	\
+						ms_exec_errors.c \
 					 )\
 					$(addprefix $(SRCS_UTILS),		\
 						ms_args_lst_utils.c	\
