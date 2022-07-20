@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 09:18:31 by aweaver           #+#    #+#             */
-/*   Updated: 2022/07/20 11:12:36 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/07/20 11:24:54 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,12 +152,13 @@ void	ft_final_path(char **paths);
 char	**ft_get_path(char **env);
 char	*ft_get_cmd(char *arg, char **paths);
 int		ft_count_pipes(t_arg *arg);
-int		ft_try(t_arg *arg, t_env *env, int pipes);
+int		ft_try(t_arg *arg, t_env *env, int pipes, int fds[2]);
 int		ft_child(t_arg *arg, char **args_tab, char **env, int std[2]);
 int		ft_executor(t_arg *arg, char **args_tab, char **paths, char **env);
 int		ft_piped_child(t_arg *arg, char **args_tab, char **env, int std[2]);
 
 void	ft_close_child(int fds[2], int std[2]);
+void	ft_close_parent(int std[2]);
 int		ft_check_pipes(t_arg *arg, t_env *env);
 
 char	*ft_display_prompt(void);

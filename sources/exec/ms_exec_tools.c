@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 08:34:23 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/07/20 10:05:48 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/07/20 11:35:18 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,18 +95,3 @@ int	ft_exec(char **args, char **paths, char **env)
 	}
 	return (0);
 }
-
-// void	ft_freetab(char **tab)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (tab[i])
-// 		i++;
-// 	while (i > 0)
-// 	{
-// 		free(tab[i - 1]);
-// 		i--;
-// 	}
-// 	free(tab);
-// }

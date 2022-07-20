@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 08:30:54 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/07/20 10:47:31 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/07/20 11:35:42 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,32 +28,13 @@ int	ft_count_pipes(t_arg *arg)
 	return (i);
 }
 
-int	ft_check_pipes(t_arg *arg, t_env *env)
-{
-	int	pipes;
-
-	close(10);
-	pipes = ft_count_pipes(arg);
-	if (pipes == -1)
-	{
-		if (ft_builtin_parser(&env, arg) == 42)
-			ft_try(arg, env, pipes);
-	}
-	else
-		ft_try(arg, env, pipes);
-	return (pipes);
-}
-
-int	ft_try(t_arg *arg, t_env *env, int pipes)
+int	ft_try(t_arg *arg, t_env *env, int pipes, int std[2])
 {
 	char	**env_tab;
 	char	**args_tab;
-	int		std[2];
 	int		i;
 
-	std[0] = dup(0);
-	std[1] = dup(1);
-	i = -1;	
+	i = -1;
 	env_tab = ft_env_to_char(env);
 	while (arg)
 	{
@@ -72,10 +53,7 @@ int	ft_try(t_arg *arg, t_env *env, int pipes)
 	env_tab = ft_magic_malloc(FREE, 0, env_tab);
 	while (pipes-- >= 0)
 		waitpid(0, NULL, 0);
-	dup2(std[0], STDIN_FILENO);
-	dup2(std[1], STDOUT_FILENO);
-	close(std[0]);
-	close(std[1]);
+	ft_close_parent(std);
 	return (0);
 }
 
@@ -155,12 +133,4 @@ int	ft_executor(t_arg *arg, char **args_tab, char **paths, char **env_tab)
 		}
 	}
 	return (-1);
-}
-
-void	ft_close_child(int fds[2], int std[2])
-{
-	close(fds[1]);
-	close(fds[0]);
-	close(std[1]);
-	close(std[0]);
 }
