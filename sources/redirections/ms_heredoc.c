@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_heredoc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mitch <mitch@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 16:17:05 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/07/17 13:29:47 by mitch            ###   ########.fr       */
+/*   Updated: 2022/07/23 16:23:22 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	ft_fill_heredoc(int file, char *delim, int flag, t_env *env)
 		if (flag == 0)
 		{
 			ret = ft_expand_heredoc(line, env);
-			printf("%s", ret);
+			printf("lalala%s", ret);
 		}
 		else
 			printf("%s\n", line);
