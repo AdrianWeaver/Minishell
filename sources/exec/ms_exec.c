@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 08:30:54 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/07/25 10:42:02 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/07/25 10:50:16 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,11 +96,9 @@ int	ft_child(t_arg *arg, t_env *env, int std[2])
 		dup2(std[1], STDOUT_FILENO);
 		close(fds[0]);
 		if (ft_redirection(arg, env, std) != -1)
-		{
 			ft_executor(arg, env, std);
-			ft_close_child(fds, std);
-			ft_magic_malloc(FLUSH, 0, NULL);
-		}
+		ft_close_child(fds, std);
+		ft_magic_malloc(FLUSH, 0, NULL);
 	}
 	waitpid(0, NULL, 0);
 	close(fds[1]);
