@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 09:18:31 by aweaver           #+#    #+#             */
-/*   Updated: 2022/07/20 17:13:26 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/07/24 17:05:49 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@
 /*                              MAIN FUNCTIONS                              */
 /* ************************************************************************ */
 
-t_arg	*ft_init_shell(void);
+t_arg	*ft_init_shell(int std[2]);
 int		ft_main_loop(t_arg *arg, t_env *env, int std[2]);
 
 /* ************************************************************************ */
@@ -146,8 +146,9 @@ void	ft_get_hd_strings(char *line, char **pieces, char *flags, t_env *env);
 char	*ft_final_hd_string(char *line, char **pieces, char *flags, t_env *env);
 char	*ft_expand_heredoc(char *line, t_env *env);
 int		ft_check_delim(t_arg *arg);
-int		ft_heredoc(t_arg *arg, t_env *env);
+int		ft_heredoc(t_arg *arg, t_env *env, int std[2]);
 int		ft_count_hd_expand(char *line, char *flags, t_env *env);
+int		ft_manage_heredoc(t_arg * arg, t_env * env, int std[2]);
 
 /* ************************************************************************ */
 /*                            EXECUTION FUNCTIONS                           */
@@ -160,9 +161,9 @@ char	**ft_get_path(char **env);
 char	*ft_get_cmd(char *arg, char **paths);
 int		ft_count_pipes(t_arg *arg);
 int		ft_try(t_arg *arg, t_env *env, int pipes, int fds[2]);
-int		ft_child(t_arg *arg, char **env, int std[2]);
-int		ft_executor(t_arg *arg, char **paths, char **env, int std[2]);
-int		ft_piped_child(t_arg *arg, char **env, int std[2]);
+int		ft_child(t_arg *arg, t_env *env, int std[2]);
+int		ft_executor(t_arg *arg, t_env *env, int std[2]);
+int		ft_piped_child(t_arg *arg, t_env *env, int std[2]);
 
 void	ft_close_child(int fds[2], int std[2]);
 void	ft_close_parent(int std[2]);
