@@ -6,13 +6,13 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 16:17:05 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/07/25 13:52:18 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/07/25 16:25:57 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int		ft_heredoc(t_arg *arg, t_env *env, int std[2], char *name)
+int	ft_heredoc(t_arg *arg, t_env *env, int std[2], char *name)
 {
 	int		tmp_file;
 	int		flag;
@@ -21,12 +21,11 @@ int		ft_heredoc(t_arg *arg, t_env *env, int std[2], char *name)
 	(void)std;
 	flag = ft_check_delim(arg);
 	tmp_file = open(name, O_CREAT | O_RDWR | O_TRUNC, 0644);
-		if (tmp_file < 0)
-			return (-1);
+	if (tmp_file < 0)
+		return (-1);
 	doc = fork();
 	if (doc == 0)
 	{
-		
 		ft_fill_heredoc(tmp_file, arg->content, flag, env);
 		close(std[0]);
 		close(std[1]);
@@ -97,32 +96,4 @@ char	*ft_expand_heredoc(char *line, t_env *env)
 		ft_magic_malloc(FREE, 0, flags);
 	ft_magic_malloc(FREE, 0, line);
 	return (ret);
-}
-
-char	*ft_manage_heredoc(t_arg *arg, t_env *env, int std[2])
-{
-	int		i;
-	char	*secret_name;
-	char	*name_end;
-
-	secret_name = NULL;
-	i = 2147483647;
-	while (arg && arg->token != TOKEN_PIPE)
-	{
-		if (arg->token == TOKEN_HEREDOC)
-		{
-			dup2(std[0], STDIN_FILENO);
-			name_end = ft_itoa(i);
-			ft_magic_malloc(ADD, 0, name_end);
-			secret_name = ft_strjoin("/tmp/.MiNiShElL#@tmp", name_end);
-			fprintf(stderr, "secret_name == %s\n", secret_name);
-			ft_magic_malloc(ADD, 0, secret_name);
-			if (arg->content[0] == '<')
-				arg = arg->next;
-			ft_heredoc(arg, env, std, secret_name);
-		}
-		i--;
-		arg = arg->next;
-	}
-	return (secret_name);
 }

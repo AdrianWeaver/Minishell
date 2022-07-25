@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 08:30:54 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/07/25 14:47:36 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/07/25 16:31:03 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,21 +32,12 @@ int	ft_try(t_arg *arg, t_env *env, int pipes, int std[2])
 {
 	int		i;
 	int		hd_fd;
-	char	*heredoc_file;
 
 	i = -1;
 	hd_fd = -1;
-	heredoc_file = NULL;
 	while (arg)
 	{
-		heredoc_file = ft_manage_heredoc(arg, env, std);
-		if (heredoc_file != NULL)
-		{
-			hd_fd = open(heredoc_file, O_RDONLY);
-			unlink(heredoc_file);
-			dup2(hd_fd, STDIN_FILENO);
-		}
-		heredoc_file = NULL;
+		ft_redir_heredoc(arg, env, std);
 		if (++i < pipes)
 			ft_piped_child(arg, env, std);
 		else
@@ -101,9 +92,9 @@ int	ft_child(t_arg *arg, t_env *env, int std[2])
 	child = fork();
 	if (child == -1)
 		return (1);
+	dup2(1, STDOUT_FILENO);
 	if (child == 0)
 	{
-		dup2(std[1], STDOUT_FILENO);
 		close(fds[0]);
 		if (ft_redirection(arg, env, std) != -1)
 			ft_executor(arg, env, std);
@@ -114,11 +105,8 @@ int	ft_child(t_arg *arg, t_env *env, int std[2])
 	{
 		waitpid(0, NULL, 0);
 		close(fds[1]);
-		dup2(fds[0], STDIN_FILENO);
 		close(fds[0]);
-		dup2(std[1], STDOUT_FILENO);
 	}
-
 	return (0);
 }
 

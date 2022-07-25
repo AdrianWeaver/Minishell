@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 10:05:52 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/07/24 18:00:36 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/07/25 16:31:16 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,5 @@ int	ft_check_pipes(t_arg *arg, t_env *env, int std[2])
 	}
 	else
 		ft_try(arg, env, pipes, std);
-	// ft_close_parent(std);
 	return (pipes);
 }
