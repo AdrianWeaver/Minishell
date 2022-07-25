@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 09:18:31 by aweaver           #+#    #+#             */
-/*   Updated: 2022/07/25 16:56:31 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/07/25 17:45:18 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ void	ft_cleanly_delone_mlc(t_mlc **mlc_start, void *addr);
 /* unset */
 t_env	*ft_find_env_elem(t_env *env_list, char *name);
 char	*ft_get_pwd(void);
-int		ft_print_pwd(char **arg);
+int		ft_print_pwd(void);
 int		ft_unset(t_env **env_list, char **name);
 
 /* cd */

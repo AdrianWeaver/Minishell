@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mitch <mitch@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 08:42:01 by aweaver           #+#    #+#             */
-/*   Updated: 2022/07/15 12:22:54 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/07/25 17:43:53 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,10 @@ char	*ft_get_pwd(void)
 	return (buff);
 }
 
-int	ft_print_pwd(char **arg)
+int	ft_print_pwd(void)
 {
 	char	*pwd;
 
-	if (ft_array_size(arg) != 0)
-		return (ft_eprintf("pwd: Too many arguments\n", 1));
 	pwd = ft_get_pwd();
 	printf("%s\n", pwd);
 	pwd = ft_magic_malloc(FREE, 0, pwd);
