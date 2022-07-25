@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 10:37:54 by aweaver           #+#    #+#             */
-/*   Updated: 2022/07/20 16:11:47 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/07/23 19:36:35 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ char	**ft_list_to_char(t_arg *list)
 	i = 0;
 	size = ft_get_cmd_nb(list);
 	ret = ft_magic_malloc(MALLOC, sizeof(*ret) * (size + 1), NULL);
+	if (size == 0)
+		return (NULL);
 	ret[size] = 0;
 	while (list)
 	{

@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 13:24:57 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/07/20 17:12:56 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/07/23 19:48:26 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ int		ft_count_expand(t_arg *arg, char *flags, t_env *env);
 
 void	ft_clear_and_quit(t_arg *arg, t_arg *head);
 void	ft_set_redirections(t_arg *arg, t_arg *head);
-int		ft_redirection(t_arg *arg);
-int		ft_redirection_in(t_arg *arg);
+int		ft_redirection(t_arg *arg, t_env *env, int std[2]);
+int		ft_redirection_in(t_arg *arg, t_env *env, int std[2]);
 int		ft_check_first_arg(t_arg *arg);
 int		ft_check_wrong_arg(t_arg *arg);
 int		ft_redirection_out(t_arg *arg);

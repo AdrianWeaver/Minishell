@@ -6,17 +6,19 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 09:18:40 by aweaver           #+#    #+#             */
-/*   Updated: 2022/07/20 17:14:57 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/07/24 11:51:17 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_arg	*ft_init_shell(void)
+t_arg	*ft_init_shell(int std[2])
 {
 	char	*line;
 	t_arg	*arg;
 
+	dup2(std[0], STDIN_FILENO);
+	dup2(std[1], STDOUT_FILENO);
 	line = NULL;
 	line = ft_display_prompt();
 	if (line == NULL)
@@ -67,7 +69,7 @@ int	main(int ac, char *av[], char *env[])
 	env_list = ft_env_to_list(env);
 	while (1)
 	{
-		arg = ft_init_shell();
+		arg = ft_init_shell(std);
 		if (arg == NULL)
 			break ;
 		ft_main_loop(arg, env_list, std);
