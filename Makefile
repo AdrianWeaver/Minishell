@@ -28,6 +28,7 @@ SRCS_PARSING	=	./parsing/
 SRCS_ERRORS		=	./errors/
 SRCS_BUILTINS	=	./builtins/
 SRCS_ENV		=	./env/
+SRCS_EXEC		=	./exec/
 SRCS_UTILS		=	./utils/
 SRCS_REDIRECT	=	./redirections/
 
@@ -49,15 +50,15 @@ SRCS 			=	mitch_main_test.c	\
 					 )\
 					$(addprefix $(SRCS_ERRORS),		\
 						ms_syntax_errors.c	\
+						ms_exec_errors.c \
 					 )\
 					$(addprefix $(SRCS_UTILS),		\
 						ms_args_lst_utils.c	\
 						ms_magic_malloc.c \
 						ms_magic_malloc_utils.c \
 						ms_mlc_lst_utils.c		\
-						ms_redirection.c \
 						ms_prompt.c \
-						ms_list_to_char.c\
+						ms_list_to_char.c \
 					)\
 					$(addprefix $(SRCS_ENV), \
 						ms_env_to_list.c \
@@ -77,6 +78,15 @@ SRCS 			=	mitch_main_test.c	\
 					$(addprefix $(SRCS_REDIRECT),		\
 						ms_heredoc.c \
 						ms_expand_heredoc.c \
+						ms_heredoc_management.c \
+						ms_redirection.c \
+						ms_check_redirections.c \
+					)\
+					$(addprefix $(SRCS_EXEC),	\
+						ms_exec.c \
+						ms_exec_tools.c \
+						ms_check_cmd.c \
+						ms_std_fd_management.c \
 					)
 
 OBJS			=	$(addprefix $(OBJS_PATH), $(SRCS:.c=.o))

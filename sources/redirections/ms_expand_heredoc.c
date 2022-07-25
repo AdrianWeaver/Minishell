@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_expand_heredoc.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcervoni <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 17:17:34 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/07/12 17:17:41 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/07/23 20:22:25 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int	ft_count_hd_expand(char *line, char *flags, t_env *env)
 		else if (line[i] && flags[i] == '1')
 			i += ft_set_q_jump(&line[i + 1]) + 1;
 	}
-	fprintf(stderr, "count_exp == %d\n", exp);
 	return (exp);
 }
 

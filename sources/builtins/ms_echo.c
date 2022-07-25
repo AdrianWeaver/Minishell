@@ -12,6 +12,13 @@
 
 #include "minishell.h"
 
+/* ************************************************************************** */
+/*	ACT : check if arg is an option and if it's valid                         */
+/*	ARG : a pointer to a t_arg element                                        */
+/*	RET : an int used as a boolean to significate if an option is given       */
+/*	or not                                                                    */
+/* ************************************************************************** */
+
 int	ft_echo_n_opt(t_arg *arg)
 {
 	int		n_opt;
@@ -29,6 +36,13 @@ int	ft_echo_n_opt(t_arg *arg)
 	return (n_opt);
 }
 
+/* ************************************************************************** */
+/*	ACT : skip every option arguments                                         */
+/*	ARG : a pointer to a t_arg element, an pointer to an int used as flag     */
+/*	to check if option is given to echo                                       */
+/*	RET : a pointer to the first non-option t_arg                             */
+/* ************************************************************************** */
+
 t_arg	*ft_echo_skip_opt(t_arg *arg, int *n_opt)
 {
 	while (arg)
@@ -43,6 +57,12 @@ t_arg	*ft_echo_skip_opt(t_arg *arg, int *n_opt)
 	}
 	return (arg);
 }
+
+/* ************************************************************************** */
+/*	ACT : will check if "-n" option is given then print the input             */
+/*	ARG : a pointer to a t_arg element                                        */
+/*	RET : 0 if all works                                                      */
+/* ************************************************************************** */
 
 int	ft_echo(t_arg *arg)
 {

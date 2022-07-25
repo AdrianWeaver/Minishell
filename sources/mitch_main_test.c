@@ -3,109 +3,79 @@
 /*                                                        :::      ::::::::   */
 /*   mitch_main_test.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mitch <mitch@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 09:18:40 by aweaver           #+#    #+#             */
-/*   Updated: 2022/07/17 12:23:46 by mitch            ###   ########.fr       */
+/*   Updated: 2022/07/25 16:54:10 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_test(t_arg *arg, t_env *env)
+t_arg	*ft_init_shell(int std[2])
 {
-	int		*dq;
-	char	*flags;
-	char	**pieces;
+	char	*line;
+	t_arg	*arg;
 
-	dq = ft_count_quotes(arg);
-	if (!dq)
-		return (-1);
-	flags = ft_get_var_pos(arg->content, env);
-	ft_flag_char(arg->content, flags);
-	if (dq[0] != 0)
-		ft_set_final_q_index(arg, flags, dq, env);
-	pieces = ft_lock_expand(ft_count_expand(arg, flags, env));
-	if (!pieces)
-		return (-1);
-	ft_final_string(arg, pieces, flags, env);
-	if (flags)
-		flags = ft_magic_malloc(FREE, 0, flags);
-	ft_remove_quotes(arg, dq);
-	dq = ft_magic_malloc(FREE, 0, dq);
-	return (0);
+	dup2(std[0], STDIN_FILENO);
+	dup2(std[1], STDOUT_FILENO);
+	line = NULL;
+	line = ft_display_prompt();
+	if (line == NULL)
+		return (NULL);
+	arg = ft_get_args(line);
+	line = ft_magic_malloc(FREE, 0, line);
+	return (arg);
 }
 
-void	ft_get_redirections(t_arg *arg)
+int	ft_main_loop(t_arg *arg, t_env *env, int std[2])
 {
 	t_arg	*head;
 
 	head = arg;
-	while (arg)
+	ft_set_token(arg);
+	if (ft_get_redirections(arg) == 0)
 	{
-		arg = ft_get_infile(arg, head);
-		arg = ft_get_heredoc(arg, head);
-		arg = ft_get_outfile(arg, head);
-		arg = ft_get_appendout(arg, head);
-		ft_check_double_pipe(arg, head);
-		arg = arg->next;
+		while (arg != NULL)
+		{
+			if (ft_check_and_expand(arg, env) == -1)
+			{
+				printf("Missing or extra dquote\n");
+				ft_magic_malloc(FLUSH, 0, NULL);
+			}
+			if (arg)
+				arg = arg->next;
+		}
+		ft_check_pipes(head, env, std);
+		dup2(std[0], STDIN_FILENO);
+		dup2(std[1], STDOUT_FILENO);
+		ft_clear_arg(head);
 	}
+	return (0);
 }
 
 int	main(int ac, char *av[], char *env[])
 {
-	char	*line;
-	char	*prompt;
-	t_arg	*verif;
-	t_arg	*temp;
+	t_arg	*arg;
 	t_env	*env_list;
+	int		std[2];
 
 	(void)ac;
 	(void)av;
-	verif = NULL;
+	std[0] = dup(STDIN_FILENO);
+	std[1] = dup(STDOUT_FILENO);
+	arg = NULL;
+	env_list = NULL;
 	env_list = ft_env_to_list(env);
 	while (1)
 	{
-		prompt = ft_get_prompt();
-		line = readline(prompt);
-		add_history(line);
-		ft_magic_malloc(ADD, 0, prompt);
-		ft_magic_malloc(ADD, 0, line);
-		prompt = ft_magic_malloc(FREE, 0, prompt);
-		if (line == NULL || ft_strcmp(line, "stop") == 0)
+		arg = ft_init_shell(std);
+		if (arg == NULL)
 			break ;
-		verif = ft_get_args(line);
-		line = ft_magic_malloc(FREE, 0, line);
-		if (verif != NULL)
-		{
-			ft_set_token(verif);
-			temp = verif;
-			ft_get_redirections(verif);
-			while (verif != NULL)
-			{
-				if (verif->token == TOKEN_HEREDOC && verif->content[0] != '<')
-					ft_heredoc(verif, env_list);
-				if (ft_test(verif, env_list) == -1)
-				{
-					if (ft_test(verif, env_list) == -1)
-					{
-						printf("Missing or extra dquote\n");
-						ft_clear_arg(temp);
-						ft_free_env(env_list);
-						line = ft_magic_malloc(FREE, 0, line);
-						exit(1);
-					}
-				}
-				verif = verif->next;
-			}
-			verif = temp;
-			while (verif)
-			{
-				ft_builtin_parser(&env_list, verif);
-				verif = verif->next;
-			}
-		}
+		ft_main_loop(arg, env_list, std);
 	}
+	close(std[0]);
+	close(std[1]);
 	rl_clear_history();
 	ft_magic_malloc(FLUSH, 0, NULL);
 	return (0);

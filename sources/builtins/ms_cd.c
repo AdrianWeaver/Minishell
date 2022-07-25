@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aweaver <aweaver@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 13:04:22 by aweaver           #+#    #+#             */
-/*   Updated: 2022/07/15 14:40:26 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/07/25 16:53:33 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,5 @@ int	ft_cd(t_env *env, char **path)
 		}
 		return (0);
 	}
-	return (ft_eprintf("cd: no such file or directory: %s\n", path), 1);
+	return (ft_eprintf("cd: no such file or directory: %s\n", *path), 1);
 }

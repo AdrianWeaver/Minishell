@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_env_to_char.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aweaver <aweaver@42.fr>                     +#+  +:+       +#+       */
+/*   By: mitch <mitch@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 12:02:09 by aweaver           #+#    #+#             */
-/*   Updated: 2022/06/23 14:16:22 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/07/17 12:37:54 by mitch            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ char	**ft_env_to_char(t_env *env)
 	while (env)
 	{
 		tab[i] = ft_strjoin(env->name, "=");
-		tab[i] = ft_strjoin(tab[i], "=");
+		tab[i] = ft_strjoin_free(tab[i], env->content);
+		ft_magic_malloc(ADD, 0, tab[i]);
 		i++;
 		env = env->next;
 	}
