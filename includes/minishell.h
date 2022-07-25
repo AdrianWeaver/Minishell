@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 09:18:31 by aweaver           #+#    #+#             */
-/*   Updated: 2022/07/25 13:35:40 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/07/25 16:27:28 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,8 @@ char	*ft_expand_heredoc(char *line, t_env *env);
 int		ft_check_delim(t_arg *arg);
 int		ft_heredoc(t_arg *arg, t_env *env, int std[2], char *name);
 int		ft_count_hd_expand(char *line, char *flags, t_env *env);
-char	*ft_manage_heredoc(t_arg * arg, t_env * env, int std[2]);
+char	*ft_manage_heredoc(t_arg *arg, t_env *env, int std[2]);
+char	*ft_redir_heredoc(t_arg *arg, t_env *env, int std[2]);
 
 /* ************************************************************************ */
 /*                            EXECUTION FUNCTIONS                           */

@@ -58,7 +58,7 @@ SRCS 			=	mitch_main_test.c	\
 						ms_magic_malloc_utils.c \
 						ms_mlc_lst_utils.c		\
 						ms_prompt.c \
-						ms_list_to_char.c\
+						ms_list_to_char.c \
 					)\
 					$(addprefix $(SRCS_ENV), \
 						ms_env_to_list.c \
@@ -78,6 +78,7 @@ SRCS 			=	mitch_main_test.c	\
 					$(addprefix $(SRCS_REDIRECT),		\
 						ms_heredoc.c \
 						ms_expand_heredoc.c \
+						ms_heredoc_management.c \
 						ms_redirection.c \
 						ms_check_redirections.c \
 					)\
