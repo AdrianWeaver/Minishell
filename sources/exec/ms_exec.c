@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 08:30:54 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/07/25 10:50:16 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/07/25 14:47:36 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,21 +31,30 @@ int	ft_count_pipes(t_arg *arg)
 int	ft_try(t_arg *arg, t_env *env, int pipes, int std[2])
 {
 	int		i;
-	int		hd;
+	int		hd_fd;
+	char	*heredoc_file;
 
 	i = -1;
-	hd = -1;
+	hd_fd = -1;
+	heredoc_file = NULL;
 	while (arg)
 	{
-		hd = ft_manage_heredoc(arg, env, std);
-		if (hd != -1)
-			dup2(hd, STDIN_FILENO);
+		heredoc_file = ft_manage_heredoc(arg, env, std);
+		if (heredoc_file != NULL)
+		{
+			hd_fd = open(heredoc_file, O_RDONLY);
+			unlink(heredoc_file);
+			dup2(hd_fd, STDIN_FILENO);
+		}
+		heredoc_file = NULL;
 		if (++i < pipes)
 			ft_piped_child(arg, env, std);
 		else
 			ft_child(arg, env, std);
 		arg = ft_get_next_pipe(arg);
 	}
+	if (hd_fd != -1)
+		close(hd_fd);
 	while (pipes > 0)
 	{
 		waitpid(0, NULL, 0);
@@ -77,6 +86,7 @@ int	ft_piped_child(t_arg *arg, t_env *env, int std[2])
 	{
 		dup2(fds[0], STDIN_FILENO);
 		close(fds[1]);
+		close(fds[0]);
 	}
 	return (0);
 }
@@ -100,11 +110,14 @@ int	ft_child(t_arg *arg, t_env *env, int std[2])
 		ft_close_child(fds, std);
 		ft_magic_malloc(FLUSH, 0, NULL);
 	}
-	waitpid(0, NULL, 0);
-	close(fds[1]);
-	close(fds[0]);
-	dup2(std[0], STDIN_FILENO);
-	dup2(std[1], STDOUT_FILENO);
+	else
+	{
+		waitpid(0, NULL, 0);
+		close(fds[1]);
+		dup2(fds[0], STDIN_FILENO);
+		close(fds[0]);
+		dup2(std[1], STDOUT_FILENO);
+	}
 
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 11:25:56 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/07/24 14:27:28 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/07/25 13:11:13 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	ft_close_child(int fds[2], int std[2])
 	close(fds[0]);
 	close(std[1]);
 	close(std[0]);
+	close(0);
+	close(1);
 }
 
 void	ft_close_parent(int std[2])

@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 09:18:31 by aweaver           #+#    #+#             */
-/*   Updated: 2022/07/24 17:05:49 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/07/25 13:35:40 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <fcntl.h>
+# include <limits.h>
 # include <errno.h>
 # include <wait.h>
 # include <readline/readline.h>
@@ -146,9 +147,9 @@ void	ft_get_hd_strings(char *line, char **pieces, char *flags, t_env *env);
 char	*ft_final_hd_string(char *line, char **pieces, char *flags, t_env *env);
 char	*ft_expand_heredoc(char *line, t_env *env);
 int		ft_check_delim(t_arg *arg);
-int		ft_heredoc(t_arg *arg, t_env *env, int std[2]);
+int		ft_heredoc(t_arg *arg, t_env *env, int std[2], char *name);
 int		ft_count_hd_expand(char *line, char *flags, t_env *env);
-int		ft_manage_heredoc(t_arg * arg, t_env * env, int std[2]);
+char	*ft_manage_heredoc(t_arg * arg, t_env * env, int std[2]);
 
 /* ************************************************************************ */
 /*                            EXECUTION FUNCTIONS                           */
