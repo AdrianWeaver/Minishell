@@ -6,40 +6,39 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 16:17:05 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/07/23 16:23:22 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/07/25 10:20:50 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int	ft_heredoc(t_arg *arg, t_env *env)
+int	ft_heredoc(t_arg *arg, t_env *env, int std[2])
 {
 	int		tmp_file;
 	int		flag;
 	pid_t	doc;
 
+	(void)std;
 	flag = ft_check_delim(arg);
-	tmp_file = open("/tmp", __O_TMPFILE | O_RDWR, 0600);
+	tmp_file = open("fichier_de_merde", O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (tmp_file < 0)
 		return (-1);
 	doc = fork();
-	dup2(tmp_file, STDOUT_FILENO);
 	if (doc == 0)
 	{
-		
 		ft_fill_heredoc(tmp_file, arg->content, flag, env);
-		// ft_clear_arg(arg);
+		close(std[0]);
+		close(std[1]);
+		// dup2(tmp_file, STDIN_FILENO);
 		close(tmp_file);
 		ft_magic_malloc(FLUSH, 0, NULL);
-		exit(EXIT_SUCCESS);
 	}
 	else
 	{
 		waitpid(0, NULL, 0);
-		dup2(tmp_file, STDOUT_FILENO);
-		close(tmp_file);
+		// close(tmp_file);
 	}
-	return (0);
+	return (tmp_file);
 }
 
 void	ft_fill_heredoc(int file, char *delim, int flag, t_env *env)
@@ -48,24 +47,22 @@ void	ft_fill_heredoc(int file, char *delim, int flag, t_env *env)
 	char	*stop;
 	char	*ret;
 
-	(void)file;
 	line = NULL;
 	ret = NULL;
 	stop = ft_strjoin(delim, "\n");
-	// dup2(file, STDOUT_FILENO);
-	line = get_next_line(0);
+	line = get_next_line(STDIN_FILENO);
 	while (strcmp(line, stop) != 0)
 	{
 		ft_magic_malloc(ADD, 0, line);
 		if (flag == 0)
 		{
 			ret = ft_expand_heredoc(line, env);
-			printf("lalala%s", ret);
+			ft_putstr_fd(ret, file);
 		}
 		else
-			printf("%s\n", line);
+			ft_putstr_fd(line, file); 
 		ft_magic_malloc(FREE, 0, ret);
-		line = get_next_line(0);
+		line = get_next_line(STDIN_FILENO);
 	}
 	get_next_line(GNL_FLUSH);
 	line = ft_magic_malloc(FREE, 0, line);
@@ -92,7 +89,6 @@ char	*ft_expand_heredoc(char *line, t_env *env)
 
 	ret = NULL;
 	flags = ft_get_var_pos(line, env);
-	fprintf(stderr, "flags == %s\n", flags);
 	pieces = ft_lock_expand(ft_count_hd_expand(line, flags, env));
 	if (!pieces)
 		return (NULL);
@@ -101,4 +97,24 @@ char	*ft_expand_heredoc(char *line, t_env *env)
 		ft_magic_malloc(FREE, 0, flags);
 	ft_magic_malloc(FREE, 0, line);
 	return (ret);
+}
+
+int	ft_manage_heredoc(t_arg *arg, t_env *env, int std[2])
+{
+	int	fd;
+
+	fd = -1;
+	while (arg && arg->token != TOKEN_PIPE)
+	{
+		if (arg->token == TOKEN_HEREDOC)
+		{
+			if (arg->content[0] == '<')
+				arg = arg->next;
+			fd = ft_heredoc(arg, env, std);
+		}
+		arg = arg->next;
+	}
+	// if (fd < 0)
+	// 	return (ft_error(arg->content));
+	return (fd);
 }

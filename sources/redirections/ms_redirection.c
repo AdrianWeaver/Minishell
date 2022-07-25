@@ -6,17 +6,19 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 10:32:14 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/07/20 17:15:27 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/07/25 10:30:04 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_redirection(t_arg *arg)
+int	ft_redirection(t_arg *arg, t_env *env, int std[2])
 {
 	int	fd;
 
 	fd = 0;
+	(void)env;
+	(void)std;
 	while (arg && arg->token != TOKEN_PIPE)
 	{
 		if (arg->token == TOKEN_OUTFILE || arg->token == TOKEN_APPENDOUT)
@@ -29,7 +31,7 @@ int	ft_redirection(t_arg *arg)
 		{
 			if (arg->content[0] == '<')
 				arg = arg->next;
-			fd = ft_redirection_in(arg);
+			fd = ft_redirection_in(arg, env, std);
 		}
 		if (arg)
 			arg = arg->next;
@@ -52,16 +54,17 @@ int	ft_redirection_out(t_arg *arg)
 	return (fd);
 }
 
-int	ft_redirection_in(t_arg *arg)
+int	ft_redirection_in(t_arg *arg, t_env *env, int std[2])
 {
 	int	fd;
 
+	(void)env;
+	(void)std;
 	if (arg->token == TOKEN_INFILE)
 		fd = open(arg->content, O_RDONLY);
 	if (fd == -1)
 		return (ft_error(arg->content));
 	dup2(fd, STDIN_FILENO);
-	close(fd);
 	return (fd);
 }
 
