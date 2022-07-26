@@ -31,6 +31,8 @@ SRCS_ENV		=	./env/
 SRCS_EXEC		=	./exec/
 SRCS_UTILS		=	./utils/
 SRCS_REDIRECT	=	./redirections/
+SRCS_SIGNALS	=	./signals/
+SRCS_TERMINAL	=	./terminal/
 
 
 #############################################################################
@@ -39,7 +41,7 @@ SRCS_REDIRECT	=	./redirections/
 #																			#
 #############################################################################
 
-SRCS 			=	mitch_main_test.c	\
+SRCS				=	main.c\
 					$(addprefix $(SRCS_PARSING),	\
 						ms_parser.c	\
 						ms_parse_check.c \
@@ -87,6 +89,13 @@ SRCS 			=	mitch_main_test.c	\
 						ms_exec_tools.c \
 						ms_check_cmd.c \
 						ms_std_fd_management.c \
+					)\
+					$(addprefix $(SRCS_SIGNALS),	\
+						ms_signals.c \
+						ms_signals_heredoc.c \
+					)\
+					$(addprefix $(SRCS_TERMINAL),	\
+						ms_terminal.c\
 					)
 
 OBJS			=	$(addprefix $(OBJS_PATH), $(SRCS:.c=.o))
@@ -109,10 +118,10 @@ $(OBJS_PATH)%.o:	$(SRCS_PATH)%.c
 					@mkdir -p $(dir $@)
 					$(CC) $(CFLAGS) -c $< -o $@ $(INC)
 
-$(LIBFT):			
+$(LIBFT):
 					@make -C $(LIBFT_PATH) $(SILENT)
 
-clean:				
+clean:
 					@rm -rf $(OBJS_PATH)
 					@echo "Objects cleaned!"
 
@@ -144,7 +153,7 @@ teststaf:			$(LIBFT)
 					./sources/env/ms_print_env.c \
 					./sources/utils/ms_magic_malloc.c \
 					./sources/utils/ms_magic_malloc_utils.c \
-					-I ./includes -I ./libft/includes libft/libft.a 
+					-I ./includes -I ./libft/includes libft/libft.a
 					valgrind --leak-check=full --show-leak-kinds=all ./a.out
 
 testexport:			$(LIBFT)
@@ -161,7 +170,7 @@ testexport:			$(LIBFT)
 					./sources/env/ms_print_env.c \
 					./sources/utils/ms_magic_malloc.c \
 					./sources/utils/ms_magic_malloc_utils.c \
-					-I ./includes -I ./libft/includes libft/libft.a 
+					-I ./includes -I ./libft/includes libft/libft.a
 					valgrind --leak-check=full --show-leak-kinds=all ./a.out
 
 -include $(DEPS)

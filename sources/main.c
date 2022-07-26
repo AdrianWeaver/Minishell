@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mitch_main_test.c                                  :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 09:18:40 by aweaver           #+#    #+#             */
-/*   Updated: 2022/07/25 16:54:10 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/07/26 12:29:13 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ int	main(int ac, char *av[], char *env[])
 	env_list = ft_env_to_list(env);
 	while (1)
 	{
+		ft_signal_catching();
 		arg = ft_init_shell(std);
 		if (arg == NULL)
 			break ;

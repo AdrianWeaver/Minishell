@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 09:18:31 by aweaver           #+#    #+#             */
-/*   Updated: 2022/07/25 17:45:18 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/07/26 16:47:09 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,33 @@
 # define TOKEN_OUTFILE 6
 # define TOKEN_APPENDOUT 7
 
-# define FREE 0
-# define MALLOC 1
-# define ADD 2
-# define FLUSH -1
+/* ************************************************************************ */
+/*							MAGIC MALLOC DEFINES							*/
+/* ************************************************************************ */
+# ifndef MS_MAGIC_MALLOC_DEFINES
+#  define MS_MAGIC_MALLOC_DEFINES
+#  define FREE 0
+#  define MALLOC 1
+#  define ADD 2
+#  define FLUSH -1
+# endif
+
+/* ************************************************************************ */
+/*						SIGNAL HANDLE INTERACTIVE DEFINE					*/
+/* ************************************************************************ */
+# ifndef MS_SIGNAL_INTERACTIVE
+#  define MS_SIGNAL_INTERACTIVE
+#  define INTERACTIVE 1
+#  define NOT_INTERACTIVE 0
+# endif
 
 # define NOT_FOUND "command not found"
 # define SYNTAX_ERROR "minishell: syntax error near unexpected token"
 # define IS_DIR "Is a directory"
+
+# ifndef DEBUG
+#  define DEBUG 1
+# endif
 
 # include <unistd.h>
 # include <stdlib.h>
@@ -175,5 +194,19 @@ char	*ft_display_prompt(void);
 int		*ft_save_std_fd(void);
 int		ft_check_cmd(char *cmd);
 int		ft_error(char *file);
+
+/* ************************************************************************ */
+/*                            SIGNALS FUNCTIONS                             */
+/* ************************************************************************ */
+
+void	ft_signal_catching(void);
+void	ft_signal_catching_heredoc(void);
+void	ft_my_magic_handler_heredoc(int signum);
+void	ft_my_magic_handler_interactive(int signum);
+void	ft_my_magic_handler_not_interactive(int signum);
+void	ft_ignore_signal(void);
+void	ft_ignore_handler(int signum);
+void	ft_set_term_behaviour(void);
+int		ft_is_interactive(void);
 
 #endif

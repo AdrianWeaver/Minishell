@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 16:25:05 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/07/25 16:30:30 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/07/26 10:40:33 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*ft_manage_heredoc(t_arg *arg, t_env *env, int std[2])
 	char	*name_end;
 
 	secret_name = NULL;
-	i = 2147483647;
+	i = INT_MAX;
 	while (arg && arg->token != TOKEN_PIPE)
 	{
 		if (arg->token == TOKEN_HEREDOC)
@@ -28,7 +28,8 @@ char	*ft_manage_heredoc(t_arg *arg, t_env *env, int std[2])
 			name_end = ft_itoa(i);
 			ft_magic_malloc(ADD, 0, name_end);
 			secret_name = ft_strjoin("/tmp/.MiNiShElL#@tmp", name_end);
-			fprintf(stderr, "secret_name == %s\n", secret_name);
+			if (DEBUG)
+				fprintf(stderr, "secret_name == %s\n", secret_name);
 			ft_magic_malloc(ADD, 0, secret_name);
 			if (arg->content[0] == '<')
 				arg = arg->next;

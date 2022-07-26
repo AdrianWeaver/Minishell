@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 16:17:05 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/07/25 16:25:57 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/07/26 12:08:28 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,15 @@ int	ft_heredoc(t_arg *arg, t_env *env, int std[2], char *name)
 	int		flag;
 	pid_t	doc;
 
-	(void)std;
 	flag = ft_check_delim(arg);
 	tmp_file = open(name, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (tmp_file < 0)
 		return (-1);
+	ft_ignore_signal();
 	doc = fork();
 	if (doc == 0)
 	{
+		ft_signal_catching_heredoc();
 		ft_fill_heredoc(tmp_file, arg->content, flag, env);
 		close(std[0]);
 		close(std[1]);
