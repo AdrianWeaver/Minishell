@@ -6,7 +6,7 @@
 /*   By: aweaver <aweaver@42.fr>                     +#+  +:+       +#+       */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 16:40:03 by aweaver           #+#    #+#             */
-/*   Updated: 2022/06/23 13:59:18 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/07/26 17:03:25 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	ft_delone_mlc(t_mlc *mlc, void (*del)(void *))
 	mlc = NULL;
 }
 
-void	ft_free_mlc_and_quit(t_mlc *mlc_start)
+void	ft_free_mlc_and_quit(t_mlc *mlc_start, int size)
 {
 	t_mlc	*tmp;
 
@@ -32,7 +32,7 @@ void	ft_free_mlc_and_quit(t_mlc *mlc_start)
 		mlc_start = mlc_start->next;
 		ft_delone_mlc(tmp, free);
 	}
-	exit (0);
+	exit (size);
 }
 
 t_mlc	*ft_find_mlc_elem(t_mlc *mlc_list, void *addr)

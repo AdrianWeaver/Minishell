@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 09:18:31 by aweaver           #+#    #+#             */
-/*   Updated: 2022/07/26 16:47:09 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/07/27 09:36:49 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ int		ft_print_env(t_env *env_list, char **arg);
 t_mlc	*ft_malloc_list_add_back(t_mlc **mlc_list, t_mlc *new_mlc);
 void	ft_free_env(t_env *env_start);
 void	ft_free_double_array(char **str);
-void	ft_free_mlc_and_quit(t_mlc *mlc_start);
+void	ft_free_mlc_and_quit(t_mlc *mlc_start, int exit_code);
 void	ft_delone_mlc(t_mlc *mlc, void (*del)(void *));
 void	*ft_magic_malloc(int funct, size_t size, void *addr);
 void	ft_cleanly_delone_mlc(t_mlc **mlc_start, void *addr);
