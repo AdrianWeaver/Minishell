@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 18:13:22 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/06/23 14:19:28 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/07/26 13:06:56 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,9 @@ void	ft_get_strings(t_arg *arg, char **pieces, char *flags, t_env *env)
 			pieces[++j] = ft_get_expanded(&arg->content[i + 1], env);
 			i += ft_check_var(&arg->content[i], env) + 1;
 		}
-		if (flags[i] == '\0' || j == -1)
-			pieces[++j] = NULL;
 	}
+	if (flags[i] == '\0' || j == -1)
+		pieces[++j] = NULL;
 }
 
 void	ft_flag_char(char *str, char *flags)
