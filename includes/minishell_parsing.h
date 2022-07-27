@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 13:24:57 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/07/23 19:48:26 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/07/26 15:10:08 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,21 +56,5 @@ int		ft_check_var(char *str, t_env *env);
 int		ft_expand_size(char *str, t_env *env);
 int		ft_check_env_var(char *str, t_env *env);
 int		ft_count_expand(t_arg *arg, char *flags, t_env *env);
-
-/* ************************************************************************** */
-/*                                REDIRECTIONS                                */
-/* ************************************************************************** */
-
-void	ft_clear_and_quit(t_arg *arg, t_arg *head);
-void	ft_set_redirections(t_arg *arg, t_arg *head);
-int		ft_redirection(t_arg *arg, t_env *env, int std[2]);
-int		ft_redirection_in(t_arg *arg, t_env *env, int std[2]);
-int		ft_check_first_arg(t_arg *arg);
-int		ft_check_wrong_arg(t_arg *arg);
-int		ft_redirection_out(t_arg *arg);
-int		ft_get_redirections(t_arg *arg);
-int		ft_check_single_redir(t_arg *arg);
-int		ft_check_double_redir(t_arg *arg);
-int		ft_check_double_pipe(t_arg *arg, t_arg *head);
 
 #endif
