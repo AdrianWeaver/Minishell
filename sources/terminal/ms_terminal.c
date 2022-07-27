@@ -6,7 +6,7 @@
 /*   By: aweaver <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 16:28:52 by aweaver           #+#    #+#             */
-/*   Updated: 2022/07/26 16:31:14 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/07/27 13:40:18 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ void	ft_set_term_behaviour(void)
 	{
 		if (tcgetattr(0, &term) == -1)
 		{
-			ft_eprintf("1tcgetattr: cannot recover terminal status");
+			ft_eprintf("tcgetattr: %s\n", strerror(errno));
 			ft_magic_malloc(FLUSH, 1, NULL);
 		}
 		term.c_lflag &= ~ECHOCTL;
 		if (tcsetattr(0, 0, &term) == -1)
 		{
-			ft_eprintf("2tcgetattr: cannot recover terminal status");
+			ft_eprintf("tcsetattr: %s\n", strerror(errno));
 			ft_magic_malloc(FLUSH, 1, NULL);
 		}
 	}
