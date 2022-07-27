@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 16:17:05 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/07/27 11:24:57 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/07/27 12:16:25 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,13 @@ int	ft_heredoc(t_arg *arg, t_env *env, int std[2], char *name)
 	return (0);
 }
 
+void	ft_finish_heredoc(char *line, char *stop)
+{
+	get_next_line(GNL_FLUSH);
+	line = ft_magic_malloc(FREE, 0, line);
+	stop = ft_magic_malloc(FREE, 0, stop);
+}
+
 void	ft_fill_heredoc(int file, char *delim, int flag, t_env *env)
 {
 	char	*line;
@@ -50,6 +57,7 @@ void	ft_fill_heredoc(int file, char *delim, int flag, t_env *env)
 	line = NULL;
 	ret = NULL;
 	stop = ft_strjoin(delim, "\n");
+	write(2, ">", 1);
 	line = get_next_line(STDIN_FILENO);
 	while (strcmp(line, stop) != 0)
 	{
@@ -62,11 +70,10 @@ void	ft_fill_heredoc(int file, char *delim, int flag, t_env *env)
 		else
 			ft_putstr_fd(line, file);
 		ft_magic_malloc(FREE, 0, ret);
+		write(2, ">", 1);
 		line = get_next_line(STDIN_FILENO);
 	}
-	get_next_line(GNL_FLUSH);
-	line = ft_magic_malloc(FREE, 0, line);
-	stop = ft_magic_malloc(FREE, 0, stop);
+	ft_finish_heredoc(line, stop);
 }
 
 int	ft_check_delim(t_arg *arg)

@@ -6,7 +6,7 @@
 /*   By: aweaver <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 10:53:13 by aweaver           #+#    #+#             */
-/*   Updated: 2022/07/26 16:31:20 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/07/27 12:10:14 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	ft_my_magic_handler_heredoc(int signum)
 {
 	if (signum == SIGINT)
 	{
+		get_next_line(GNL_FLUSH);
 		ft_magic_malloc(FLUSH, 130, NULL);
 		exit(130);
 	}
