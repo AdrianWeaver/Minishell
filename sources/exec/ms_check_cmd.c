@@ -32,14 +32,22 @@ int	ft_check_cmd(char *cmd)
 int	ft_check_pipes(t_arg *arg, t_env *env, int std[2])
 {
 	int		pipes;
+	int		*currents;
 
 	pipes = ft_count_pipes(arg);
 	if (pipes == 0)
 	{
 		ft_redir_heredoc(arg, env, std);
-		ft_redirection(arg);
+		currents = ft_redirection(arg);
 		if (ft_builtin_parser(&env, arg, std) == 42)
 			ft_try(arg, env, pipes, std);
+		else
+		{
+			if (currents[0] != 0)
+				close(currents[0]);
+			if (currents[1] != 1)
+				close(currents[1]);
+		}	
 	}
 	else
 		ft_try(arg, env, pipes, std);

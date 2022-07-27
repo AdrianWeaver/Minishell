@@ -162,10 +162,12 @@ int		ft_builtin_parser(t_env **env, t_arg *arg, int std[2]);
 /* ************************************************************************ */
 
 void	ft_set_redirections(t_arg *arg, t_arg *head);
-int		ft_redirection(t_arg *arg);
+int		*ft_redirection(t_arg *arg);
 int		ft_redirection_in(t_arg *arg, int current_in);
 int		ft_redirection_out(t_arg *arg, int current_out);
 int		ft_get_redirections(t_arg *arg);
+
+int		*ft_set_currents(void);
 
 void	ft_fill_heredoc(int file, char *delim, int flag, t_env *env);
 void	ft_get_hd_strings(char *line, char **pieces, char *flags, t_env *env);
@@ -195,7 +197,7 @@ int		ft_child(t_arg *arg, t_env *env, int std[2]);
 int		ft_executor(t_arg *arg, t_env *env, int std[2]);
 int		ft_piped_child(t_arg *arg, t_env *env, int std[2]);
 
-void	ft_close_child(int fds[2], int std[2]);
+void	ft_close_child(int fds[2], int std[2], int currents[2]);
 void	ft_close_parent(int std[2]);
 int		ft_check_pipes(t_arg *arg, t_env *env, int std[2]);
 

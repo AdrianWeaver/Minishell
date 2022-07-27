@@ -57,6 +57,7 @@ int	ft_piped_child(t_arg *arg, t_env *env, int std[2])
 {
 	pid_t	child;
 	int		fds[2];
+	int		*currents;
 
 	if (pipe(fds) == -1)
 		return (1);
@@ -66,9 +67,9 @@ int	ft_piped_child(t_arg *arg, t_env *env, int std[2])
 	if (child == 0)
 	{
 		dup2(fds[1], STDOUT_FILENO);
-		ft_redirection(arg);
+		currents = ft_redirection(arg);
 		ft_executor(arg, env, std);
-		ft_close_child(fds, std);
+		ft_close_child(fds, std, currents);
 		ft_magic_malloc(FLUSH, 0, NULL);
 	}
 	else
@@ -84,6 +85,7 @@ int	ft_child(t_arg *arg, t_env *env, int std[2])
 {
 	pid_t	child;
 	int		fds[2];
+	int		*currents;
 
 	if (pipe(fds) == -1)
 		return (1);
@@ -93,9 +95,9 @@ int	ft_child(t_arg *arg, t_env *env, int std[2])
 	if (child == 0)
 	{
 		dup2(std[1], STDOUT_FILENO);
-		ft_redirection(arg);
+		currents = ft_redirection(arg);
 		ft_executor(arg, env, std);
-		ft_close_child(fds, std);
+		ft_close_child(fds, std, currents);
 		ft_magic_malloc(FLUSH, 0, NULL);
 	}
 	else

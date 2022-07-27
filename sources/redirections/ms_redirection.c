@@ -12,32 +12,30 @@
 
 #include "minishell.h"
 
-int	ft_redirection(t_arg *arg)
+int	*ft_redirection(t_arg *arg)
 {
 	int	fd;
-	int	current_in;
-	int	current_out;
+	int	*currents;
 
 	fd = 0;
-	current_in = 0;
-	current_out = 1;
+	currents = ft_set_currents();
 	while (arg && arg->token != TOKEN_PIPE)
 	{
 		if (arg->content[0] == '>' || arg->content[0] == '<')
 				arg = arg->next;
 		if (arg->token == TOKEN_OUTFILE || arg->token == TOKEN_APPENDOUT)
 		{
-			fd = ft_redirection_out(arg, current_out);
-			current_out = fd;
+			fd = ft_redirection_out(arg, currents[1]);
+			currents[1] = fd;
 		}
 		else if (arg->token == TOKEN_INFILE || arg->token == TOKEN_HEREDOC)
 		{
-			fd = ft_redirection_in(arg, current_in);
-			current_in = fd;
+			fd = ft_redirection_in(arg, currents[0]);
+			currents[0] = fd;
 		}
 		arg = arg->next;
 	}
-	return (fd);
+	return (currents);
 }
 
 int	ft_redirection_out(t_arg *arg, int current_out)
@@ -97,4 +95,14 @@ void	ft_set_redirections(t_arg *arg, t_arg *head)
 	arg = ft_get_outfile(arg, head);
 	arg = ft_get_appendout(arg, head);
 	ft_check_double_pipe(arg, head);
+}
+
+int	*ft_set_currents(void)
+{
+	int	*currents;
+
+	currents = ft_magic_malloc(MALLOC, sizeof(int) * 2, NULL);
+	currents[0] = 0;
+	currents[1] = 1;
+	return (currents);
 }
