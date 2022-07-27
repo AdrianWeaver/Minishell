@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 08:30:54 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/07/27 12:37:51 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/07/27 12:38:31 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	ft_try(t_arg *arg, t_env *env, int pipes, int std[2])
 			ft_child(arg, env, -1, std);
 		arg = ft_get_next_pipe(arg);
 	}
-	while (pipes >= 0)
+	while (pipes > 0)
 	{
 		waitpid(0, NULL, 0);
 		pipes--;
