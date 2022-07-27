@@ -12,35 +12,35 @@
 
 #include "minishell.h"
 
-int	ft_redirection(t_arg *arg, t_env *env, int index, int std[2])
+int	ft_redirection(t_arg *arg)
 {
 	int	fd;
-	int	i;
+	int	current_in;
+	int	current_out;
 
 	fd = 0;
-	i = 2147483647 / (index + 2);
+	current_in = 0;
+	current_out = 1;
 	while (arg && arg->token != TOKEN_PIPE)
 	{
+		if (arg->content[0] == '>' || arg->content[0] == '<')
+				arg = arg->next;
 		if (arg->token == TOKEN_OUTFILE || arg->token == TOKEN_APPENDOUT)
 		{
-			if (arg->content[0] == '>')
-				arg = arg->next;
-			fd = ft_redirection_out(arg);
+			fd = ft_redirection_out(arg, current_out);
+			current_out = fd;
 		}
 		else if (arg->token == TOKEN_INFILE || arg->token == TOKEN_HEREDOC)
 		{
-			if (arg->content[0] == '<')
-				arg = arg->next;
-			fd = ft_redirection_in(arg, env, i, std);
-			i--;
+			fd = ft_redirection_in(arg, current_in);
+			current_in = fd;
 		}
-		if (arg)
-			arg = arg->next;
+		arg = arg->next;
 	}
 	return (fd);
 }
 
-int	ft_redirection_out(t_arg *arg)
+int	ft_redirection_out(t_arg *arg, int current_out)
 {
 	int	fd;
 
@@ -50,12 +50,13 @@ int	ft_redirection_out(t_arg *arg)
 		fd = open(arg->content, O_CREAT | O_RDWR | O_APPEND, 0644);
 	if (fd == -1)
 		return (ft_error(arg->content));
+	if (current_out != 1)
+		close(current_out);
 	dup2(fd, STDOUT_FILENO);
-	close(fd);
 	return (fd);
 }
 
-int	ft_redirection_in(t_arg *arg, t_env *env, int i, int std[2])
+int	ft_redirection_in(t_arg *arg, int current_in)
 {
 	int	fd;
 
@@ -66,7 +67,14 @@ int	ft_redirection_in(t_arg *arg, t_env *env, int i, int std[2])
 			return (ft_error(arg->content));
 	}
 	else if (arg->token == TOKEN_HEREDOC)
-		fd = ft_redir_heredoc(arg, env, i, std);
+	{
+		fd = open(arg->content, O_RDONLY);
+		if (fd == -1)
+			return (ft_error(arg->content));
+		unlink(arg->content);
+	}
+	if (current_in != 0)
+		close(current_in);
 	dup2(fd, STDIN_FILENO);
 	return (fd);
 }

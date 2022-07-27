@@ -12,38 +12,55 @@
 
 #include "minishell.h"
 
-char	*ft_manage_heredoc(t_arg *arg, t_env *env, int i, int std[2])
+char	*ft_manage_heredoc(t_arg *arg, t_env *env, int std[2])
+{
+	char	*heredoc_name;
+
+	heredoc_name = NULL;
+	heredoc_name = ft_heredoc(arg, env, std);
+	arg->content = ft_magic_malloc(FREE, 0, arg->content);
+	arg->content = ft_strdup(heredoc_name);
+	ft_magic_malloc(ADD, 0, arg->content);
+	return (heredoc_name);
+}
+
+int	ft_redir_heredoc(t_arg *arg, t_env *env, int std[2])
+{
+	while (arg)
+	{
+		if (arg->token == TOKEN_HEREDOC)
+		{
+			if (arg->content[0] == '<')
+			arg = arg->next;
+			if (ft_manage_heredoc(arg, env, std) == NULL)
+				return (-1);
+		}
+		arg = arg->next;
+	}
+	return (0);
+}
+
+char	*ft_create_heredoc(void)
 {
 	char	*secret_name;
 	char	*name_end;
+	int		i;
 
+	i = INT_MAX;
 	secret_name = NULL;
-	dup2(std[0], STDIN_FILENO);
-	name_end = ft_itoa(i);
-	ft_magic_malloc(ADD, 0, name_end);
-	secret_name = ft_strjoin("/tmp/.MiNiShElL#@tmp", name_end);
-	ft_magic_malloc(ADD, 0, secret_name);
-	if (arg->content[0] == '<')
-		arg = arg->next;
-	ft_heredoc(arg, env, std, secret_name);
-	i--;
-	arg = arg->next;
-	return (secret_name);
-}
-
-int	ft_redir_heredoc(t_arg *arg, t_env *env, int i, int std[2])
-{
-	char	*heredoc_file;
-	int		hd_fd;
-
-	heredoc_file = NULL;
-	hd_fd = -1;
-	heredoc_file = ft_manage_heredoc(arg, env, i, std);
-	if (heredoc_file != NULL)
+	while (1)
 	{
-		hd_fd = open(heredoc_file, O_RDONLY);
-		unlink(heredoc_file);
-		dup2(hd_fd, STDIN_FILENO);
+		name_end = ft_itoa(i);
+		ft_magic_malloc(ADD, 0, name_end);
+		secret_name = ft_strjoin("/tmp/.MiNiShElL#@tmp", name_end);
+		ft_magic_malloc(ADD, 0, secret_name);
+		if (access(secret_name, F_OK) == -1)
+			break ;
+		name_end = ft_magic_malloc(FREE, 0, name_end);
+		secret_name = ft_magic_malloc(FREE, 0, secret_name);
+		i--;
+		if (i == INT_MAX)
+			return (NULL);
 	}
-	return (hd_fd);
+	return (secret_name);
 }

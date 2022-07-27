@@ -29,3 +29,10 @@ void	ft_close_parent(int std[2])
 	dup2(std[0], STDIN_FILENO);
 	dup2(std[1], STDOUT_FILENO);
 }
+
+void	ft_close_heredoc(int std[2], int tmp_file)
+{
+	close(std[0]);
+	close(std[1]);
+	close(tmp_file);
+}

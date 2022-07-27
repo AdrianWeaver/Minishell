@@ -33,38 +33,40 @@ int	ft_try(t_arg *arg, t_env *env, int pipes, int std[2])
 	int		i;
 
 	i = -1;
+	if (ft_redir_heredoc(arg, env, std) == -1)
+		return (-1);
 	while (arg)
 	{
 		if (++i < pipes)
-			ft_piped_child(arg, env, i, std);
+			ft_piped_child(arg, env, std);
 		else
-			ft_child(arg, env, -1, std);
+			ft_child(arg, env, std);
 		arg = ft_get_next_pipe(arg);
-	}
-	while (pipes > 0)
-	{
-		waitpid(0, NULL, 0);
-		pipes--;
 	}
 	dup2(std[1], STDOUT_FILENO);
 	dup2(std[0], STDIN_FILENO);
+	while (pipes >= 0)
+	{
+		waitpid(-1, NULL, 0);
+		pipes--;
+	}
 	return (0);
 }
 
-int	ft_piped_child(t_arg *arg, t_env *env, int index, int std[2])
+int	ft_piped_child(t_arg *arg, t_env *env, int std[2])
 {
 	pid_t	child;
 	int		fds[2];
 
 	if (pipe(fds) == -1)
 		return (1);
-	dup2(fds[1], STDOUT_FILENO);
-	ft_redirection(arg, env, index, std);
 	child = fork();
 	if (child == -1)
 		return (1);
 	if (child == 0)
 	{
+		dup2(fds[1], STDOUT_FILENO);
+		ft_redirection(arg);
 		ft_executor(arg, env, std);
 		ft_close_child(fds, std);
 		ft_magic_malloc(FLUSH, 0, NULL);
@@ -73,33 +75,31 @@ int	ft_piped_child(t_arg *arg, t_env *env, int index, int std[2])
 	{
 		dup2(fds[0], STDIN_FILENO);
 		close(fds[1]);
+		close(fds[0]);
 	}
 	return (0);
 }
 
-int	ft_child(t_arg *arg, t_env *env, int index, int std[2])
+int	ft_child(t_arg *arg, t_env *env, int std[2])
 {
 	pid_t	child;
 	int		fds[2];
 
 	if (pipe(fds) == -1)
 		return (1);
-	dup2(std[1], STDOUT_FILENO);
 	child = fork();
 	if (child == -1)
 		return (1);
 	if (child == 0)
 	{
-		close(fds[1]);
-		close(fds[0]);
-		ft_redirection(arg, env, index, std);
+		dup2(std[1], STDOUT_FILENO);
+		ft_redirection(arg);
 		ft_executor(arg, env, std);
 		ft_close_child(fds, std);
 		ft_magic_malloc(FLUSH, 0, NULL);
 	}
 	else
 	{
-		waitpid(0, NULL, 0);
 		close(fds[1]);
 		close(fds[0]);
 	}
