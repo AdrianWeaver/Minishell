@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 09:18:31 by aweaver           #+#    #+#             */
-/*   Updated: 2022/07/27 11:34:23 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/07/27 12:39:17 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,20 +162,25 @@ int		ft_builtin_parser(t_env **env, t_arg *arg, int std[2]);
 /* ************************************************************************ */
 
 void	ft_set_redirections(t_arg *arg, t_arg *head);
-int		ft_redirection(t_arg *arg, t_env *env, int index, int std[2]);
-int		ft_redirection_in(t_arg *arg, t_env *env, int i, int std[2]);
-int		ft_redirection_out(t_arg *arg);
+int		*ft_redirection(t_arg *arg);
+int		ft_redirection_in(t_arg *arg, int current_in);
+int		ft_redirection_out(t_arg *arg, int current_out);
 int		ft_get_redirections(t_arg *arg);
+
+int		*ft_set_currents(void);
 
 void	ft_fill_heredoc(int file, char *delim, int flag, t_env *env);
 void	ft_get_hd_strings(char *line, char **pieces, char *flags, t_env *env);
 char	*ft_final_hd_string(char *line, char **pieces, char *flags, t_env *env);
 char	*ft_expand_heredoc(char *line, t_env *env);
 int		ft_check_delim(t_arg *arg);
-int		ft_heredoc(t_arg *arg, t_env *env, int std[2], char *name);
+char	*ft_heredoc(t_arg *arg, t_env *env, int std[2]);
 int		ft_count_hd_expand(char *line, char *flags, t_env *env);
-char	*ft_manage_heredoc(t_arg *arg, t_env *env, int i, int std[2]);
-int		ft_redir_heredoc(t_arg *arg, t_env *env, int i, int std[2]);
+char	*ft_manage_heredoc(t_arg *arg, t_env *env, int std[2]);
+int		ft_redir_heredoc(t_arg *arg, t_env *env, int std[2]);
+
+char	*ft_create_heredoc(void);
+void	ft_close_heredoc(int std[2], int tmp_file);
 
 /* ************************************************************************ */
 /*                            EXECUTION FUNCTIONS                           */
@@ -188,11 +193,11 @@ char	**ft_get_path(char **env);
 char	*ft_get_cmd(char *arg, char **paths);
 int		ft_count_pipes(t_arg *arg);
 int		ft_try(t_arg *arg, t_env *env, int pipes, int fds[2]);
-int		ft_child(t_arg *arg, t_env *env, int index, int std[2]);
+int		ft_child(t_arg *arg, t_env *env, int std[2]);
 int		ft_executor(t_arg *arg, t_env *env, int std[2]);
-int		ft_piped_child(t_arg *arg, t_env *env, int index, int std[2]);
+int		ft_piped_child(t_arg *arg, t_env *env, int std[2]);
 
-void	ft_close_child(int fds[2], int std[2]);
+void	ft_close_child(int fds[2], int std[2], int currents[2]);
 void	ft_close_parent(int std[2]);
 int		ft_check_pipes(t_arg *arg, t_env *env, int std[2]);
 
