@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 17:17:34 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/07/25 17:23:59 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/07/27 12:30:39 by jcervoni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,4 +87,6 @@ void	ft_get_hd_strings(char *line, char **pieces, char *flags, t_env *env)
 			i += ft_check_var(&line[i], env) + 1;
 		}
 	}
+	if (flags[i] == '\0' || j == -1)
+		pieces[++j] = NULL;
 }
