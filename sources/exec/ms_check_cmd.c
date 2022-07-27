@@ -36,6 +36,8 @@ int	ft_check_pipes(t_arg *arg, t_env *env, int std[2])
 	pipes = ft_count_pipes(arg);
 	if (pipes == 0)
 	{
+		ft_redir_heredoc(arg, env, std);
+		ft_redirection(arg);
 		if (ft_builtin_parser(&env, arg, std) == 42)
 			ft_try(arg, env, pipes, std);
 	}
