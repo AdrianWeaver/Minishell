@@ -27,8 +27,13 @@ char	*ft_get_prompt(void)
 	name = ft_strjoin_free(name, ":");
 	name = ft_strjoin_free(name, path);
 	name = ft_strjoin_free(name, "$ ");
+<<<<<<< HEAD
 	path = ft_magic_malloc(FREE, 0, path);
 	cwd = ft_magic_malloc(FREE, 0, cwd);
+=======
+	ft_magic_malloc(FREE, 0, path);
+	ft_magic_malloc(FREE, 0, cwd);
+>>>>>>> 67cc5b4 (ADD MS_HEREDOC.C :)
 	return (name);
 }
 
