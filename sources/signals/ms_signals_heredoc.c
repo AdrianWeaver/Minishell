@@ -6,7 +6,7 @@
 /*   By: aweaver <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 10:53:13 by aweaver           #+#    #+#             */
-/*   Updated: 2022/07/27 12:10:14 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/07/28 20:10:24 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,25 @@ void	ft_my_magic_handler_heredoc(int signum)
 		ft_magic_malloc(FLUSH, 130, NULL);
 		exit(130);
 	}
-	if (signum == SIGQUIT)
+}
+
+static void	ft_ignore_heredoc_handler(int signum)
+{
+	if (signum == SIGINT)
 	{
 		(void)signum;
+		write(2, "\n", 1);
 	}
+}
+
+void	ft_ignore_signal_heredoc(void)
+{
+	struct sigaction	action_heredoc;
+
+	sigemptyset(&action_heredoc.sa_mask);
+	action_heredoc.sa_flags = SA_NODEFER;
+	action_heredoc.sa_handler = &ft_ignore_heredoc_handler;
+	sigaction(SIGINT, &action_heredoc, 0);
 }
 
 void	ft_signal_catching_heredoc(void)
@@ -32,7 +47,7 @@ void	ft_signal_catching_heredoc(void)
 	struct sigaction	action;
 
 	sigemptyset(&action.sa_mask);
-	action.sa_flags = SA_RESTART;
+	action.sa_flags = SA_NODEFER;
 	action.sa_handler = &ft_my_magic_handler_heredoc;
 	sigaction(SIGINT, &action, 0);
 }
@@ -40,4 +55,5 @@ void	ft_signal_catching_heredoc(void)
 void	ft_ignore_handler(int signum)
 {
 	(void)signum;
+	write(2, "\n", 1);
 }

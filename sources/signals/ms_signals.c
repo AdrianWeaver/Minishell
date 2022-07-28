@@ -6,7 +6,7 @@
 /*   By: aweaver <aweaver@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 12:09:13 by aweaver           #+#    #+#             */
-/*   Updated: 2022/07/26 16:49:05 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/07/28 11:32:20 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 
 void	ft_my_magic_handler_interactive(int signum)
 {
+	ft_set_term_behaviour();
 	if (signum == SIGINT)
 	{
 		write(1, "\n", 1);
@@ -49,6 +50,7 @@ void	ft_ignore_signal(void)
 {
 	struct sigaction	action;
 
+	ft_set_term_behaviour();
 	sigemptyset(&action.sa_mask);
 	action.sa_handler = ft_ignore_handler;
 	action.sa_flags = SA_RESTART;

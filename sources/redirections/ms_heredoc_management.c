@@ -6,34 +6,38 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/25 16:25:05 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/07/27 12:38:51 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/07/28 18:00:07 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*ft_manage_heredoc(t_arg *arg, t_env *env, int std[2])
+int	ft_manage_heredoc(t_arg *arg, t_env *env, int std[2], char **heredoc_name)
 {
-	char	*heredoc_name;
+	int	heredoc_status;
 
-	heredoc_name = NULL;
-	heredoc_name = ft_heredoc(arg, env, std);
+	heredoc_status = ft_heredoc(arg, env, std, heredoc_name);
+	if (heredoc_status != 0)
+		return (heredoc_status);
 	arg->content = ft_magic_malloc(FREE, 0, arg->content);
-	arg->content = ft_strdup(heredoc_name);
+	arg->content = ft_strdup(*heredoc_name);
 	ft_magic_malloc(ADD, 0, arg->content);
-	return (heredoc_name);
+	return (0);
 }
 
-int	ft_redir_heredoc(t_arg *arg, t_env *env, int std[2])
+int	ft_redir_heredoc(t_arg *arg, t_env *env, int std[2], char **heredoc_name)
 {
+	int	heredoc_return;
+
 	while (arg)
 	{
 		if (arg->token == TOKEN_HEREDOC)
 		{
 			if (arg->content[0] == '<')
 			arg = arg->next;
-			if (ft_manage_heredoc(arg, env, std) == NULL)
-				return (-1);
+			heredoc_return = ft_manage_heredoc(arg, env, std, heredoc_name);
+			if (heredoc_return != 0)
+				return (heredoc_return);
 		}
 		arg = arg->next;
 	}
@@ -52,7 +56,7 @@ char	*ft_create_heredoc(void)
 	{
 		name_end = ft_itoa(i);
 		ft_magic_malloc(ADD, 0, name_end);
-		secret_name = ft_strjoin("/tmp/.MiNiShElL#@tmp", name_end);
+		secret_name = ft_strjoin("/tmp/.MiNiShElL@#tmp", name_end);
 		ft_magic_malloc(ADD, 0, secret_name);
 		if (access(secret_name, F_OK) == -1)
 			break ;

@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 08:30:54 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/07/27 12:38:31 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/07/28 14:27:21 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,9 @@ int	ft_count_pipes(t_arg *arg)
 int	ft_try(t_arg *arg, t_env *env, int pipes, int std[2])
 {
 	int		i;
+	int		child_return;
 
 	i = -1;
-	if (ft_redir_heredoc(arg, env, std) == -1)
-		return (-1);
 	while (arg)
 	{
 		if (++i < pipes)
@@ -47,7 +46,9 @@ int	ft_try(t_arg *arg, t_env *env, int pipes, int std[2])
 	dup2(std[0], STDIN_FILENO);
 	while (pipes >= 0)
 	{
-		waitpid(-1, NULL, 0);
+		child_return = ft_check_child_return(-1);
+		if (child_return)
+			return (child_return);
 		pipes--;
 	}
 	return (0);
@@ -74,6 +75,7 @@ int	ft_piped_child(t_arg *arg, t_env *env, int std[2])
 	}
 	else
 	{
+		ft_ignore_signal();
 		dup2(fds[0], STDIN_FILENO);
 		close(fds[1]);
 		close(fds[0]);
@@ -102,6 +104,7 @@ int	ft_child(t_arg *arg, t_env *env, int std[2])
 	}
 	else
 	{
+		ft_ignore_signal();
 		close(fds[1]);
 		close(fds[0]);
 	}

@@ -83,6 +83,7 @@ SRCS				=	main.c\
 						ms_heredoc_management.c \
 						ms_redirection.c \
 						ms_check_redirections.c \
+						ms_check_child_return.c	\
 					)\
 					$(addprefix $(SRCS_EXEC),	\
 						ms_exec.c \

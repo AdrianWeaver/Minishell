@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 09:18:31 by aweaver           #+#    #+#             */
-/*   Updated: 2022/07/27 12:39:17 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/07/28 20:06:20 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,11 @@
 #  define NOT_INTERACTIVE 0
 # endif
 
+/* ************************************************************************ */
+/*								OTHER DEFINES								*/
+/* ************************************************************************ */
+# define MS_NOFILE -22
+# define MS_CTRLD -23
 # define NOT_FOUND "command not found"
 # define SYNTAX_ERROR "minishell: syntax error near unexpected token"
 # define IS_DIR "Is a directory"
@@ -66,6 +71,8 @@
 # include "libft.h"
 # include "libftprintf.h"
 # include "get_next_line.h"
+
+extern int	g_ret_value;
 
 /* ************************************************************************ */
 /*                              MAIN FUNCTIONS                              */
@@ -169,15 +176,15 @@ int		ft_get_redirections(t_arg *arg);
 
 int		*ft_set_currents(void);
 
-void	ft_fill_heredoc(int file, char *delim, int flag, t_env *env);
+int		ft_fill_heredoc(int file, char *delim, int flag, t_env *env);
 void	ft_get_hd_strings(char *line, char **pieces, char *flags, t_env *env);
 char	*ft_final_hd_string(char *line, char **pieces, char *flags, t_env *env);
 char	*ft_expand_heredoc(char *line, t_env *env);
 int		ft_check_delim(t_arg *arg);
-char	*ft_heredoc(t_arg *arg, t_env *env, int std[2]);
+int		ft_heredoc(t_arg *arg, t_env *env, int std[2], char **heredoc_name);
 int		ft_count_hd_expand(char *line, char *flags, t_env *env);
-char	*ft_manage_heredoc(t_arg *arg, t_env *env, int std[2]);
-int		ft_redir_heredoc(t_arg *arg, t_env *env, int std[2]);
+int		ft_manage_heredoc(t_arg *arg, t_env *env, int std[2], char **hd_name);
+int		ft_redir_heredoc(t_arg *arg, t_env *env, int std[2], char **hd_name);
 
 char	*ft_create_heredoc(void);
 void	ft_close_heredoc(int std[2], int tmp_file);
@@ -199,6 +206,7 @@ int		ft_piped_child(t_arg *arg, t_env *env, int std[2]);
 
 void	ft_close_child(int fds[2], int std[2], int currents[2]);
 void	ft_close_parent(int std[2]);
+int		ft_check_child_return(pid_t child_pid);
 int		ft_check_pipes(t_arg *arg, t_env *env, int std[2]);
 
 char	*ft_display_prompt(void);
@@ -219,6 +227,7 @@ void	ft_ignore_signal(void);
 void	ft_ignore_handler(int signum);
 void	ft_set_term_behaviour(void);
 int		ft_is_interactive(void);
+void	ft_ignore_signal_heredoc(void);
 
 /* ************************************************************************ */
 /*                            ERROR MANAGEMENT                              */

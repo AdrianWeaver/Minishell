@@ -6,11 +6,13 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 09:18:40 by aweaver           #+#    #+#             */
-/*   Updated: 2022/07/27 12:32:30 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/07/28 19:16:26 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	g_ret_value;
 
 t_arg	*ft_init_shell(int std[2])
 {
@@ -26,6 +28,27 @@ t_arg	*ft_init_shell(int std[2])
 	arg = ft_get_args(line);
 	line = ft_magic_malloc(FREE, 0, line);
 	return (arg);
+}
+
+int	ft_launch_and_test_heredocs(t_arg *head, t_env *env, int std[2])
+{
+	int		heredoc_return;
+	char	*heredoc_name;
+
+	heredoc_name = NULL;
+	heredoc_return = ft_redir_heredoc(head, env, std, &heredoc_name);
+	if (heredoc_return != 0)
+	{
+		if (heredoc_return == MS_NOFILE)
+			return (-1);
+		else
+		{
+			g_ret_value = heredoc_return;
+			unlink(heredoc_name);
+		}
+		return (-1);
+	}
+	return (0);
 }
 
 int	ft_main_loop(t_arg *arg, t_env *env, int std[2])
@@ -46,6 +69,8 @@ int	ft_main_loop(t_arg *arg, t_env *env, int std[2])
 			if (arg)
 				arg = arg->next;
 		}
+		if (ft_launch_and_test_heredocs(head, env, std) == -1)
+			return (-1);
 		ft_check_pipes(head, env, std);
 		dup2(std[0], STDIN_FILENO);
 		dup2(std[1], STDOUT_FILENO);
