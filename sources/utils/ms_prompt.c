@@ -71,7 +71,7 @@ char	*ft_display_prompt(void)
 	add_history(line);
 	ft_magic_malloc(ADD, 0, prompt);
 	prompt = ft_magic_malloc(FREE, 0, prompt);
-	if (line == NULL || ft_strcmp(line, "stop") == 0)
+	if (line == NULL)
 	{
 		line = ft_magic_malloc(FREE, 0, line);
 		return (NULL);
