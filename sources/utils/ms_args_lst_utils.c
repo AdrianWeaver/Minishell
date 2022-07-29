@@ -26,6 +26,7 @@ t_arg	*ft_newarg(char *argv)
 	if (!new)
 		return (NULL);
 	new->content = ft_strdup(argv);
+	ft_magic_malloc(ADD, 0, new->content);
 	if (!new->content)
 		return (NULL);
 	new->next = NULL;
