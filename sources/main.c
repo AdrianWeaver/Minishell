@@ -78,8 +78,8 @@ int	ft_main_loop(t_arg *arg, t_env *env, int std[2])
 		ft_check_pipes(head, env, std);
 		dup2(std[0], STDIN_FILENO);
 		dup2(std[1], STDOUT_FILENO);
-		ft_clear_arg(head);
 	}
+	ft_clear_arg(head);
 	return (0);
 }
 
