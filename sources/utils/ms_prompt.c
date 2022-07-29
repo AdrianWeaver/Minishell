@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 11:35:51 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/07/25 17:20:33 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/07/29 13:15:47 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,16 @@ char	*ft_display_prompt(void)
 	char	*line;
 	char	*prompt;
 
-	prompt = ft_get_prompt();
-	line = readline(prompt);
-	add_history(line);
-	ft_magic_malloc(ADD, 0, prompt);
-	prompt = ft_magic_malloc(FREE, 0, prompt);
+	if (ft_is_interactive() == 0)
+		line = get_next_line(STDIN_FILENO);
+	else
+	{
+		prompt = ft_get_prompt();
+		line = readline(prompt);
+		add_history(line);
+		ft_magic_malloc(ADD, 0, prompt);
+		prompt = ft_magic_malloc(FREE, 0, prompt);
+	}
 	if (line == NULL)
 	{
 		line = ft_magic_malloc(FREE, 0, line);
