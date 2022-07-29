@@ -168,7 +168,7 @@ int		ft_builtin_parser(t_env **env, t_arg *arg, int std[2]);
 /*                           REDIRECTION FUNCTIONS                          */
 /* ************************************************************************ */
 
-void	ft_set_redirections(t_arg *arg, t_arg *head);
+int		ft_set_redirections(t_arg *arg, t_arg *head);
 int		*ft_redirection(t_arg *arg);
 int		ft_redirection_in(t_arg *arg, int current_in);
 int		ft_redirection_out(t_arg *arg, int current_out);

@@ -68,7 +68,8 @@ int	ft_get_redirections(t_arg *arg)
 			return (1);
 		if (ft_check_double_redir(arg) != 0 || ft_check_single_redir(arg) != 0)
 			return (1);
-		ft_set_redirections(arg, head);
+		if (ft_set_redirections(arg, head) == 1)
+			return (1);
 		arg = arg->next;
 	}
 	return (0);

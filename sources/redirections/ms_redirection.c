@@ -77,13 +77,23 @@ int	ft_redirection_in(t_arg *arg, int current_in)
 	return (fd);
 }
 
-void	ft_set_redirections(t_arg *arg, t_arg *head)
+int	ft_set_redirections(t_arg *arg, t_arg *head)
 {
 	arg = ft_get_infile(arg, head);
+	if (arg == NULL)
+		return (1);
 	arg = ft_get_heredoc(arg, head);
+	if (arg == NULL)
+		return (1);
 	arg = ft_get_outfile(arg, head);
+	if (arg == NULL)
+		return (1);
 	arg = ft_get_appendout(arg, head);
-	ft_check_double_pipe(arg, head);
+	if (arg == NULL)
+		return (1);
+	if (ft_check_double_pipe(arg, head) == 1)
+		return (1);
+	return (0);
 }
 
 int	*ft_set_currents(void)
