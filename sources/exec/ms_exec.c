@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 08:30:54 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/07/28 14:27:21 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/07/29 13:48:34 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ int	ft_try(t_arg *arg, t_env *env, int pipes, int std[2])
 	while (pipes >= 0)
 	{
 		child_return = ft_check_child_return(-1);
+		if (child_return == SIGQUIT)
+			ft_eprintf("Quit (core dumped)\n");
 		if (child_return)
 			return (child_return);
 		pipes--;
