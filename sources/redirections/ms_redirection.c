@@ -47,7 +47,7 @@ int	ft_redirection_out(t_arg *arg, int current_out)
 	else if (arg->token == TOKEN_APPENDOUT)
 		fd = open(arg->content, O_CREAT | O_RDWR | O_APPEND, 0644);
 	if (fd == -1)
-		return (ft_error(arg->content));
+		return (ft_eprintf("%s: %s\n", strerror(errno), arg->content), -1);
 	if (current_out != 1)
 		close(current_out);
 	dup2(fd, STDOUT_FILENO);
@@ -62,16 +62,13 @@ int	ft_redirection_in(t_arg *arg, int current_in)
 	{
 		fd = open(arg->content, O_RDONLY);
 		if (fd == -1)
-			return (ft_error(arg->content));
+			return (ft_eprintf("%s: %s\n", strerror(errno), arg->content), -1);
 	}
 	else if (arg->token == TOKEN_HEREDOC)
 	{
 		fd = open(arg->content, O_RDONLY);
 		if (fd == -1)
-		{
-			ft_eprintf("BITCH DE C MORE MORE\n");
-			return (ft_error(arg->content));
-		}
+			return (ft_eprintf("%s: %s\n", strerror(errno), arg->content), -1);
 		unlink(arg->content);
 	}
 	if (current_in != 0)

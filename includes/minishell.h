@@ -201,7 +201,7 @@ char	*ft_get_cmd(char *arg, char **paths);
 int		ft_count_pipes(t_arg *arg);
 int		ft_try(t_arg *arg, t_env *env, int pipes, int fds[2]);
 int		ft_child(t_arg *arg, t_env *env, int std[2]);
-int		ft_executor(t_arg *arg, t_env *env, int std[2]);
+int		ft_executor(t_arg *arg, t_env *env, int std[2], int *currents);
 int		ft_piped_child(t_arg *arg, t_env *env, int std[2]);
 
 void	ft_close_child(int fds[2], int std[2], int currents[2]);
@@ -236,7 +236,6 @@ void	ft_ignore_signal_heredoc(void);
 void	ft_clear_and_quit(t_arg *arg, t_arg *head);
 int		ft_check_double_redir(t_arg *arg);
 int		ft_check_single_redir(t_arg *arg);
-int		ft_error(char *file);
 int		ft_check_wrong_arg(t_arg *arg);
 int		ft_check_first_arg(t_arg *arg);
 int		ft_check_double_pipe(t_arg *arg, t_arg *head);
