@@ -27,7 +27,6 @@ void	ft_clear_and_quit(t_arg *arg, t_arg *head)
 		ft_eprintf("%s `>>\'\n", SYNTAX_ERROR);
 	else if (arg->token == TOKEN_PIPE)
 		ft_eprintf("%s `|\'\n", SYNTAX_ERROR);
-	// ft_magic_malloc(FLUSH, 0, NULL);
 }
 
 int	ft_check_double_redir(t_arg *arg)
