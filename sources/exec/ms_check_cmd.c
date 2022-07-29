@@ -19,7 +19,7 @@ int	ft_check_cmd(char *cmd)
 	i = -1;
 	if (cmd)
 		while (cmd[++i])
-			if ((cmd[0] != '\0') &&(cmd[i] != '/' && cmd[i] != '.'))
+			if ((cmd[0] != '\0') && (cmd[i] != '/' && cmd[i] != '.'))
 				break ;
 	if (i != 0 && cmd[i] == '\0')
 	{
