@@ -24,7 +24,11 @@ t_arg	*ft_init_shell(int std[2])
 	line = NULL;
 	line = ft_display_prompt();
 	if (line == NULL)
-		return (NULL);
+	{
+		close(std[0]);
+		close(std[1]);
+		ft_magic_malloc(FLUSH, 0, NULL);
+	}
 	arg = ft_get_args(line);
 	line = ft_magic_malloc(FREE, 0, line);
 	return (arg);
@@ -97,7 +101,7 @@ int	main(int ac, char *av[], char *env[])
 		ft_signal_catching();
 		arg = ft_init_shell(std);
 		if (arg == NULL)
-			break ;
+			continue ;
 		ft_main_loop(arg, env_list, std);
 	}
 	close(std[0]);
