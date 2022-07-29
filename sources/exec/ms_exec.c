@@ -69,7 +69,7 @@ int	ft_piped_child(t_arg *arg, t_env *env, int std[2])
 	{
 		dup2(fds[1], STDOUT_FILENO);
 		currents = ft_redirection(arg);
-		ft_executor(arg, env, std);
+		ft_executor(arg, env, std, currents);
 		ft_close_child(fds, std, currents);
 		ft_magic_malloc(FLUSH, 0, NULL);
 	}
@@ -98,7 +98,7 @@ int	ft_child(t_arg *arg, t_env *env, int std[2])
 	{
 		dup2(std[1], STDOUT_FILENO);
 		currents = ft_redirection(arg);
-		ft_executor(arg, env, std);
+		ft_executor(arg, env, std, currents);
 		ft_close_child(fds, std, currents);
 		ft_magic_malloc(FLUSH, 0, NULL);
 	}
@@ -111,7 +111,7 @@ int	ft_child(t_arg *arg, t_env *env, int std[2])
 	return (0);
 }
 
-int	ft_executor(t_arg *arg, t_env *env, int std[2])
+int	ft_executor(t_arg *arg, t_env *env, int std[2], int *currents)
 {
 	char	*cmd;
 	char	**env_tab;
@@ -121,7 +121,8 @@ int	ft_executor(t_arg *arg, t_env *env, int std[2])
 	args_tab = ft_list_to_char(arg);
 	env_tab = ft_env_to_char(env);
 	paths = ft_get_path(env_tab);
-	if (ft_builtin_parser(&env, arg, std) == 42)
+	if ((currents[0] >= 0 && currents[1] >= 0)
+		&& ft_builtin_parser(&env, arg, std) == 42)
 	{
 		if (args_tab && ft_check_cmd(args_tab[0]) == 0)
 		{
