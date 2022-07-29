@@ -19,9 +19,9 @@ int	ft_check_cmd(char *cmd)
 	i = -1;
 	if (cmd)
 		while (cmd[++i])
-			if (cmd[i] != '/' && cmd[i] != '.')
+			if ((cmd[0] != '\0') &&(cmd[i] != '/' && cmd[i] != '.'))
 				break ;
-	if (cmd[i] == '\0')
+	if (i != 0 && cmd[i] == '\0')
 	{
 		ft_eprintf("minishell: %s: %s\n", cmd, IS_DIR);
 		return (-1);
