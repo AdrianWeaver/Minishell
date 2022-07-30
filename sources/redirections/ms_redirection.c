@@ -48,7 +48,7 @@ int	ft_redirection_out(t_arg *arg, int current_out)
 		fd = open(arg->content, O_CREAT | O_RDWR | O_APPEND, 0644);
 	if (fd == -1)
 		return (ft_eprintf("%s: %s\n", strerror(errno), arg->content), -1);
-	if (current_out != 1)
+	if (current_out > 1)
 		close(current_out);
 	dup2(fd, STDOUT_FILENO);
 	return (fd);
@@ -71,7 +71,7 @@ int	ft_redirection_in(t_arg *arg, int current_in)
 			return (ft_eprintf("%s: %s\n", strerror(errno), arg->content), -1);
 		unlink(arg->content);
 	}
-	if (current_in != 0)
+	if (current_in > 0)
 		close(current_in);
 	dup2(fd, STDIN_FILENO);
 	return (fd);

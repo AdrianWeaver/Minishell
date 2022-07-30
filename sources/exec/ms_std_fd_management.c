@@ -18,9 +18,9 @@ void	ft_close_child(int fds[2], int std[2], int currents[2])
 	close(fds[0]);
 	close(std[1]);
 	close(std[0]);
-	if (currents[0] != 0)
+	if (currents[0] > 0)
 		close(currents[0]);
-	if (currents[1] != 1)
+	if (currents[1] > 1)
 		close(currents[1]);
 }
 

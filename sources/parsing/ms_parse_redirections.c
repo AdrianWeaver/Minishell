@@ -29,7 +29,7 @@ t_arg	*ft_get_infile(t_arg *arg, t_arg *head)
 	if (arg->token == TOKEN_INFILE && arg->content[0] == '<'
 		&& ft_strlen(arg->content) > 1)
 	{
-		tmp = ft_strdup(&arg->content[1]);
+		tmp = ft_magic_malloc(ADD, 0, ft_strdup(&arg->content[1]));
 		arg->content = ft_magic_malloc(FREE, 0, arg->content);
 		arg->content = tmp;
 	}
@@ -62,7 +62,7 @@ t_arg	*ft_get_heredoc(t_arg *arg, t_arg *head)
 	if (arg->token == TOKEN_HEREDOC && arg->content[0] == '<'
 		&& ft_strlen(arg->content) > 2)
 	{
-		tmp = ft_strdup(&arg->content[2]);
+		tmp = ft_magic_malloc(ADD, 0, ft_strdup(&arg->content[2]));
 		arg->content = ft_magic_malloc(FREE, 0, arg->content);
 		arg->content = tmp;
 	}
@@ -98,7 +98,7 @@ t_arg	*ft_get_outfile(t_arg *arg, t_arg *head)
 	if (arg->token == TOKEN_OUTFILE && arg->content[0] == '>'
 		&& ft_strlen(arg->content) > 1)
 	{
-		tmp = ft_strdup(&arg->content[1]);
+		tmp = ft_magic_malloc(ADD, 0, ft_strdup(&arg->content[1]));
 		arg->content = ft_magic_malloc(FREE, 0, arg->content);
 		arg->content = tmp;
 	}
@@ -131,7 +131,7 @@ t_arg	*ft_get_appendout(t_arg *arg, t_arg *head)
 	if (arg->token == TOKEN_APPENDOUT && arg->content[0] == '>'
 		&& ft_strlen(arg->content) > 2)
 	{
-		tmp = ft_strdup(&arg->content[2]);
+		tmp = ft_magic_malloc(ADD, 0, ft_strdup(&arg->content[2]));
 		arg->content = ft_magic_malloc(FREE, 0, arg->content);
 		arg->content = tmp;
 	}
