@@ -81,7 +81,7 @@ int	ft_echo(t_arg *arg)
 	}
 	if (n_opt == 0)
 		to_print = ft_strjoin_free(to_print, "\n");
-	printf("%s", to_print);
+	ft_printf("%s", to_print);
 	to_print = ft_magic_malloc(FREE, 0, to_print);
 	return (0);
 }

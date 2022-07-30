@@ -68,7 +68,8 @@ int	ft_main_loop(t_arg *arg, t_env *env, int std[2])
 			if (ft_check_and_expand(arg, env) == -1)
 			{
 				printf("Missing or extra dquote\n");
-				ft_magic_malloc(FLUSH, 0, NULL);
+				ft_clear_arg(head);
+				return (1);
 			}
 			if (arg)
 				arg = arg->next;
