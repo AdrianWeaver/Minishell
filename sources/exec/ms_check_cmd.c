@@ -55,10 +55,11 @@ int	ft_check_pipes(t_arg *arg, t_env *env, int std[2])
 		if (ft_is_a_builtin(arg) == 1)
 		{
 			currents = ft_redirection(arg);
-			ft_builtin_parser(&env, arg, std);
-			if (currents[0] != 0)
+			if (currents[0] >= 0 && currents[1] > 0)
+				ft_builtin_parser(&env, arg, std);
+			if (currents[0] > 0)
 				close(currents[0]);
-			if (currents[1] != 1)
+			if (currents[1] > 1)
 				close(currents[1]);
 		}
 		else
