@@ -133,7 +133,7 @@ int	ft_executor(t_arg *arg, t_env *env, int std[2], int *currents)
 			{
 				cmd = ft_get_cmd(args_tab[0], paths);
 				if (cmd == NULL || execve(cmd, args_tab, env_tab) == -1)
-					ft_eprintf("%s: %s\n", args_tab[0], strerror(errno));
+					ft_eprintf("%s: %s\n", args_tab[0], NOT_FOUND);
 				cmd = ft_magic_malloc(FREE, 0, cmd);
 			}
 		}

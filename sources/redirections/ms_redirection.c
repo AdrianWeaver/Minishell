@@ -33,6 +33,8 @@ int	*ft_redirection(t_arg *arg)
 			fd = ft_redirection_in(arg, currents[0]);
 			currents[0] = fd;
 		}
+		if (currents[0] < 0 || currents[1] < 0)
+			break;
 		arg = arg->next;
 	}
 	return (currents);
@@ -42,6 +44,7 @@ int	ft_redirection_out(t_arg *arg, int current_out)
 {
 	int	fd;
 
+	
 	if (arg->token == TOKEN_OUTFILE)
 		fd = open(arg->content, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	else if (arg->token == TOKEN_APPENDOUT)
@@ -50,6 +53,8 @@ int	ft_redirection_out(t_arg *arg, int current_out)
 		return (ft_eprintf("%s: %s\n", strerror(errno), arg->content), -1);
 	if (current_out > 1)
 		close(current_out);
+	if (access(arg->content, F_OK) != 0)
+		return (ft_eprintf("%s: %s\n", strerror(errno), arg->content), -1);
 	dup2(fd, STDOUT_FILENO);
 	return (fd);
 }
@@ -58,15 +63,16 @@ int	ft_redirection_in(t_arg *arg, int current_in)
 {
 	int	fd;
 
+	ft_eprintf("arg = %s\n", arg->content);
 	if (arg->token == TOKEN_INFILE)
 	{
-		fd = open(arg->content, O_RDONLY);
+		fd = open(arg->content, O_RDWR);
 		if (fd == -1)
 			return (ft_eprintf("%s: %s\n", strerror(errno), arg->content), -1);
 	}
 	else if (arg->token == TOKEN_HEREDOC)
 	{
-		fd = open(arg->content, O_RDONLY);
+		fd = open(arg->content, O_RDWR);
 		if (fd == -1)
 			return (ft_eprintf("%s: %s\n", strerror(errno), arg->content), -1);
 		unlink(arg->content);
