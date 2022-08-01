@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 08:42:01 by aweaver           #+#    #+#             */
-/*   Updated: 2022/07/25 17:43:53 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/08/01 08:47:07 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*ft_get_pwd(void)
 {
-	char	*cwd;		
+	char	*cwd;
 	char	*buff;
 	int		i;
 
@@ -22,12 +22,17 @@ char	*ft_get_pwd(void)
 	cwd = NULL;
 	while (cwd == NULL)
 	{
-		buff = ft_magic_malloc(MALLOC, sizeof(*cwd) * i, NULL);
+		buff = ft_magic_malloc(MALLOC, sizeof(*buff) * i, NULL);
 		cwd = getcwd(buff, i);
 		if (cwd == NULL)
 		{
 			i++;
 			buff = ft_magic_malloc(FREE, 0, buff);
+			if (i > 4096)
+			{
+				ft_eprintf(MS_NOCWD);
+				ft_magic_malloc(FLUSH, errno, NULL);
+			}
 		}
 	}
 	return (buff);

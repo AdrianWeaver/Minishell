@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 09:18:31 by aweaver           #+#    #+#             */
-/*   Updated: 2022/07/28 20:06:20 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/08/01 08:39:47 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@
 # define NOT_FOUND "command not found"
 # define SYNTAX_ERROR "minishell: syntax error near unexpected token"
 # define IS_DIR "Is a directory"
+# define MS_NOCWD "minishell: currrent working directory no longer exists"
 
 # ifndef DEBUG
 #  define DEBUG 1
