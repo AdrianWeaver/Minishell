@@ -22,12 +22,13 @@ t_arg	*ft_init_shell(int std[2])
 	dup2(std[0], STDIN_FILENO);
 	dup2(std[1], STDOUT_FILENO);
 	line = NULL;
+	arg = NULL;
 	line = ft_display_prompt(std);
 	if (line == NULL)
 	{
 		close(std[0]);
 		close(std[1]);
-		ft_magic_malloc(FLUSH, 0, NULL);
+		ft_exit_manager(arg, std);
 	}
 	arg = ft_get_args(line);
 	line = ft_magic_malloc(FREE, 0, line);
