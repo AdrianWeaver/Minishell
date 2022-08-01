@@ -64,7 +64,6 @@ char	*ft_get_var_pos(char *str, t_env *env)
 	return (flags);
 }
 
-//stuck in this loop
 void	ft_get_strings(t_arg *arg, char **pieces, char *flags, t_env *env)
 {
 	int	i;
