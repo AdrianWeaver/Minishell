@@ -163,6 +163,11 @@ t_arg	*ft_echo_skip_opt(t_arg *arg, int *n_opt);
 int		ft_echo(t_arg *arg);
 int		ft_echo_n_opt(t_arg *arg);
 
+/* exit */
+void	ft_write_exit(void);
+void	ft_exit_manager(t_arg *arg, int std[2]);
+void	ft_exit(unsigned char exit_code, int std[2]);
+
 int		ft_builtin_parser(t_env **env, t_arg *arg, int std[2]);
 
 /* ************************************************************************ */
