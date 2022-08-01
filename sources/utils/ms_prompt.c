@@ -87,7 +87,11 @@ char	*ft_display_prompt(int std[2])
 	char	*prompt;
 
 	if (ft_is_interactive() == 0)
+	{
 		line = get_next_line(STDIN_FILENO);
+		if (line && *line && line[ft_strlen(line) - 1] == '\n')
+			line[ft_strlen(line) - 1] = '\0';
+	}
 	else
 	{
 		prompt = ft_get_prompt(std);
