@@ -6,13 +6,13 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 08:42:01 by aweaver           #+#    #+#             */
-/*   Updated: 2022/08/01 08:47:07 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/08/01 09:21:45 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*ft_get_pwd(void)
+char	*ft_get_pwd(int std[2])
 {
 	char	*cwd;
 	char	*buff;
@@ -31,6 +31,8 @@ char	*ft_get_pwd(void)
 			if (i > 4096)
 			{
 				ft_eprintf(MS_NOCWD);
+				close(std[0]);
+				close(std[1]);
 				ft_magic_malloc(FLUSH, errno, NULL);
 			}
 		}
@@ -38,11 +40,11 @@ char	*ft_get_pwd(void)
 	return (buff);
 }
 
-int	ft_print_pwd(void)
+int	ft_print_pwd(int std[2])
 {
 	char	*pwd;
 
-	pwd = ft_get_pwd();
+	pwd = ft_get_pwd(std);
 	printf("%s\n", pwd);
 	pwd = ft_magic_malloc(FREE, 0, pwd);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 09:18:31 by aweaver           #+#    #+#             */
-/*   Updated: 2022/08/01 08:39:47 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/08/01 09:24:47 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,12 +148,12 @@ void	ft_cleanly_delone_mlc(t_mlc **mlc_start, void *addr);
 
 /* unset */
 t_env	*ft_find_env_elem(t_env *env_list, char *name);
-char	*ft_get_pwd(void);
-int		ft_print_pwd(void);
+char	*ft_get_pwd(int std[2]);
+int		ft_print_pwd(int std[2]);
 int		ft_unset(t_env **env_list, char **name);
 
 /* cd */
-int		ft_cd(t_env *env, char **path);
+int		ft_cd(t_env *env, char **path, int std[2]);
 
 /* export */
 int		ft_export(t_env **env_list, char **to_add);
@@ -210,7 +210,7 @@ void	ft_close_parent(int std[2]);
 int		ft_check_child_return(pid_t child_pid);
 int		ft_check_pipes(t_arg *arg, t_env *env, int std[2]);
 
-char	*ft_display_prompt(void);
+char	*ft_display_prompt(int std[2]);
 int		*ft_save_std_fd(void);
 int		ft_check_cmd(char *cmd);
 int		ft_error(char *file);

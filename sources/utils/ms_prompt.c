@@ -6,20 +6,20 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 11:35:51 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/07/29 13:15:47 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/08/01 09:27:05 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*ft_get_prompt(void)
+char	*ft_get_prompt(int std[2])
 {
 	char	*name;
 	char	*cwd;
 	char	*path;
 
 	name = NULL;
-	cwd = ft_get_pwd();
+	cwd = ft_get_pwd(std);
 	path = ft_get_short_path(cwd);
 	if (!cwd)
 		return (NULL);
@@ -61,7 +61,7 @@ char	*ft_get_short_path(char *cwd)
 	return (cwd);
 }
 
-char	*ft_display_prompt(void)
+char	*ft_display_prompt(int std[2])
 {
 	char	*line;
 	char	*prompt;
@@ -70,7 +70,7 @@ char	*ft_display_prompt(void)
 		line = get_next_line(STDIN_FILENO);
 	else
 	{
-		prompt = ft_get_prompt();
+		prompt = ft_get_prompt(std);
 		line = readline(prompt);
 		add_history(line);
 		ft_magic_malloc(ADD, 0, prompt);

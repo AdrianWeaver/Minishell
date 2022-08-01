@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 09:18:40 by aweaver           #+#    #+#             */
-/*   Updated: 2022/07/29 15:14:37 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/08/01 09:21:55 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_arg	*ft_init_shell(int std[2])
 	dup2(std[0], STDIN_FILENO);
 	dup2(std[1], STDOUT_FILENO);
 	line = NULL;
-	line = ft_display_prompt();
+	line = ft_display_prompt(std);
 	if (line == NULL)
 	{
 		close(std[0]);
