@@ -62,7 +62,7 @@ t_arg	*ft_get_args(char *input)
 	arg = NULL;
 	while (input[i] != '\0')
 	{
-		while (input[i] != ' ' && input[i] != '\0')
+		while (input[i] != ' ' && input[i] != '\t' && input[i] != '\0')
 		{	
 			if (input[i] == '"' || input[i] == '\'')
 				arg = ft_get_quote_arg(&input[i], &i, arg, input[i]);
@@ -94,7 +94,8 @@ t_arg	*ft_get_quote_arg(char *input, int *i, t_arg *arg, char delim)
 	{
 		while (input[j] && input[j] != delim)
 			j++;
-		while (input[j] && input[j] != ' ' && ft_check_op(input[j]) == 0)
+		while (input[j] && input[j] != ' ' && input[j] != '\t'
+			&& ft_check_op(input[j]) == 0)
 			j++;
 	}
 	sub = ft_substr(input, 0, j);
