@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:00:46 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/07/29 15:13:49 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/08/01 08:19:52 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	ft_expand_size(char *str, t_env *env)
 	i = 0;
 	len = 0;
 	if (str[i] == '?')
-		return (ft_strlen_int(ft_itoa(g_ret_value)));
+		return (ft_strlen_int(ft_magic_malloc(ADD, 0, ft_itoa(g_ret_value))));
 	i += ft_is_valid_env_variable(str);
 	str_name = ft_magic_malloc(ADD, 0, ft_substr(str, 0, i));
 	if (!str_name)
@@ -91,7 +91,7 @@ char	*ft_get_expanded(char *str, t_env *env)
 	len = 0;
 	var_ret = NULL;
 	if (*str == '?')
-		return (ft_magic_malloc(ADD, 0, ft_strdup(ft_itoa(g_ret_value))));
+		return (ft_magic_malloc(ADD, 0, ft_itoa(g_ret_value)));
 	while (ft_isalnum(str[len]) == 1 || str[len] == '_')
 		len++;
 	name = ft_magic_malloc(ADD, 0, ft_substr(str, 0, len));
