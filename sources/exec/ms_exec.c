@@ -129,7 +129,7 @@ int	ft_executor(t_arg *arg, t_env *env, int std[2], int *currents)
 	{
 		if (args_tab && ft_check_cmd(args_tab[0]) == 0)
 		{
-			if (execve(args_tab[0], args_tab, env_tab) == -1 && env_tab)
+			if (execve(args_tab[0], args_tab, env_tab) == -1)
 			{
 				cmd = ft_get_cmd(args_tab[0], paths);
 				if (cmd == NULL || execve(cmd, args_tab, env_tab) == -1)

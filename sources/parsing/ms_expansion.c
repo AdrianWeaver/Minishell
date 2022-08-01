@@ -58,26 +58,23 @@ int	ft_expand_size(char *str, t_env *env)
 	char	*str_name;
 	int		i;
 	int		len;
+	t_env	*to_find;
 
 	i = 0;
 	len = 0;
 	if (str[i] == '?')
 		return (ft_strlen_int(ft_magic_malloc(ADD, 0, ft_itoa(g_ret_value))));
-	i += ft_is_valid_env_variable(str);
-	str_name = ft_magic_malloc(ADD, 0, ft_substr(str, 0, i));
+	i += ft_check_var(str, env);
+	str_name = ft_magic_malloc(ADD, 0, ft_substr(str, 1, i));
+	if (env == NULL)
+		return (ft_strlen_int(str_name));
 	if (!str_name)
-		return (-1);
-	while (env != NULL)
-	{
-		if (ft_strcmp(str_name, env->name) == 0)
-			break ;
-		env = env->next;
-	}
+		return (ft_magic_malloc(FLUSH, -1, NULL), -1);
+	to_find = ft_find_env_elem(env, str_name);
+	if (to_find != NULL)
+		len = ft_strlen_int(to_find->content) - ft_strlen_int(to_find->name);
 	if (len < 0)
 		return (0);
-	len = ft_strlen(env->content) - ft_strlen(env->name);
-	if (env == NULL)
-		return (ft_strlen(str_name));
 	str_name = ft_magic_malloc(FREE, 0, str_name);
 	return (len);
 }

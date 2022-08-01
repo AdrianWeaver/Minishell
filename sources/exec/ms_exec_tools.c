@@ -46,6 +46,7 @@ char	**ft_get_path(char **env)
 	int		i;
 
 	i = 0;
+	paths = NULL;
 	while (env[i])
 	{
 		if (ft_strncmp(env[i], "PATH=", 5) == 0)

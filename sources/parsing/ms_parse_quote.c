@@ -125,7 +125,7 @@ void	ft_set_final_q_index(t_arg *arg, char *flags, int *dq_nbr, t_env *env)
 			&& ft_set_q_jump(&arg->content[i + 1]) > 0)
 		{
 			if (ft_check_var(&arg->content[i], env) > 0)
-				ret += ft_expand_size(&arg->content[i + 1], env) - 1;
+				ret += ft_expand_size(&arg->content[i], env) - 1;
 			else
 				ret -= ft_set_q_jump(&arg->content[i + 1]) + 1;
 		}
