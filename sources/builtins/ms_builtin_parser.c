@@ -6,26 +6,18 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 08:27:19 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/08/01 09:24:32 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/08/01 09:45:28 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-
-//SUBJECT CHEAT SHEET
-//echo option -n
-//cd relative or absolute path
-//pwd no option
-//export no option
-//unset no option
-//env no option and no args
-//exit no options
 
 void	ft_exit(unsigned char exit_code, int std[2])
 {
 	g_ret_value = exit_code;
 	close(std[0]);
 	close(std[1]);
+	rl_clear_history();
 	ft_magic_malloc(FLUSH, g_ret_value, NULL);
 }
 

@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/25 08:42:01 by aweaver           #+#    #+#             */
-/*   Updated: 2022/08/01 09:21:45 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/08/01 09:36:32 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ char	*ft_get_pwd(int std[2])
 				ft_eprintf(MS_NOCWD);
 				close(std[0]);
 				close(std[1]);
+				rl_clear_history();
 				ft_magic_malloc(FLUSH, errno, NULL);
 			}
 		}

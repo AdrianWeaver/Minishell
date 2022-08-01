@@ -6,7 +6,7 @@
 /*   By: aweaver <aweaver@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 12:09:13 by aweaver           #+#    #+#             */
-/*   Updated: 2022/07/28 11:32:20 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/08/01 09:44:11 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,14 @@ void	ft_my_magic_handler_not_interactive(int signum)
 	ft_set_term_behaviour();
 	if (signum == SIGINT)
 	{
+		rl_clear_history();
 		ft_magic_malloc(FLUSH, 130, NULL);
 		exit(130);
 	}
 	if (signum == SIGQUIT)
 	{
 		write(2, "Quit (core dumped)\n", 19);
+		rl_clear_history();
 		ft_magic_malloc(FLUSH, 131, NULL);
 		exit(131);
 	}
