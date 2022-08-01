@@ -90,6 +90,8 @@ int	ft_check_var(char *str, t_env *env)
 
 	i = 0;
 	j = 0;
+	if (str[i] == '$' && str[i + 1] == '?')
+		return (1);
 	if (str[i] == '$' && str[i + 1])
 	{
 		i++;

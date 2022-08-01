@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 09:18:40 by aweaver           #+#    #+#             */
-/*   Updated: 2022/07/28 19:16:26 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/07/29 15:14:37 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ int	main(int ac, char *av[], char *env[])
 
 	(void)ac;
 	(void)av;
+	g_ret_value = 0;
 	std[0] = dup(STDIN_FILENO);
 	std[1] = dup(STDOUT_FILENO);
 	arg = NULL;

@@ -113,6 +113,7 @@ int	ft_child(t_arg *arg, t_env *env, int std[2])
 	return (0);
 }
 
+//ft_builtin parser return code needs to be store in global
 int	ft_executor(t_arg *arg, t_env *env, int std[2], int *currents)
 {
 	char	*cmd;

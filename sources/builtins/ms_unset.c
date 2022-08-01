@@ -6,7 +6,7 @@
 /*   By: aweaver <aweaver@42.fr>                     +#+  +:+       +#+       */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 17:58:52 by aweaver           #+#    #+#             */
-/*   Updated: 2022/07/14 15:26:52 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/07/29 15:08:28 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	ft_unset(t_env **env_list, char **to_erase)
 		return (ft_eprintf("unset: not enough arguments\n"), 1);
 	while (*to_erase)
 	{
-		if (ft_is_valid_env_variable(*to_erase) == 1)
+		if (ft_is_valid_env_variable(*to_erase) != 0)
 		{
 			target = ft_find_env_elem(*env_list, *to_erase);
 			if (target == NULL)

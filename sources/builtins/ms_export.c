@@ -6,7 +6,7 @@
 /*   By: aweaver <aweaver@42.fr>                     +#+  +:+       +#+       */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 14:29:15 by aweaver           #+#    #+#             */
-/*   Updated: 2022/07/14 14:55:24 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/07/29 15:08:44 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	ft_deal_with_existing_env_var(t_env **env_list, t_env *to_add)
  * ACT: replicates the export function
  * ARG: the env as a list, a char **to_add (result of the parsing)
  * RET: man says exit status is always 0.
- * 		here returns 0 or >0 if one of the args failed
+ *			here returns 0 or >0 if one of the args failed
  * *************************************************************************/
 
 int	ft_export(t_env **env_list, char **to_add)
@@ -83,10 +83,8 @@ int	ft_export(t_env **env_list, char **to_add)
 	while (*to_add)
 	{
 		tmp_element = ft_get_env_element(*env_list, *to_add);
-		if (ft_is_valid_env_variable(tmp_element->name) == 1)
-		{
+		if (ft_is_valid_env_variable(tmp_element->name) != 0)
 			ft_deal_with_existing_env_var(env_list, tmp_element);
-		}
 		else
 		{
 			ft_eprintf("export: `%s': not a valid identifier\n", *to_add);
