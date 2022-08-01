@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 08:34:23 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/07/20 11:35:18 by jcervoni         ###   ########.fr       */
+/*   Updated: 2022/08/01 08:22:51 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char	**ft_get_path(char **env)
 	i = 0;
 	while (env[i])
 	{
-		if (strncmp(env[i], "PATH=", 5) == 0)
+		if (ft_strncmp(env[i], "PATH=", 5) == 0)
 		{
 			paths = ft_split(&env[i][5], ':');
 			ft_magic_malloc(ADD, 0, paths);
