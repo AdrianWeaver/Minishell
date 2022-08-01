@@ -36,7 +36,7 @@ int	ft_check_op(char c)
 
 int	ft_check_arg(char c)
 {
-	if (c == '|' || c == ' ' || c == '\0')
+	if (c == '|' || c == ' ' || c == '\0' || c == '\'' || c == '"')
 		return (1);
 	return (0);
 }

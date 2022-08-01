@@ -102,6 +102,7 @@ t_arg	*ft_get_quote_arg(char *input, int *i, t_arg *arg, char delim)
 	if (!sub)
 		return (NULL);
 	new = ft_newarg(sub);
+	ft_eprintf("get quote sub == %s\n", sub);
 	ft_addarg_back(&arg, new);
 	*i += ft_strlen(new->content);
 	sub = ft_magic_malloc(FREE, 0, sub);

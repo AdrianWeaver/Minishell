@@ -71,15 +71,21 @@ int	*ft_count_quotes(t_arg *arg)
 		{
 			delim = arg->content[i];
 			dq++;
+			i++;
 		}
-		while (delim != '\0' && arg->content[++i] && arg->content[i] != delim)
-			;
+		while (delim != '\0' && arg->content[i] && arg->content[i] != delim)
+			i++;
 		if (arg->content[i] && arg->content[i] == delim)
 			dq++;
 		if (arg->content[i] == '\0')
 			break ;
 	}
+	ft_eprintf("arg == %s\n", arg->content);
+	ft_eprintf("dq = %d\n", dq);
 	dq_nbr = ft_lock_quote_pos(arg, dq);
+	// for (int j = 0; j < dq; j++){
+	// 	ft_eprintf("dq[%d] = %d\n", j, dq_nbr[j]);
+	// }
 	return (dq_nbr);
 }
 
