@@ -51,6 +51,8 @@ int	ft_set_q_jump(char *str)
 	int	i;
 
 	i = 0;
+	if (str[i] && str[i] == '?')
+		return (1);
 	while (str[i] && (ft_isalnum(str[i]) == 1 || str[i] == '_'))
 		i++;
 	return (i);
@@ -91,7 +93,7 @@ int	ft_check_var(char *str, t_env *env)
 	i = 0;
 	j = 0;
 	if (str[i] == '$' && str[i + 1] == '?')
-		return (2);
+		return (1);
 	if (str[i] == '$' && str[i + 1])
 	{
 		i++;
