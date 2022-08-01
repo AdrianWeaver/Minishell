@@ -32,28 +32,29 @@ int	ft_try(t_arg *arg, t_env *env, int pipes, int std[2])
 {
 	int		i;
 	int		child_return;
+	int		last_child_pid;
+	int		*child_pids;
 
 	i = -1;
+	child_pids = ft_magic_malloc(MALLOC, (sizeof(int) * pipes), NULL);
 	while (arg)
 	{
 		if (++i < pipes)
-			ft_piped_child(arg, env, std);
+			child_pids[i] = ft_piped_child(arg, env, std);
 		else
-			ft_child(arg, env, std);
+			last_child_pid = ft_child(arg, env, std);
 		arg = ft_get_next_pipe(arg);
 	}
 	dup2(std[1], STDOUT_FILENO);
 	dup2(std[0], STDIN_FILENO);
-	while (pipes >= 0)
-	{
-		child_return = ft_check_child_return(-1);
-		if (child_return == SIGQUIT)
-			ft_eprintf("Quit (core dumped)\n");
-		if (child_return)
-			return (child_return);
-		pipes--;
-	}
-	return (0);
+	i = -1;
+	child_return = ft_check_child_return(last_child_pid);
+	while (++i < pipes)
+		ft_check_child_return(child_pids[i]);
+	if (child_return == SIGQUIT)
+		ft_eprintf("Quit (core dumped)\n");
+	g_ret_value = child_return;
+	return (child_return);
 }
 
 int	ft_piped_child(t_arg *arg, t_env *env, int std[2])
@@ -71,8 +72,8 @@ int	ft_piped_child(t_arg *arg, t_env *env, int std[2])
 	{
 		dup2(fds[1], STDOUT_FILENO);
 		currents = ft_redirection(arg);
-		ft_executor(arg, env, std, currents);
 		ft_close_child(fds, std, currents);
+		ft_executor(arg, env, std, currents);
 		ft_magic_malloc(FLUSH, 0, NULL);
 	}
 	else
@@ -82,7 +83,7 @@ int	ft_piped_child(t_arg *arg, t_env *env, int std[2])
 		close(fds[1]);
 		close(fds[0]);
 	}
-	return (0);
+	return (child);
 }
 
 int	ft_child(t_arg *arg, t_env *env, int std[2])
@@ -100,8 +101,8 @@ int	ft_child(t_arg *arg, t_env *env, int std[2])
 	{
 		dup2(std[1], STDOUT_FILENO);
 		currents = ft_redirection(arg);
-		ft_executor(arg, env, std, currents);
 		ft_close_child(fds, std, currents);
+		ft_executor(arg, env, std, currents);
 		ft_magic_malloc(FLUSH, 0, NULL);
 	}
 	else
@@ -110,7 +111,7 @@ int	ft_child(t_arg *arg, t_env *env, int std[2])
 		close(fds[1]);
 		close(fds[0]);
 	}
-	return (0);
+	return (child);
 }
 
 //ft_builtin parser return code needs to be store in global
