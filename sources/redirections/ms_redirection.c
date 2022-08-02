@@ -34,7 +34,7 @@ int	*ft_redirection(t_arg *arg)
 			currents[0] = fd;
 		}
 		if (currents[0] < 0 || currents[1] < 0)
-			break;
+			break ;
 		arg = arg->next;
 	}
 	return (currents);
@@ -44,7 +44,6 @@ int	ft_redirection_out(t_arg *arg, int current_out)
 {
 	int	fd;
 
-	
 	if (arg->token == TOKEN_OUTFILE)
 		fd = open(arg->content, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	else if (arg->token == TOKEN_APPENDOUT)

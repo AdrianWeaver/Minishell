@@ -81,3 +81,16 @@ int	ft_check_single_redir(t_arg *arg)
 	}
 	return (0);
 }
+
+int	ft_check_double_pipe(t_arg *arg, t_arg *head)
+{
+	if (arg->token == TOKEN_PIPE)
+	{
+		if (arg->next == NULL || arg->next->token == TOKEN_PIPE)
+		{
+			ft_clear_and_quit(arg->next, head);
+			return (1);
+		}
+	}
+	return (0);
+}
