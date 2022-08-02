@@ -114,7 +114,7 @@ int	ft_check_and_expand(t_arg *arg, t_env **env)
 	char	*flags;
 	char	**pieces;
 
-	if (arg->token != TOKEN_CMD)
+	if (arg->token == TOKEN_HEREDOC)
 		return (0);
 	dq = ft_count_quotes(arg);
 	if (!dq)
