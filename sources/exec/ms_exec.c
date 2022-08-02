@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 08:30:54 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/07/29 13:48:34 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/08/02 15:06:44 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int	ft_piped_child(t_arg *arg, t_env *env, int std[2])
 	pid_t	child;
 	int		fds[2];
 	int		*currents;
+	int		ret;
 
 	if (pipe(fds) == -1)
 		return (1);
@@ -73,16 +74,13 @@ int	ft_piped_child(t_arg *arg, t_env *env, int std[2])
 		dup2(fds[1], STDOUT_FILENO);
 		currents = ft_redirection(arg);
 		ft_close_child(fds, std, currents);
-		ft_executor(arg, env, std, currents);
-		ft_magic_malloc(FLUSH, 0, NULL);
+		ret = ft_executor(arg, env, std, currents);
+		ft_magic_malloc(FLUSH, ret, NULL);
 	}
-	else
-	{
-		ft_ignore_signal();
-		dup2(fds[0], STDIN_FILENO);
-		close(fds[1]);
-		close(fds[0]);
-	}
+	ft_ignore_signal();
+	dup2(fds[0], STDIN_FILENO);
+	close(fds[1]);
+	close(fds[0]);
 	return (child);
 }
 
@@ -91,6 +89,7 @@ int	ft_child(t_arg *arg, t_env *env, int std[2])
 	pid_t	child;
 	int		fds[2];
 	int		*currents;
+	int		ret;
 
 	if (pipe(fds) == -1)
 		return (1);
@@ -102,8 +101,8 @@ int	ft_child(t_arg *arg, t_env *env, int std[2])
 		dup2(std[1], STDOUT_FILENO);
 		currents = ft_redirection(arg);
 		ft_close_child(fds, std, currents);
-		ft_executor(arg, env, std, currents);
-		ft_magic_malloc(FLUSH, 0, NULL);
+		ret = ft_executor(arg, env, std, currents);
+		ft_magic_malloc(FLUSH, ret, NULL);
 	}
 	else
 	{
@@ -114,7 +113,6 @@ int	ft_child(t_arg *arg, t_env *env, int std[2])
 	return (child);
 }
 
-//ft_builtin parser return code needs to be store in global
 int	ft_executor(t_arg *arg, t_env *env, int std[2], int *currents)
 {
 	char	*cmd;
@@ -126,7 +124,7 @@ int	ft_executor(t_arg *arg, t_env *env, int std[2], int *currents)
 	env_tab = ft_env_to_char(env);
 	paths = ft_get_path(env_tab);
 	if ((currents[0] >= 0 && currents[1] >= 0)
-		&& ft_builtin_parser(&env, arg, std) == 42)
+		&& ft_is_a_builtin(arg) == 0)
 	{
 		if (args_tab && ft_check_cmd(args_tab[0]) == 0)
 		{
@@ -134,12 +132,10 @@ int	ft_executor(t_arg *arg, t_env *env, int std[2], int *currents)
 			{
 				cmd = ft_get_cmd(args_tab[0], paths);
 				if (cmd == NULL || execve(cmd, args_tab, env_tab) == -1)
-					ft_eprintf("%s: %s\n", args_tab[0], NOT_FOUND);
+					return (ft_eprintf("%s:%s\n", args_tab[0], NOT_FOUND), 127);
 				cmd = ft_magic_malloc(FREE, 0, cmd);
 			}
 		}
-		args_tab = ft_magic_malloc(FREE, 0, args_tab);
-		env = ft_magic_malloc(FREE, 0, env);
 	}
-	return (-1);
+	return (ft_builtin_parser(&env, arg, std));
 }

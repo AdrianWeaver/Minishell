@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 10:05:52 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/07/30 17:09:34 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/08/02 15:04:42 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	ft_check_cmd(char *cmd)
 	return (0);
 }
 
-static int	ft_is_a_builtin(t_arg *arg)
+int	ft_is_a_builtin(t_arg *arg)
 {
 	while (arg && arg->token != TOKEN_CMD)
 		arg = arg->next;

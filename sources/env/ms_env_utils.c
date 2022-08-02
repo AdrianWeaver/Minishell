@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 13:25:39 by aweaver           #+#    #+#             */
-/*   Updated: 2022/08/02 10:12:16 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/08/02 15:07:33 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ int	ft_is_valid_env_variable(char *str)
 		return (0);
 	if (ft_isdigit(str[0]) == 1)
 		return (0);
-	ft_eprintf("str dans export == %s\n", str);
 	while (str[i])
 	{
 		if (ft_isalnum(str[i]) == 0 && str[i] != '_')

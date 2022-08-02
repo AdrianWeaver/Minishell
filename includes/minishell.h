@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 09:18:31 by aweaver           #+#    #+#             */
-/*   Updated: 2022/08/02 13:40:14 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/08/02 15:02:51 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,7 @@ void	ft_exit_manager(t_arg *arg, int std[2]);
 void	ft_exit(unsigned char exit_code, int std[2]);
 
 int		ft_builtin_parser(t_env **env, t_arg *arg, int std[2]);
+int		ft_is_a_builtin(t_arg *arg);
 
 /* ************************************************************************ */
 /*                           REDIRECTION FUNCTIONS                          */

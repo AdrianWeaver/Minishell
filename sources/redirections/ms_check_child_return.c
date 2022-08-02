@@ -6,7 +6,7 @@
 /*   By: aweaver <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/28 20:15:45 by aweaver           #+#    #+#             */
-/*   Updated: 2022/07/28 20:16:38 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/08/02 14:55:42 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,13 @@ int	ft_check_child_return(pid_t child_pid)
 		child_return = WEXITSTATUS(child_status);
 		g_ret_value = child_return;
 		if (child_return == 130)
-		{
-			g_ret_value = 130;
 			return (130);
-		}
+		return (child_return);
 	}
 	else if (WIFSIGNALED(child_status))
 	{
 		child_return = WTERMSIG(child_status);
-		g_ret_value = ft_get_signal_return_code(child_return);
+		child_return = ft_get_signal_return_code(child_return);
 		return (child_return);
 	}
 	return (0);

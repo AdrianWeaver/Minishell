@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 10:32:14 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/07/28 18:07:34 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/08/02 15:08:18 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ int	ft_redirection_in(t_arg *arg, int current_in)
 {
 	int	fd;
 
-	ft_eprintf("arg = %s\n", arg->content);
 	if (arg->token == TOKEN_INFILE)
 	{
 		fd = open(arg->content, O_RDWR);

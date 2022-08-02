@@ -90,7 +90,7 @@ int	*ft_lock_quote_pos(t_arg *arg, int dq)
 
 	if (dq != 0 && dq % 2 != 0)
 		return (NULL);
-	dq_nbr = calloc(sizeof(int), dq + 1);
+	dq_nbr = ft_calloc(sizeof(int), dq + 1);
 	if (!dq_nbr)
 		return (NULL);
 	ft_magic_malloc(ADD, 0, dq_nbr);

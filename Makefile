@@ -75,6 +75,7 @@ SRCS				=	main.c\
 						ms_cd.c		\
 						ms_builtin_parser.c \
 						ms_echo.c \
+						ms_exit.c	\
 					)\
 					$(addprefix $(SRCS_REDIRECT),		\
 						ms_heredoc.c \
