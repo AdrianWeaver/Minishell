@@ -6,14 +6,15 @@
 /*   By: aweaver <aweaver@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/26 14:12:49 by aweaver           #+#    #+#             */
-/*   Updated: 2022/02/08 12:04:23 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/08/02 13:12:49 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 #include "libft.h"
 
-static char	*id_flag_plus_space(char *str, t_list_printf *list, int nbr)
+static char	*id_flag_plus_space(char *str, t_list_printf *list, int nbr,
+		char **output)
 {
 	char	*tmp;
 
@@ -25,14 +26,15 @@ static char	*id_flag_plus_space(char *str, t_list_printf *list, int nbr)
 	}
 	if (list->flag_space == 1 && !(nbr < 0))
 	{
-		(void)tmp;
-		list->ret += ft_putchar_fd(' ', 2);
+		*output = ft_strjoin_free(*output, " ");
+		list->ret++;
 		list->width--;
 	}
 	return (str);
 }
 
-static char	*id_nohyphen_flag(char *str, t_list_printf *list, int nbr)
+static char	*id_nohyphen_flag(char *str, t_list_printf *list, int nbr,
+		char **output)
 {
 	char	*tmp;
 
@@ -40,7 +42,7 @@ static char	*id_nohyphen_flag(char *str, t_list_printf *list, int nbr)
 	{
 		while (list->width > ft_strlen_int(str))
 		{
-			list->ret += ft_putchar_fd(' ', 2);
+			*output = ft_strjoin_free(*output, " ");
 			list->width--;
 		}
 	}
@@ -110,24 +112,26 @@ static char	*id_flag_precision(char *str, t_list_printf *list, int nbr)
 	return (str);
 }
 
-void	ft_eprintf_id(int nbr, t_list_printf *list)
+void	ft_eprintf_id(int nbr, t_list_printf *list, char **output)
 {
 	char	*str;
 
 	str = ft_itoa(nbr);
-	str = id_flag_plus_space(str, list, nbr);
+	str = id_flag_plus_space(str, list, nbr, output);
 	str = id_flag_precision(str, list, nbr);
-	str = id_nohyphen_flag(str, list, nbr);
+	str = id_nohyphen_flag(str, list, nbr, output);
 	while ((list->flag_precision == 1 && list->precision_width == 0
 			&& list->flag_zero == 0 && list->flag_hyphen == 0
 			&& nbr == 0) && (list->width > 0) && list->flag_plus == 0)
 	{
-		list->ret += ft_putchar_fd(' ', 2);
+		*output = ft_strjoin_free(*output, " ");
+		list->ret++;
 		list->width--;
 	}
-	list->ret += ft_putstr_fd(str, 2);
+	*output = ft_strjoin_free(*output, str);
+	list->ret += ft_strlen_int(str);
 	list->width -= ft_strlen_int(str);
-	ft_flag_hyphen(list);
+	ft_eflag_hyphen(list, output);
 	list->i++;
 	free(str);
 }

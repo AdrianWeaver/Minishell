@@ -1,19 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_x.c                                      :+:      :+:    :+:   */
+/*   ft_eprintf_x.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aweaver <aweaver@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 16:57:00 by aweaver           #+#    #+#             */
-/*   Updated: 2022/02/10 14:15:18 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/08/02 13:10:03 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 #include "libft.h"
 
-static void	x_noflag(char *str, t_list_printf *list, unsigned int unbr)
+static void	x_noflag(char *str, t_list_printf *list, unsigned int unbr,
+		char **output)
 {
 	int	str_len;
 
@@ -22,13 +23,13 @@ static void	x_noflag(char *str, t_list_printf *list, unsigned int unbr)
 	{
 		while (list->width > str_len)
 		{
-			list->ret += ft_putchar_fd(' ', 2);
+			*output = ft_strjoin_free(*output, " ");
 			list->width--;
 		}
 		if (list->flag_precision == 1 && list->precision_width == 0
 			&& unbr == 0 && list->width > 0)
 		{
-			list->ret += ft_putchar_fd(' ', 2);
+			*output = ft_strjoin_free(*output, " ");
 			list->width--;
 		}
 	}
@@ -100,7 +101,8 @@ static char	*x_precision(char *str, t_list_printf *list, unsigned int unbr)
 	return (str);
 }
 
-void	ft_eprintf_x(unsigned int unbr, t_list_printf *list, const char *src)
+void	ft_eprintf_x(unsigned int unbr, t_list_printf *list, const char *src,
+		char **output)
 {
 	char	*str;
 
@@ -117,10 +119,10 @@ void	ft_eprintf_x(unsigned int unbr, t_list_printf *list, const char *src)
 	}
 	if (unbr != 0)
 		str = x_hashtag(src, str, list, unbr);
-	x_noflag(str, list, unbr);
-	list->ret += ft_putstr_fd(str, 2);
+	x_noflag(str, list, unbr, output);
+	*output = ft_strjoin_free(*output, str);
 	list->width -= ft_strlen_int(str);
-	ft_flag_hyphen(list);
+	ft_eflag_hyphen(list, output);
 	list->i++;
 	free(str);
 }

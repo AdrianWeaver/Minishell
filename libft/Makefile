@@ -6,7 +6,7 @@
 #    By: aweaver <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/23 10:40:46 by aweaver           #+#    #+#              #
-#    Updated: 2022/05/09 11:30:46 by aweaver          ###   ########.fr        #
+#    Updated: 2022/08/02 12:09:05 by aweaver          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,6 +55,7 @@ SRCS		=	$(addprefix $(LIBFT_PATH),\
 				ft_substr.c			\
 				ft_strjoin.c		\
 				ft_strjoin_free.c	\
+				ft_strcharjoin_free.c	\
 				ft_strtrim.c		\
 				ft_split.c			\
 				ft_itoa.c			\

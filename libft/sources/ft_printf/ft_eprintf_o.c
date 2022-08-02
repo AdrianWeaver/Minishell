@@ -6,14 +6,15 @@
 /*   By: aweaver <aweaver@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 16:57:00 by aweaver           #+#    #+#             */
-/*   Updated: 2022/02/10 14:14:51 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/08/02 13:13:17 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 #include "libft.h"
 
-static void	o_noflag(char *str, t_list_printf *list, unsigned int unbr)
+static void	o_noflag(char *str, t_list_printf *list, unsigned int unbr, char
+		**output)
 {
 	int	str_len;
 
@@ -22,13 +23,15 @@ static void	o_noflag(char *str, t_list_printf *list, unsigned int unbr)
 	{
 		while (list->width > str_len)
 		{
-			list->ret += ft_putchar_fd(' ', 2);
+			*output = ft_strjoin_free(*output, " ");
+			list->ret++;
 			list->width--;
 		}
 		if (list->flag_precision == 1 && list->precision_width == 0
 			&& unbr == 0 && list->width > 0)
 		{
-			list->ret += ft_putchar_fd(' ', 2);
+			*output = ft_strjoin_free(*output, " ");
+			list->ret++;
 			list->width--;
 		}
 	}
@@ -100,7 +103,8 @@ static char	*o_precision(char *str, t_list_printf *list, unsigned int unbr)
 	return (str);
 }
 
-void	ft_eprintf_o(unsigned int unbr, t_list_printf *list, const char *src)
+void	ft_eprintf_o(unsigned int unbr, t_list_printf *list, const char *src,
+		char **output)
 {
 	char	*str;
 
@@ -114,10 +118,11 @@ void	ft_eprintf_o(unsigned int unbr, t_list_printf *list, const char *src)
 	}
 	if (unbr != 0)
 		str = o_hashtag(src, str, list, unbr);
-	o_noflag(str, list, unbr);
-	list->ret += ft_putstr_fd(str, 2);
+	o_noflag(str, list, unbr, output);
+	*output = ft_strjoin_free(*output, str);
+	list->ret += ft_strlen_int(str);
 	list->width -= ft_strlen_int(str);
-	ft_flag_hyphen(list);
+	ft_eflag_hyphen(list, output);
 	list->i++;
 	free(str);
 }

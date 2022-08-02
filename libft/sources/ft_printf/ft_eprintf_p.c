@@ -6,14 +6,14 @@
 /*   By: aweaver <aweaver@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 14:00:09 by aweaver           #+#    #+#             */
-/*   Updated: 2022/01/25 17:16:27 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/08/02 13:13:17 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 #include "libft.h"
 
-static void	p_noflag_width(char *str, t_list_printf *list)
+static void	p_noflag_width(char *str, t_list_printf *list, char **output)
 {
 	int	str_len;
 
@@ -30,7 +30,8 @@ static void	p_noflag_width(char *str, t_list_printf *list)
 			str_len = ft_strlen(str);
 		while (list->width > str_len)
 		{
-			list->ret += ft_putchar_fd(' ', 2);
+			*output = ft_strjoin_free(*output, " ");
+			list->ret++;
 			list->width--;
 		}
 	}
@@ -45,7 +46,7 @@ static char	*p_addr_prefix(char *prefix, char *tmp)
 	return (str);
 }
 
-void	ft_eprintf_p(unsigned long int addr, t_list_printf *list)
+void	ft_eprintf_p(unsigned long int addr, t_list_printf *list, char **output)
 {
 	char	*str;
 
@@ -58,10 +59,11 @@ void	ft_eprintf_p(unsigned long int addr, t_list_printf *list)
 		str = ft_ultoa_base((size_t)addr, 16, "0123456789abcdef");
 		str = p_addr_prefix("0x", str);
 	}
-	p_noflag_width(str, list);
-	list->ret += ft_putstr_fd(str, 2);
+	p_noflag_width(str, list, output);
+	*output = ft_strjoin_free(*output, str);
+	list->ret += ft_strlen_int(str);
 	list->width -= ft_strlen(str);
-	ft_flag_hyphen(list);
+	ft_eflag_hyphen(list, output);
 	list->i++;
 	if (addr != 0)
 		free(str);
