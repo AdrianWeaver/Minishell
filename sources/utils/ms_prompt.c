@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 11:35:51 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/08/02 13:41:01 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/08/02 16:41:58 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,12 +84,13 @@ char	*ft_get_short_path(char *cwd)
 char	*ft_dup_readline(char *prompt)
 {
 	char	*line;
-	int		save_stderr;
+	int		save_stdout;
 
-	save_stderr = dup(STDERR_FILENO);
-	dup2(STDOUT_FILENO, STDERR_FILENO);
+	save_stdout = dup(STDOUT_FILENO);
+	dup2(STDERR_FILENO, STDOUT_FILENO);
 	line = readline(prompt);
-	dup2(STDERR_FILENO, save_stderr);
+	dup2(save_stdout, STDOUT_FILENO);
+	close(save_stdout);
 	return (line);
 }
 
