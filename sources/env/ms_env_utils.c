@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 13:25:39 by aweaver           #+#    #+#             */
-/*   Updated: 2022/07/29 15:03:39 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/08/02 10:12:16 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,19 +83,25 @@ void	ft_manually_add_one_env(t_env *env_list, char *name, char *content)
 	t_env	*env_set;
 	t_env	*env_new;
 
-	if (ft_is_valid_env_variable(name) == 1)
+	if (ft_is_valid_env_variable(name) != 0)
 	{
 		env_set = ft_find_env_elem(env_list, name);
 		if (env_set)
 		{
 			env_set->content = ft_magic_malloc(FREE, 0, env_set->content);
-			env_set->content = ft_strdup(content);
+			if (content == NULL)
+				env_set->content = NULL;
+			else
+				env_set->content = ft_magic_malloc(ADD, 0, ft_strdup(content));
 		}
 		else
 		{
 			env_new = ft_magic_malloc(MALLOC, sizeof(*env_new) * 1, NULL);
-			env_new->name = ft_strdup(name);
-			env_new->content = ft_strdup(content);
+			env_new->name = ft_magic_malloc(ADD, 0, ft_strdup(name));
+			if (content == NULL)
+				env_set->content = NULL;
+			else
+				env_new->content = ft_magic_malloc(ADD, 0, ft_strdup(content));
 			ft_env_add_back(&env_list, env_new);
 		}
 	}
