@@ -24,7 +24,7 @@ int	ft_set_token(t_arg *args)
 
 	temp = args;
 	while (temp != NULL)
-	{	
+	{
 		if (temp->content[0] == '|')
 			temp->token = TOKEN_PIPE;
 		else if ((temp->content[0] == '<' && ft_strlen(temp->content) == 1)
@@ -152,7 +152,10 @@ int	ft_move_cursor(char *input, int j)
 	i = j;
 	while (ft_check_arg(input[i]) == 0)
 	{
-		if (ft_check_quote(input[i]) == 1)
+		if (ft_check_in_out(input[i]) == 1)
+			while (input[i] && ft_check_in_out(input[i]) == 1)
+				i++;
+		if (input[i] && ft_check_quote(input[i]) == 1)
 			delim = input[i];
 		if (delim != '\0')
 		{
@@ -161,6 +164,8 @@ int	ft_move_cursor(char *input, int j)
 				i++;
 		}
 		i++;
+		if (ft_check_in_out(input[i]) == 1)
+			return (i);
 	}
 	return (i);
 }

@@ -94,3 +94,23 @@ int	ft_check_double_pipe(t_arg *arg, t_arg *head)
 	}
 	return (0);
 }
+
+/* ************************************************************************** */
+/*	ACT : check if an $ENV_VAR with name given in param exists                */
+/*	ARG : string name, a pointer to a t_env struct                            */
+/*	RET : 0 if $ENV_VAR exists, -1 if not                                     */
+/* ************************************************************************** */
+
+int	ft_check_env_var(char *str, t_env *env)
+{
+	t_env	*temp;
+
+	temp = env;
+	while (temp != NULL)
+	{
+		if (ft_strcmp(str, temp->name) == 0)
+			return (0);
+		temp = temp->next;
+	}
+	return (-1);
+}

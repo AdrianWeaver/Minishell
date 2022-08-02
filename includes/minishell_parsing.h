@@ -27,6 +27,7 @@ char	*ft_get_short_path(char *cwd);
 int		ft_check_op(char c);
 int		ft_check_arg(char c);
 int		ft_check_quote(char c);
+int		ft_check_in_out(char c);
 int		ft_move_cursor(char *input, int j);
 int		ft_set_token(t_arg *args);
 

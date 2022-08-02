@@ -72,11 +72,14 @@ int	ft_echo(t_arg *arg)
 	n_opt = 0;
 	arg = ft_echo_skip_opt(arg, &n_opt);
 	to_print = ft_calloc(1, 1);
-	while (arg && arg->token == TOKEN_CMD)
+	while (arg && arg->token != TOKEN_PIPE)
 	{
-		to_print = ft_strjoin_free(to_print, arg->content);
-		if (arg->next && arg->next->token == TOKEN_CMD)
-			to_print = ft_strjoin_free(to_print, " ");
+		if (arg->token == TOKEN_CMD)
+		{
+			to_print = ft_strjoin_free(to_print, arg->content);
+			if (arg->next && arg->next->token == TOKEN_CMD)
+				to_print = ft_strjoin_free(to_print, " ");
+		}
 		arg = arg->next;
 	}
 	if (n_opt == 0)

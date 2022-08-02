@@ -22,7 +22,7 @@ int	ft_check_op(char c)
 {
 	if (c != '\0')
 	{
-		if (c == '|' || c == '<' || c == '>' || c == ' ')
+		if (c == '|' || c == ' ')
 			return (1);
 	}
 	return (0);
@@ -47,6 +47,13 @@ int	ft_check_quote(char c)
 		return (1);
 	return (0);
 }
+
+int	ft_check_in_out(char c)
+{
+	if (c == '<' || c == '>')
+		return (1);
+	return (0);
+}
 /* ************************************************************************** */
 /*	ACT : calculate length of char to jump ahaed in case of wrong $VAR name   */
 /*	ARG : pointer to an occurence of wrong $VAR name                          */
@@ -63,24 +70,4 @@ int	ft_set_q_jump(char *str)
 	while (str[i] && (ft_isalnum(str[i]) == 1 || str[i] == '_'))
 		i++;
 	return (i);
-}
-
-/* ************************************************************************** */
-/*	ACT : check if an $ENV_VAR with name given in param exists                */
-/*	ARG : string name, a pointer to a t_env struct                            */
-/*	RET : 0 if $ENV_VAR exists, -1 if not                                     */
-/* ************************************************************************** */
-
-int	ft_check_env_var(char *str, t_env *env)
-{
-	t_env	*temp;
-
-	temp = env;
-	while (temp != NULL)
-	{
-		if (ft_strcmp(str, temp->name) == 0)
-			return (0);
-		temp = temp->next;
-	}
-	return (-1);
 }
