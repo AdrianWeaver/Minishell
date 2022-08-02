@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 11:35:51 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/08/02 09:39:05 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/08/02 13:41:01 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	ft_check_for_home(char *cwd)
 	if (cwd == NULL)
 	{
 		rl_clear_history();
-		ft_eprintf(MS_NOCWD MS_NOCWD2);
+		ft_eprintf(MS_NOCWD MS_NOCWD2 MS_WTF);
 		ft_magic_malloc(FLUSH, 1, NULL);
 	}
 	while (cwd[i] && ft_strncmp(&cwd[i], "home", 4) != 0)

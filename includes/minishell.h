@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 09:18:31 by aweaver           #+#    #+#             */
-/*   Updated: 2022/08/02 09:33:43 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/08/02 13:40:14 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@
 # define IS_DIR "Is a directory"
 # define MS_NOCWD "minishell: currrent working directory no longer exists"
 # define MS_NOCWD2 "\nquitting execution to prevent undefined behaviours\n"
+# define MS_WTF "ᛞᛟ ᚾᛟᛏ ᛞᛟ ᚦᛁᛋ ᛈᛚᛖᚨᛋᛖ\n" 
 
 # ifndef DEBUG
 #  define DEBUG 1

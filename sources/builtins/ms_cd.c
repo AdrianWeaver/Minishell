@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 13:04:22 by aweaver           #+#    #+#             */
-/*   Updated: 2022/08/02 10:14:30 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/08/02 13:42:29 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ int	ft_cd(t_env *env, char **path, int std[2])
 	success = chdir(*path);
 	if (success == 0)
 	{
-		ft_eprintf("debug cd: Success !\n");
 		ft_manually_add_one_env(env, "OLDPWD", env_pwd->content);
 		new_path = ft_get_pwd(std);
 		ft_manually_add_one_env(env, "PWD", new_path);
