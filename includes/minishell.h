@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 09:18:31 by aweaver           #+#    #+#             */
-/*   Updated: 2022/08/02 18:07:47 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/08/02 19:49:21 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,7 @@ int		ft_echo_n_opt(t_arg *arg);
 
 /* exit */
 void	ft_write_exit(void);
-void	ft_exit_manager(t_arg *arg, int std[2]);
+int		ft_exit_manager(t_arg *arg, int std[2]);
 void	ft_exit(unsigned char exit_code, int std[2]);
 
 int		ft_builtin_parser(t_env **env, t_arg *arg, int std[2]);

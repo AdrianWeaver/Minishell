@@ -6,7 +6,7 @@
 /*   By: aweaver <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 14:18:08 by aweaver           #+#    #+#             */
-/*   Updated: 2022/08/02 14:18:26 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/08/02 19:48:44 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,31 +27,67 @@ void	ft_write_exit(void)
 		write(2, "exit\n", 5);
 }
 
-void	ft_exit_manager(t_arg *arg, int std[2])
+int	ft_check_exit_first_arg(char *exit_phrase, unsigned char *exit_code)
 {
-	int		i;
-	char	*exit_phrase;
+	int	i;
 
 	i = 0;
-	if (arg == NULL || arg->content == NULL)
+	if (ft_strlen_int(exit_phrase) > 19)
 	{
-		ft_write_exit();
-		ft_exit(0, std);
+		ft_eprintf("minishell: exit: %s: numeric argument required\n",
+			exit_phrase);
+		*exit_code = 2;
+		return (0);
 	}
-	exit_phrase = arg->content;
 	if (exit_phrase[0] == '+' || exit_phrase[0] == '-')
 		i++;
 	while (exit_phrase[i])
 	{
 		if (ft_isdigit(exit_phrase[i]) == 0)
 		{
-			ft_write_exit();
 			ft_eprintf("minishell: exit: %s: numeric argument required\n",
 				exit_phrase);
-			ft_exit(2, std);
+			*exit_code = 2;
+			return (0);
 		}
 		i++;
 	}
+	*exit_code = ft_atoi(exit_phrase);
+	return (1);
+}
+
+static int	ft_exit_arg_number(t_arg *arg)
+{
+	int	i;
+
+	i = 0;
+	while (arg && arg->token != TOKEN_PIPE)
+	{
+		if (arg->token == TOKEN_CMD)
+			i++;
+		arg = arg->next;
+	}
+	return (i);
+}
+
+int	ft_exit_manager(t_arg *arg, int std[2])
+{
+	int				arg_one_isok;
+	int				arg_number;
+	unsigned char	exit_code;
+
+	exit_code = 0;
+	arg_number = ft_exit_arg_number(arg);
 	ft_write_exit();
-	ft_exit(ft_atoi(exit_phrase), std);
+	if (arg == NULL || (arg->content == NULL && arg_number == 1))
+		ft_exit(g_ret_value, std);
+	arg_one_isok = ft_check_exit_first_arg(arg->content, &exit_code);
+	if (arg_number > 1 && arg_one_isok == 1)
+	{
+		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
+		return (1);
+	}
+	else
+		ft_exit(exit_code, std);
+	return (0);
 }
