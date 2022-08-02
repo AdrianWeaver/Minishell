@@ -6,7 +6,7 @@
 /*   By: aweaver <aweaver@42.fr>                     +#+  +:+       +#+       */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/09 17:27:33 by aweaver           #+#    #+#             */
-/*   Updated: 2022/06/23 16:38:57 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/08/02 17:41:40 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	ft_cleanly_delone_env(t_env **env_start, t_env *target)
 				env_prev->next = env_list->next;
 			else if (env_list->next == NULL)
 				env_prev->next = NULL;
-			ft_delone_env(env_list);
+			ft_delone_env(&env_list);
 			return ;
 		}
 		else
@@ -69,15 +69,13 @@ void	ft_cleanly_delone_env(t_env **env_start, t_env *target)
 /*	RET : void																*/
 /* ************************************************************************ */
 
-void	ft_delone_env(t_env *env)
+void	ft_delone_env(t_env **env)
 {
 	if (!env)
 		return ;
-	env->name = ft_magic_malloc(FREE, 0, env->name);
-	env->name = NULL;
-	env->content = ft_magic_malloc(FREE, 0, env->content);
-	env->content = NULL;
-	env = ft_magic_malloc(FREE, 0, env);
+	(*env)->name = ft_magic_malloc(FREE, 0, (*env)->name);
+	(*env)->content = ft_magic_malloc(FREE, 0, (*env)->content);
+	(*env) = ft_magic_malloc(FREE, 0, *env);
 }
 
 /* ************************************************************************ */
@@ -93,6 +91,6 @@ void	ft_free_env(t_env *env_start)
 	{
 		tmp = env_start;
 		env_start = env_start->next;
-		ft_delone_env(tmp);
+		ft_delone_env(&tmp);
 	}
 }

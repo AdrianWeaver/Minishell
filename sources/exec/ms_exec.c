@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 08:30:54 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/08/02 15:06:44 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/08/02 18:08:01 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	ft_count_pipes(t_arg *arg)
 	return (i);
 }
 
-int	ft_try(t_arg *arg, t_env *env, int pipes, int std[2])
+int	ft_try(t_arg *arg, t_env **env, int pipes, int std[2])
 {
 	int		i;
 	int		child_return;
@@ -57,7 +57,7 @@ int	ft_try(t_arg *arg, t_env *env, int pipes, int std[2])
 	return (child_return);
 }
 
-int	ft_piped_child(t_arg *arg, t_env *env, int std[2])
+int	ft_piped_child(t_arg *arg, t_env **env, int std[2])
 {
 	pid_t	child;
 	int		fds[2];
@@ -84,7 +84,7 @@ int	ft_piped_child(t_arg *arg, t_env *env, int std[2])
 	return (child);
 }
 
-int	ft_child(t_arg *arg, t_env *env, int std[2])
+int	ft_child(t_arg *arg, t_env **env, int std[2])
 {
 	pid_t	child;
 	int		fds[2];
@@ -113,7 +113,7 @@ int	ft_child(t_arg *arg, t_env *env, int std[2])
 	return (child);
 }
 
-int	ft_executor(t_arg *arg, t_env *env, int std[2], int *currents)
+int	ft_executor(t_arg *arg, t_env **env, int std[2], int *currents)
 {
 	char	*cmd;
 	char	**env_tab;
@@ -121,7 +121,7 @@ int	ft_executor(t_arg *arg, t_env *env, int std[2], int *currents)
 	char	**paths;
 
 	args_tab = ft_list_to_char(arg);
-	env_tab = ft_env_to_char(env);
+	env_tab = ft_env_to_char(*env);
 	paths = ft_get_path(env_tab);
 	if ((currents[0] >= 0 && currents[1] >= 0)
 		&& ft_is_a_builtin(arg) == 0)
@@ -137,5 +137,5 @@ int	ft_executor(t_arg *arg, t_env *env, int std[2], int *currents)
 			}
 		}
 	}
-	return (ft_builtin_parser(&env, arg, std));
+	return (ft_builtin_parser(env, arg, std));
 }

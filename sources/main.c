@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 09:18:40 by aweaver           #+#    #+#             */
-/*   Updated: 2022/08/01 09:21:55 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/08/02 18:03:08 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,13 @@ t_arg	*ft_init_shell(int std[2])
 	return (arg);
 }
 
-int	ft_launch_and_test_heredocs(t_arg *head, t_env *env, int std[2])
+int	ft_launch_and_test_heredocs(t_arg *head, t_env **env, int std[2])
 {
 	int		heredoc_return;
 	char	*heredoc_name;
 
 	heredoc_name = NULL;
-	heredoc_return = ft_redir_heredoc(head, env, std, &heredoc_name);
+	heredoc_return = ft_redir_heredoc(head, *env, std, &heredoc_name);
 	if (heredoc_return != 0)
 	{
 		if (heredoc_return == MS_NOFILE)
@@ -56,7 +56,7 @@ int	ft_launch_and_test_heredocs(t_arg *head, t_env *env, int std[2])
 	return (0);
 }
 
-int	ft_main_loop(t_arg *arg, t_env *env, int std[2])
+int	ft_main_loop(t_arg *arg, t_env **env, int std[2])
 {
 	t_arg	*head;
 
@@ -98,14 +98,14 @@ int	main(int ac, char *av[], char *env[])
 	std[1] = dup(STDOUT_FILENO);
 	arg = NULL;
 	env_list = NULL;
-	env_list = ft_env_to_list(env);
+	env_list = ft_env_to_list(env, std);
 	while (1)
 	{
 		ft_signal_catching();
 		arg = ft_init_shell(std);
 		if (arg == NULL)
 			continue ;
-		ft_main_loop(arg, env_list, std);
+		ft_main_loop(arg, &env_list, std);
 	}
 	close(std[0]);
 	close(std[1]);

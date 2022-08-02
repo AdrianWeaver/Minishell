@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:00:46 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/08/01 08:19:52 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/08/02 18:02:03 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ char	*ft_get_expanded(char *str, t_env *env)
 	return (var_ret);
 }
 
-int	ft_check_and_expand(t_arg *arg, t_env *env)
+int	ft_check_and_expand(t_arg *arg, t_env **env)
 {
 	int		*dq;
 	char	*flags;
@@ -119,14 +119,14 @@ int	ft_check_and_expand(t_arg *arg, t_env *env)
 	dq = ft_count_quotes(arg);
 	if (!dq)
 		return (-1);
-	flags = ft_get_var_pos(arg->content, env);
+	flags = ft_get_var_pos(arg->content, *env);
 	ft_flag_char(arg->content, flags);
 	if (dq[0] != 0)
-		ft_set_final_q_index(arg, flags, dq, env);
-	pieces = ft_lock_expand(ft_count_expand(arg, flags, env));
+		ft_set_final_q_index(arg, flags, dq, *env);
+	pieces = ft_lock_expand(ft_count_expand(arg, flags, *env));
 	if (!pieces)
 		return (-1);
-	ft_final_string(arg, pieces, flags, env);
+	ft_final_string(arg, pieces, flags, *env);
 	if (flags)
 		flags = ft_magic_malloc(FREE, 0, flags);
 	ft_remove_quotes(arg, dq);

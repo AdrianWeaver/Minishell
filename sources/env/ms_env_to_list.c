@@ -6,17 +6,17 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 14:31:25 by aweaver           #+#    #+#             */
-/*   Updated: 2022/07/14 17:58:54 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/08/02 18:12:18 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* ************************************************************************** */
-/*	ACT : returns the last element of a list						          */
-/*	ARG : a t_env *list											              */
-/*	RET : a pointer on the last element of the list given as input			  */
-/* ************************************************************************** */
+/* ************************************************************************ */
+/*	ACT : returns the last element of a list								*/
+/*	ARG : a t_env *list														*/
+/*	RET : a pointer on the last element of the list given as input			*/
+/* ************************************************************************ */
 
 t_env	*ft_env_last(t_env *env)
 {
@@ -39,7 +39,7 @@ void	ft_env_add_back(t_env **env_start, t_env *new)
 {
 	t_env	*last;
 
-	if (*env_start == NULL)
+	if (env_start == NULL || *env_start == NULL)
 	{
 		*env_start = new;
 		return ;
@@ -51,11 +51,11 @@ void	ft_env_add_back(t_env **env_start, t_env *new)
 	}
 }
 
-/* ************************************************************************** */
-/*	ACT : Used to get the content of an env var and deals with +=             */
-/*	ARG : the env as a list, name of var, content of var and flag + (0 or 1)  */
-/*	RET : returns the created content                                         */
-/* ************************************************************************** */
+/* ************************************************************************ */
+/*	ACT : Used to get the content of an env var and deals with +=			*/
+/*	ARG : the env as a list, name of var, content of var and flag+(0 or 1)  */
+/*	RET : returns the created content										*/
+/* ************************************************************************ */
 
 char	*ft_env_get_content(t_env *env_list, char *name, char *env_line,
 		int flag_plus)
@@ -82,11 +82,11 @@ char	*ft_env_get_content(t_env *env_list, char *name, char *env_line,
 	}
 }
 
-/* ************************************************************************** */
-/*	ACT : Used by ft_env_to_list to retrieve one line of the env	          */
-/*	ARG : one line of the env given as a char *		                          */
-/*	RET : a pointer on the created struct with name and content filled        */
-/* ************************************************************************** */
+/* ************************************************************************ */
+/*	ACT : Used by ft_env_to_list to retrieve one line of the env			*/
+/*	ARG : one line of the env given as a char *								*/
+/*	RET : a pointer on the created struct with name and content filled		*/
+/* ************************************************************************ */
 
 t_env	*ft_get_env_element(t_env *env_list, char *env_line)
 {
@@ -117,18 +117,26 @@ t_env	*ft_get_env_element(t_env *env_list, char *env_line)
 	return (tmp_element);
 }
 
-/* ************************************************************************** */
-/*	ACT : creates the env that will be used by the minishell                  */
-/*	ARG : the env given as a char **				                          */
-/*	RET : a pointer on the first element of the created struct                */
-/* ************************************************************************** */
+/* ************************************************************************ */
+/*	ACT : creates the env that will be used by the minishell				*/
+/*	ARG : the env given as a char **										*/
+/*	RET : a pointer on the first element of the created struct				*/
+/* ************************************************************************ */
 
-t_env	*ft_env_to_list(char **env)
+t_env	*ft_env_to_list(char **env, int std[2])
 {
 	t_env	*env_start;
 	t_env	*tmp_element;
 
 	env_start = NULL;
+	if (*env == NULL)
+	{
+		env_start = ft_magic_malloc(MALLOC, sizeof(*env_start), 0);
+		env_start->name = ft_magic_malloc(ADD, 0, ft_strdup("PWD"));
+		env_start->content = ft_get_pwd(std);
+		env_start->next = NULL;
+		return (env_start);
+	}
 	while (*env)
 	{
 		tmp_element = ft_get_env_element(env_start, *env);

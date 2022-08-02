@@ -6,7 +6,7 @@
 /*   By: aweaver <aweaver@42.fr>                     +#+  +:+       +#+       */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 14:29:15 by aweaver           #+#    #+#             */
-/*   Updated: 2022/07/29 15:08:44 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/08/02 17:42:14 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	ft_export(t_env **env_list, char **to_add)
 		else
 		{
 			ft_eprintf("export: `%s': not a valid identifier\n", *to_add);
-			ft_delone_env(tmp_element);
+			ft_delone_env(&tmp_element);
 			ret++;
 		}
 		to_add++;

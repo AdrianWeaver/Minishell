@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 09:18:31 by aweaver           #+#    #+#             */
-/*   Updated: 2022/08/02 15:02:51 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/08/02 18:07:47 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ extern int	g_ret_value;
 /* ************************************************************************ */
 
 t_arg	*ft_init_shell(int std[2]);
-int		ft_main_loop(t_arg *arg, t_env *env, int std[2]);
+int		ft_main_loop(t_arg *arg, t_env **env, int std[2]);
 
 /* ************************************************************************ */
 /*                                 PARSING                                  */
@@ -120,9 +120,9 @@ int		ft_check_quotes(char input);
 /* ************************************************************************ */
 
 t_env	*ft_env_last(t_env *env);
-t_env	*ft_env_to_list(char **env);
+t_env	*ft_env_to_list(char **env, int std[2]);
 t_env	*ft_get_env_element(t_env *env, char *env_line);
-void	ft_delone_env(t_env *env);
+void	ft_delone_env(t_env **env);
 void	ft_env_add_back(t_env **env_start, t_env *new);
 void	ft_cleanly_delone_env(t_env **env_start, t_env *target);
 void	ft_deal_with_existing_env_var(t_env **env_list, t_env *to_add);
@@ -208,15 +208,15 @@ void	ft_final_path(char **paths);
 char	**ft_get_path(char **env);
 char	*ft_get_cmd(char *arg, char **paths);
 int		ft_count_pipes(t_arg *arg);
-int		ft_try(t_arg *arg, t_env *env, int pipes, int fds[2]);
-int		ft_child(t_arg *arg, t_env *env, int std[2]);
-int		ft_executor(t_arg *arg, t_env *env, int std[2], int *currents);
-int		ft_piped_child(t_arg *arg, t_env *env, int std[2]);
+int		ft_try(t_arg *arg, t_env **env, int pipes, int fds[2]);
+int		ft_child(t_arg *arg, t_env **env, int std[2]);
+int		ft_executor(t_arg *arg, t_env **env, int std[2], int *currents);
+int		ft_piped_child(t_arg *arg, t_env **env, int std[2]);
 
 void	ft_close_child(int fds[2], int std[2], int currents[2]);
 void	ft_close_parent(int std[2]);
 int		ft_check_child_return(pid_t child_pid);
-int		ft_check_pipes(t_arg *arg, t_env *env, int std[2]);
+int		ft_check_pipes(t_arg *arg, t_env **env, int std[2]);
 
 char	*ft_display_prompt(int std[2]);
 int		*ft_save_std_fd(void);

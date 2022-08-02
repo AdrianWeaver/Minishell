@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/19 13:25:39 by aweaver           #+#    #+#             */
-/*   Updated: 2022/08/02 15:07:33 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/08/02 18:11:09 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	ft_manually_add_one_env(t_env *env_list, char *name, char *content)
 	t_env	*env_set;
 	t_env	*env_new;
 
-	if (ft_is_valid_env_variable(name) != 0)
+	if (env_list && ft_is_valid_env_variable(name) != 0)
 	{
 		env_set = ft_find_env_elem(env_list, name);
 		if (env_set)

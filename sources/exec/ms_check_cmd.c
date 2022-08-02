@@ -6,7 +6,7 @@
 /*   By: jcervoni <jcervoni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 10:05:52 by jcervoni          #+#    #+#             */
-/*   Updated: 2022/08/02 15:04:42 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/08/02 18:03:38 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	ft_is_a_builtin(t_arg *arg)
 	return (0);
 }
 
-int	ft_check_pipes(t_arg *arg, t_env *env, int std[2])
+int	ft_check_pipes(t_arg *arg, t_env **env, int std[2])
 {
 	int		pipes;
 	int		*currents;
@@ -56,7 +56,7 @@ int	ft_check_pipes(t_arg *arg, t_env *env, int std[2])
 		{
 			currents = ft_redirection(arg);
 			if (currents[0] >= 0 && currents[1] > 0)
-				g_ret_value = ft_builtin_parser(&env, arg, std);
+				g_ret_value = ft_builtin_parser(env, arg, std);
 			if (currents[0] > 0)
 				close(currents[0]);
 			if (currents[1] > 1)
