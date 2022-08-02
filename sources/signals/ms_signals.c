@@ -6,7 +6,7 @@
 /*   By: aweaver <aweaver@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 12:09:13 by aweaver           #+#    #+#             */
-/*   Updated: 2022/08/01 09:44:11 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/08/02 09:25:57 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,25 @@
 #include <signal.h>
 #include <termios.h>
 
+void	ft_rl_funct_dup(void)
+{
+	int		save_stderr;
+
+	save_stderr = dup(STDERR_FILENO);
+	dup2(STDOUT_FILENO, STDERR_FILENO);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+	dup2(STDERR_FILENO, save_stderr);
+}
+
 void	ft_my_magic_handler_interactive(int signum)
 {
 	ft_set_term_behaviour();
 	if (signum == SIGINT)
 	{
 		write(1, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
+		ft_rl_funct_dup();
 	}
 	if (signum == SIGQUIT)
 	{
