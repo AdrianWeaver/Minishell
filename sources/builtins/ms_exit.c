@@ -64,7 +64,10 @@ static int	ft_exit_arg_number(t_arg *arg)
 	while (arg && arg->token != TOKEN_PIPE)
 	{
 		if (arg->token == TOKEN_CMD)
+		{
+			ft_eprintf("commande reconnue = %s\n", arg->content);
 			i++;
+		}
 		arg = arg->next;
 	}
 	return (i);
@@ -78,6 +81,7 @@ int	ft_exit_manager(t_arg *arg, int std[2])
 
 	exit_code = 0;
 	arg_number = ft_exit_arg_number(arg);
+	ft_eprintf("debug arg number %d\n", arg_number);
 	if (ft_count_pipes(arg) == 0)
 		ft_write_exit();
 	if (arg == NULL || arg->token == TOKEN_PIPE
