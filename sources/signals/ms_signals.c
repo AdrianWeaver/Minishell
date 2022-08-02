@@ -32,6 +32,7 @@ void	ft_my_magic_handler_interactive(int signum)
 	if (signum == SIGINT)
 	{
 		write(1, "\n", 1);
+		g_ret_value = 130;
 		ft_rl_funct_dup();
 	}
 	if (signum == SIGQUIT)
