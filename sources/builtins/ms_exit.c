@@ -6,7 +6,7 @@
 /*   By: aweaver <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/02 14:18:08 by aweaver           #+#    #+#             */
-/*   Updated: 2022/08/02 19:48:44 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/08/02 23:04:29 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,10 @@ int	ft_exit_manager(t_arg *arg, int std[2])
 
 	exit_code = 0;
 	arg_number = ft_exit_arg_number(arg);
-	ft_write_exit();
-	if (arg == NULL || (arg->content == NULL && arg_number == 1))
+	if (ft_count_pipes(arg) == 0)
+		ft_write_exit();
+	if (arg == NULL || arg->token == TOKEN_PIPE
+		|| (arg->content == NULL && arg_number == 1))
 		ft_exit(g_ret_value, std);
 	arg_one_isok = ft_check_exit_first_arg(arg->content, &exit_code);
 	if (arg_number > 1 && arg_one_isok == 1)
