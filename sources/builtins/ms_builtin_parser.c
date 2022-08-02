@@ -16,10 +16,9 @@ int	ft_builtin_parser(t_env **env, t_arg *arg, int std[2])
 {
 	int	ret;
 
+	ret = 1;
 	while (arg && arg->token != TOKEN_PIPE && arg->token != TOKEN_CMD)
 		arg = arg->next;
-	if (ft_is_a_builtin(arg) == 0)
-		return (42);
 	if (arg && ft_strcmp(arg->content, "echo") == 0)
 		ret = ft_echo(arg->next);
 	else if (arg && ft_strcmp(arg->content, "env") == 0)

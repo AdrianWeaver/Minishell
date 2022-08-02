@@ -19,7 +19,8 @@ int	*ft_redirection(t_arg *arg)
 
 	fd = 0;
 	currents = ft_set_currents();
-	while (arg && arg->token != TOKEN_PIPE)
+	while (currents[0] >= 0 && currents[1] >= 0
+		&& arg && arg->token != TOKEN_PIPE)
 	{
 		if (arg->content[0] == '>' || arg->content[0] == '<')
 				arg = arg->next;
@@ -34,7 +35,7 @@ int	*ft_redirection(t_arg *arg)
 			currents[0] = fd;
 		}
 		if (currents[0] < 0 || currents[1] < 0)
-			break ;
+			g_ret_value = 1;
 		arg = arg->next;
 	}
 	return (currents);
