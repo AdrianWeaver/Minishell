@@ -132,8 +132,7 @@ t_arg	*ft_get_arg(char *input, int *i, t_arg *arg)
 		sub = ft_magic_malloc(FREE, 0, sub);
 		return (arg);
 	}
-	while (ft_check_arg(input[j]) == 0)
-		j++;
+	j += ft_move_cursor(input, j);
 	sub = ft_substr(input, 0, j);
 	if (sub == NULL)
 		return (NULL);
@@ -144,15 +143,24 @@ t_arg	*ft_get_arg(char *input, int *i, t_arg *arg)
 	return (arg);
 }
 
-int	ft_check_double_pipe(t_arg *arg, t_arg *head)
+int	ft_move_cursor(char *input, int j)
 {
-	if (arg->token == TOKEN_PIPE)
+	char	delim;
+	int		i;
+
+	delim = '\0';
+	i = j;
+	while (ft_check_arg(input[i]) == 0)
 	{
-		if (arg->next == NULL || arg->next->token == TOKEN_PIPE)
+		if (ft_check_quote(input[i]) == 1)
+			delim = input[i];
+		if (delim != '\0')
 		{
-			ft_clear_and_quit(arg->next, head);
-			return (1);
+			i++;
+			while (input[i] && input[i] != delim)
+				i++;
 		}
+		i++;
 	}
-	return (0);
+	return (i);
 }

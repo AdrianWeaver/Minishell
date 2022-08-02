@@ -149,3 +149,38 @@ t_arg	*ft_get_appendout(t_arg *arg, t_arg *head)
 	}
 	return (arg);
 }
+
+/* ************************************************************************** */
+/*	ACT : for each char '$', check if $string is an existing env var name     */
+/*	ARG : string input, a pointer to a t_env struct                           */
+/*	RET : lenght of var's name if $ENV_VAR exists, -1 if not                  */
+/* ************************************************************************** */
+
+int	ft_check_var(char *str, t_env *env)
+{
+	char	*sub;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	if (str[i] == '$' && str[i + 1] == '?')
+		return (1);
+	if (str[i] == '$' && str[i + 1])
+	{
+		i++;
+		j = i;
+		while (str[i] && (ft_isalnum(str[i]) == 1 || str[i] == '_'))
+			i++;
+		sub = ft_substr(str, j, i - j);
+		if (!sub)
+			return (-1);
+		if (ft_check_env_var(sub, env) == 0)
+		{
+			sub = ft_magic_malloc(FREE, 0, sub);
+			return (i - j);
+		}
+		sub = ft_magic_malloc(FREE, 0, sub);
+	}
+	return (-1);
+}

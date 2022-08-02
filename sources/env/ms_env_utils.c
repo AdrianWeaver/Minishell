@@ -46,6 +46,7 @@ int	ft_is_valid_env_variable(char *str)
 		return (0);
 	if (ft_isdigit(str[0]) == 1)
 		return (0);
+	ft_eprintf("str dans export == %s\n", str);
 	while (str[i])
 	{
 		if (ft_isalnum(str[i]) == 0 && str[i] != '_')
