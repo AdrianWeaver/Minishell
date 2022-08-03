@@ -137,44 +137,5 @@ re:					fclean
 test:				$(NAME)
 					./$(NAME)
 
-vtest:				$(NAME)
-					valgrind --leak-check=full --track-fds=yes\
-					--show-leak-kinds=all\
-					--suppressions=.ignore_readline ./$(NAME)
-
-teststaf:			$(LIBFT)
-					@clear
-					$(CC) -Wall -Wextra -g3 \
-					./sources/builtins/ms_unset.c	\
-					./sources/builtins/ms_export.c	\
-					./sources/builtins/ms_pwd.c	\
-					./sources/builtins/ms_cd.c	\
-					./sources/env/ms_env_to_list.c  \
-					./sources/utils/main_staf.c \
-					./sources/env/ms_free_env.c \
-					./sources/env/ms_env_utils.c	\
-					./sources/env/ms_print_env.c \
-					./sources/utils/ms_magic_malloc.c \
-					./sources/utils/ms_magic_malloc_utils.c \
-					-I ./includes -I ./libft/includes libft/libft.a
-					valgrind --leak-check=full --show-leak-kinds=all ./a.out
-
-testexport:			$(LIBFT)
-					@clear
-					$(CC) -Wall -Wextra -g3 \
-					./sources/builtins/ms_unset.c	\
-					./sources/builtins/ms_export.c	\
-					./sources/builtins/ms_pwd.c	\
-					./sources/builtins/ms_cd.c	\
-					./sources/env/ms_env_to_list.c  \
-					./sources/builtins/main_test_staf.c \
-					./sources/env/ms_free_env.c \
-					./sources/env/ms_env_utils.c	\
-					./sources/env/ms_print_env.c \
-					./sources/utils/ms_magic_malloc.c \
-					./sources/utils/ms_magic_malloc_utils.c \
-					-I ./includes -I ./libft/includes libft/libft.a
-					valgrind --leak-check=full --show-leak-kinds=all ./a.out
-
 -include $(DEPS)
 .PHONY:				all clean fclean re test
