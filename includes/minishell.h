@@ -209,6 +209,7 @@ t_arg	*ft_get_next_pipe(t_arg *arg);
 void	ft_freetab(char **tab);
 void	ft_final_path(char **paths);
 char	**ft_get_path(char **env);
+char	**ft_list_to_char_exec(t_arg *list);
 char	*ft_get_cmd(char *arg, char **paths);
 int		ft_count_pipes(t_arg *arg);
 int		ft_try(t_arg *arg, t_env **env, int pipes, int fds[2]);

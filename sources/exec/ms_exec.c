@@ -120,12 +120,12 @@ int	ft_executor(t_arg *arg, t_env **env, int std[2], int *currents)
 	char	**args_tab;
 	char	**paths;
 
-	args_tab = ft_list_to_char(arg);
 	env_tab = ft_env_to_char(*env);
 	paths = ft_get_path(env_tab);
 	if ((currents[0] >= 0 && currents[1] >= 0)
 		&& ft_is_a_builtin(arg) == 0)
 	{
+		args_tab = ft_list_to_char_exec(arg);
 		if (args_tab && ft_check_cmd(args_tab[0]) == 0)
 		{
 			if (execve(args_tab[0], args_tab, env_tab) == -1)
