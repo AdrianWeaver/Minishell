@@ -6,7 +6,7 @@
 /*   By: aweaver <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/26 10:53:13 by aweaver           #+#    #+#             */
-/*   Updated: 2022/08/01 09:44:50 by aweaver          ###   ########.fr       */
+/*   Updated: 2022/08/03 17:06:01 by aweaver          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	ft_my_magic_handler_heredoc(int signum)
 	{
 		get_next_line(GNL_FLUSH);
 		rl_clear_history();
-		ft_magic_malloc(FLUSH, 130, NULL);
-		exit(130);
+		ft_magic_malloc(FLUSH, 2, NULL);
+		exit(2);
 	}
 }
 

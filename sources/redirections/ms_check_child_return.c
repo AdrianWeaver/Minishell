@@ -14,18 +14,7 @@
 
 static int	ft_get_signal_return_code(int signal_code)
 {
-	if (signal_code == SIGINT)
-		return (130);
-	if (signal_code == SIGQUIT)
-		return (131);
-	if (signal_code == SIGKILL || signal_code == SIGTERM)
-		return (143);
-	if (signal_code == SIGSTOP)
-		return (148);
-	if (signal_code == SIGABRT)
-		return (143);
-	else
-		return (0);
+	return (128 + signal_code);
 }
 
 int	ft_check_child_return(pid_t child_pid)
@@ -34,6 +23,7 @@ int	ft_check_child_return(pid_t child_pid)
 	int		child_return;
 
 	child_return = 0;
+	child_status = 0;
 	waitpid(child_pid, &child_status, 0);
 	if (WIFEXITED(child_status))
 	{

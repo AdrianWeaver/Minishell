@@ -75,7 +75,7 @@ int	ft_main_loop(t_arg *arg, t_env **env, int std[2])
 			if (arg)
 				arg = arg->next;
 		}
-		if (ft_launch_and_test_heredocs(head, env, std) == -1)
+		if (ft_launch_and_test_heredocs(head, env, std) != 0)
 			return (-1);
 		ft_check_pipes(head, env, std);
 		dup2(std[0], STDIN_FILENO);

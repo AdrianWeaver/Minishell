@@ -128,6 +128,7 @@ int	ft_executor(t_arg *arg, t_env **env, int std[2], int *currents)
 		args_tab = ft_list_to_char_exec(arg);
 		if (args_tab && ft_check_cmd(args_tab[0]) == 0)
 		{
+			ft_ignore_signal();
 			if (execve(args_tab[0], args_tab, env_tab) == -1)
 			{
 				cmd = ft_get_cmd(args_tab[0], paths);
