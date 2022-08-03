@@ -149,8 +149,8 @@ int	ft_move_cursor(char *input, int j)
 	int		i;
 
 	delim = '\0';
-	i = j;
-	while (ft_check_arg(input[i]) == 0)
+	i = j - 1;
+	while (ft_check_arg(input[++i]) == 0)
 	{
 		if (ft_check_in_out(input[i]) == 1)
 			while (input[i] && ft_check_in_out(input[i]) == 1)
@@ -163,8 +163,7 @@ int	ft_move_cursor(char *input, int j)
 			while (input[i] && input[i] != delim)
 				i++;
 		}
-		i++;
-		if (ft_check_in_out(input[i]) == 1)
+		if (ft_check_arg(input[i]) == 1)
 			return (i);
 	}
 	return (i);

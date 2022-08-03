@@ -34,7 +34,7 @@ int	ft_redir_heredoc(t_arg *arg, t_env *env, int std[2], char **heredoc_name)
 		if (arg->token == TOKEN_HEREDOC)
 		{
 			if (arg->content[0] == '<')
-			arg = arg->next;
+				arg = arg->next;
 			heredoc_return = ft_manage_heredoc(arg, env, std, heredoc_name);
 			if (heredoc_return != 0)
 				return (heredoc_return);
