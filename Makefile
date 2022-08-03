@@ -67,6 +67,7 @@ SRCS				=	main.c\
 						ms_free_env.c \
 						ms_print_env.c	\
 						ms_env_utils.c	\
+						ms_shlvl.c	\
 					)\
 					$(addprefix $(SRCS_BUILTINS),		\
 						ms_export.c	\

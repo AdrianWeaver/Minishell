@@ -85,20 +85,26 @@ int	ft_main_loop(t_arg *arg, t_env **env, int std[2])
 	return (0);
 }
 
-int	main(int ac, char *av[], char *env[])
+static void	ft_void(int ac, char **av)
+{
+	(void)ac;
+	(void)av;
+}
+
+int	main(int ac, char **av, char *env[])
 {
 	t_arg	*arg;
 	t_env	*env_list;
 	int		std[2];
 
-	(void)ac;
-	(void)av;
+	ft_void(ac, av);
 	g_ret_value = 0;
 	std[0] = dup(STDIN_FILENO);
 	std[1] = dup(STDOUT_FILENO);
 	arg = NULL;
 	env_list = NULL;
 	env_list = ft_env_to_list(env, std);
+	ft_update_shlvl(env_list);
 	while (1)
 	{
 		ft_signal_catching();

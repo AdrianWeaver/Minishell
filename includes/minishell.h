@@ -131,6 +131,9 @@ char	**ft_env_to_char(t_env *env);
 int		ft_env_size(t_env *env);
 int		ft_is_valid_env_variable(char *str);
 int		ft_print_env(t_env *env_list, char **arg);
+void	ft_replace_env_content(t_env *env_elem, char *new_content);
+void	ft_increment_shlvl(t_env *shlvl);
+void	ft_update_shlvl(t_env *env);
 
 /* ************************************************************************ */
 /*								FREE FUNCTIONS								*/

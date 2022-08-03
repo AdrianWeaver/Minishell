@@ -106,3 +106,12 @@ void	ft_manually_add_one_env(t_env *env_list, char *name, char *content)
 		}
 	}
 }
+
+void	ft_replace_env_content(t_env *env_elem, char *new_content)
+{
+	if (new_content == NULL)
+		ft_magic_malloc(FLUSH, 1, env_elem->content);
+	ft_magic_malloc(ADD, 0, new_content);
+	env_elem->content = ft_magic_malloc(FREE, 0, env_elem->content);
+	env_elem->content = new_content;
+}
